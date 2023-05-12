@@ -22,3 +22,9 @@ internal fun runOnMainThread(action: () -> Unit) {
         action()
     }
 }
+
+internal fun runDelayOnMainThread(delay: Long, action: () -> Unit) {
+    Handler(mainLooper).postDelayed({
+        action()
+    }, delay)
+}

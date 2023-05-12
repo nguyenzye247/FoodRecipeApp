@@ -1,10 +1,9 @@
-package com.nguyenhl.bk.foodrecipe.extension
+package com.nguyenhl.bk.foodrecipe.core.extension.livedata
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
-import com.nguyenhl.bk.foodrecipe.extension.livedata.ObsoleteSplittiesLifecycleApi
 
 @ObsoleteSplittiesLifecycleApi
 inline fun <T> LifecycleOwner.observe(

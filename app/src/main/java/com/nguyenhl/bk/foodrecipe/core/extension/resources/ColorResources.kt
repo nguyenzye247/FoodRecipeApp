@@ -18,13 +18,13 @@ import androidx.fragment.app.Fragment
  * @see [androidx.core.content.ContextCompat.getColor]
  */
 @ColorInt
-fun Context.color(@ColorRes colorRes: Int): Int = if (SDK_INT >= 23) getColor(colorRes) else {
+fun Context.getColor(@ColorRes colorRes: Int): Int = if (SDK_INT >= 23) getColor(colorRes) else {
     @Suppress("DEPRECATION")
     resources.getColor(colorRes)
 }
 
-inline fun Fragment.color(@ColorRes colorRes: Int) = context!!.color(colorRes)
-inline fun View.color(@ColorRes colorRes: Int) = context.color(colorRes)
+inline fun Fragment.getColor(@ColorRes colorRes: Int) = context!!.getColor(colorRes)
+inline fun View.getColor(@ColorRes colorRes: Int) = context.getColor(colorRes)
 
 /**
  * Use this method for non configuration dependent resources when you don't have a [Context]

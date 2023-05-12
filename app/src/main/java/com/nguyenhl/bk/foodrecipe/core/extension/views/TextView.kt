@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
-import com.nguyenhl.bk.foodrecipe.extension.resources.color
+import com.nguyenhl.bk.foodrecipe.core.extension.resources.getColor
 
 inline var TextView.textResource: Int
     @Deprecated(NO_GETTER, level = DeprecationLevel.HIDDEN) get() = noGetter
@@ -13,7 +13,7 @@ inline var TextView.textResource: Int
 
 inline var TextView.textColorResource: Int
     @Deprecated(NO_GETTER, level = DeprecationLevel.HIDDEN) get() = noGetter
-    set(@ColorRes value) = setTextColor(color(value))
+    set(@ColorRes value) = setTextColor(getColor(value))
 
 var TextView.textAppearance: Int
     @Deprecated(NO_GETTER, level = DeprecationLevel.HIDDEN) get() = noGetter
