@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.nguyenhl.bk.foodrecipe'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.nguyenhl.bk.foodrecipe"
         minSdk 24
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -55,7 +55,7 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.3'
 
     // Splash screen
-    implementation 'androidx.core:core-splashscreen:1.1.0-alpha01'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 
     // tests
     testImplementation 'junit:junit:4.13.2'
