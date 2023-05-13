@@ -13,4 +13,8 @@ sealed class BaseInput {
     data class LoginInput(
         val application: Application
     ) : BaseInput()
+
+    data class RegisterInput(
+        val application: Application
+    ) : BaseInput()
 }
