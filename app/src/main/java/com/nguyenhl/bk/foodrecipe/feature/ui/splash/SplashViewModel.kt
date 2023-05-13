@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.TimeUnit
 
-class SplashViewModel : BaseViewModel(BaseInput.NoInput) {
+class SplashViewModel(val input: BaseInput.NoInput) : BaseViewModel(input) {
     private val timeFinish: Long = 5000
     val isFinish = MutableStateFlow(false)
 

@@ -6,4 +6,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="register_greet">Lorem ipsum dolor sit amet, consectetur.</string>
+    <string name="fullname">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register_agreement">By registering you agree to our\nTerms and Conditions</string>
 </resources>
