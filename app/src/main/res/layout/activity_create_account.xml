@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_create_account"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:contentDescription="@null"
+        android:foreground="@color/rcp_black_transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_create_account"
+        app:layout_constraintDimensionRatio="750:1158"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="750dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+    <TextView
+        android:id="@+id/tv_create_account"
+        style="@style/TextAuthenticationTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_20dp"
+        android:text="@string/create_an_account"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/tv_create_account_description"
+        app:layout_constraintStart_toStartOf="@id/tv_create_account_description" />
+
+    <TextView
+        android:id="@+id/tv_create_account_description"
+        style="@style/TextRegularStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginBottom="@dimen/dimen_32dp"
+        android:text="@string/create_account_description"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/iv_create_account"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register_email"
+        style="@style/AuthenticationButtonStyle"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_marginHorizontal="@dimen/dimen_24dp"
+        android:layout_marginTop="@dimen/dimen_56dp"
+        android:layout_marginBottom="@dimen/dimen_70dp"
+        android:text="@string/register_using_email"
+        app:icon="@drawable/ic_email"
+        app:layout_constraintBottom_toTopOf="@id/tv_have_an_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_create_account"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_have_an_account"
+        style="@style/TextRegularStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:text="@string/have_an_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_login_question"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_register_email"
+        app:layout_constraintVertical_bias="1" />
+
+    <TextView
+        android:id="@+id/tv_login_question"
+        style="@style/TextBoldStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:text="@string/login"
+        app:layout_constraintBottom_toBottomOf="@id/tv_have_an_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/tv_have_an_account"
+        app:layout_constraintTop_toTopOf="@id/tv_have_an_account" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
