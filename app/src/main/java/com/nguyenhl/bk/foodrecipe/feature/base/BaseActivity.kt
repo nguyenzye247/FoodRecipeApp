@@ -18,11 +18,19 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
     protected val subscription: CompositeDisposable = CompositeDisposable()
     abstract fun getLazyBinding(): Lazy<T>
     abstract fun getLazyViewModel(): Lazy<V>
-    abstract fun setupInit()
+    open fun setupInit() {
+        initViews()
+        initListener()
+        initObservers()
+    }
 
     protected val binding by getLazyBinding()
     protected val viewModel by getLazyViewModel()
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
+    abstract fun initViews()
+    abstract fun initListener()
+    abstract fun initObservers()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
