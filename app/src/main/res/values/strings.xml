@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Food Recipe</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="login_greet">Lorem ipsum dolor sit amet, consectetur.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
 </resources>

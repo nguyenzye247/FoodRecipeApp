@@ -9,4 +9,8 @@ sealed class BaseInput {
     data class MainInput(
         val application: Application
     ) : BaseInput()
+
+    data class LoginInput(
+        val application: Application
+    ) : BaseInput()
 }

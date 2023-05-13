@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <color name="rcp_black_100">#462F4D</color>
+
+    <color name="rcp_blue_100">#E8F6F6</color>
+    <color name="rcp_blue_200">#3FB4B1</color>
+
+    <color name="rcp_grey_100">#747b7b</color>
+
+    <color name="rcp_red_100">#FD3250</color>
+    <color name="rcp_red_200">#FF9D9D</color>
 </resources>

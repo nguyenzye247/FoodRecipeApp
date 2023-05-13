@@ -10,7 +10,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun getLazyViewModel() = viewModels<MainViewModel>()
 
-    override fun setupInit() {
+    override fun initViews() {
+
+    }
+
+    override fun initListener() {
+
+    }
+
+    override fun initObservers() {
 
     }
 }
