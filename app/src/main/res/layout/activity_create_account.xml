@@ -37,9 +37,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
         android:layout_marginBottom="@dimen/dimen_32dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="@string/create_account_description"
         android:textColor="@color/white"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@id/iv_create_account"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton

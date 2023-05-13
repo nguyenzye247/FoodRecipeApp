@@ -21,4 +21,8 @@ sealed class BaseInput {
     data class CreateAccountInput(
         val application: Application
     ) : BaseInput()
+
+    data class ForgotPasswordInput(
+        val application: Application
+    ) : BaseInput()
 }
