@@ -40,6 +40,7 @@
     <dimen name="dimen_100dp">100dp</dimen>
     <dimen name="dimen_160dp">160dp</dimen>
     <dimen name="dimen_200dp">200dp</dimen>
+    <dimen name="dimen_218dp">218dp</dimen>
 
     <dimen name="text_size_10sp">10sp</dimen>
     <dimen name="text_size_12sp">12sp</dimen>

@@ -14,4 +14,7 @@
     <string name="create_account_description">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut.</string>
     <string name="register_using_email">Register using email</string>
     <string name="have_an_account">Have an account?</string>
+    <string name="forgot_password_title">Forgot\nPassword</string>
+    <string name="next">Next</string>
+    <string name="forgot_password_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
 </resources>
