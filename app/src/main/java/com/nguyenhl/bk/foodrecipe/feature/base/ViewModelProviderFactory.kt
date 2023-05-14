@@ -2,8 +2,12 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.createaccount.CreateAccountViewModel
+import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.createinfo.CreateInfoViewModel
+import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.forgot.ForgotPasswordViewModel
 import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.register.RegisterViewModel
+import com.nguyenhl.bk.foodrecipe.feature.ui.dishprefered.DishPreferredViewModel
 import com.nguyenhl.bk.foodrecipe.feature.ui.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.ui.splash.SplashViewModel
 
@@ -22,6 +26,18 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 return RegisterViewModel(input as BaseInput.RegisterInput) as T
+            }
+            modelClass.isAssignableFrom(CreateAccountViewModel::class.java) -> {
+                return CreateAccountViewModel(input as BaseInput.CreateAccountInput) as T
+            }
+            modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> {
+                return ForgotPasswordViewModel(input as BaseInput.ForgotPasswordInput) as T
+            }
+            modelClass.isAssignableFrom(DishPreferredViewModel::class.java) -> {
+                return DishPreferredViewModel(input as BaseInput.DishPreferredInput) as T
+            }
+            modelClass.isAssignableFrom(CreateInfoViewModel::class.java) -> {
+                return CreateInfoViewModel(input as BaseInput.CreateInfoInput) as T
             }
 
         }

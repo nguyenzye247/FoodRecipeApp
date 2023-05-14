@@ -62,7 +62,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tip_email"
-        style="@style/TIPAuthenticationStyle"
+        style="@style/TIPInputStyle"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_60dp"
         android:layout_marginTop="@dimen/dimen_32dp"
@@ -73,7 +73,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
-            style="@style/ETAuthenticationStyle"
+            style="@style/ETInputStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -96,7 +96,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
-            style="@style/ETAuthenticationStyle"
+            style="@style/ETInputStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -120,7 +120,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_confirm_password"
-            style="@style/ETAuthenticationStyle"
+            style="@style/ETInputStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -156,12 +156,12 @@
         android:text="@string/register_agreement"
         app:layout_constrainedHeight="true"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@id/btn_register"
-        app:layout_constraintEnd_toEndOf="@id/btn_register"
-        app:layout_constraintStart_toStartOf="@id/btn_register" />
+        app:layout_constraintBottom_toTopOf="@id/btn_continue"
+        app:layout_constraintEnd_toEndOf="@id/btn_continue"
+        app:layout_constraintStart_toStartOf="@id/btn_continue" />
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_continue"
         style="@style/AuthenticationButtonStyle"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_60dp"

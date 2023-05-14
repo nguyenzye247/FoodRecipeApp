@@ -29,4 +29,8 @@ sealed class BaseInput {
     data class DishPreferredInput(
         val application: Application
     ) : BaseInput()
+
+    data class CreateInfoInput(
+        val application: Application
+    ) : BaseInput()
 }

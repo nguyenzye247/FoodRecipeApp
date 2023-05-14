@@ -74,7 +74,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tip_email"
-        style="@style/TIPAuthenticationStyle"
+        style="@style/TIPInputStyle"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_60dp"
         android:layout_marginTop="@dimen/dimen_32dp"
@@ -85,7 +85,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
-            style="@style/ETAuthenticationStyle"
+            style="@style/ETInputStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -108,7 +108,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_confirm_password"
-            style="@style/ETAuthenticationStyle"
+            style="@style/ETInputStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"

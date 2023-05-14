@@ -109,4 +109,6 @@ dependencies {
 
     //Calendar
     implementation 'com.kizitonwose.calendar:view:2.3.0'
+    //Date picker
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 }
