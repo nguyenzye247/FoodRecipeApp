@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/iv_ornament"
+    android:layout_width="@dimen/dimen_0dp"
+    android:layout_height="wrap_content"
+    android:contentDescription="@null"
+    android:scaleType="centerCrop"
+    android:src="@drawable/img_ornament_small"
+    app:layout_constraintDimensionRatio="127:146"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />

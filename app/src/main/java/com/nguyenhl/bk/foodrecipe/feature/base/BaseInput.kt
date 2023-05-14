@@ -25,4 +25,8 @@ sealed class BaseInput {
     data class ForgotPasswordInput(
         val application: Application
     ) : BaseInput()
+
+    data class DishPreferredInput(
+        val application: Application
+    ) : BaseInput()
 }

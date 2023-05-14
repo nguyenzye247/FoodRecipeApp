@@ -4,16 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <include
         android:id="@+id/iv_ornament"
+        layout="@layout/layout_bg_ornament"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_ornament"
-        app:layout_constraintDimensionRatio="211:322"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/iv_ornament"-->
+    <!--        android:layout_width="@dimen/dimen_0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="@null"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/img_ornament"-->
+    <!--        app:layout_constraintDimensionRatio="211:322"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ImageButton
         android:id="@+id/btn_back"
