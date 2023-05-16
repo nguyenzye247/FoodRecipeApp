@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_preferred_dish_title" />
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_continue"
         style="@style/CaretButtonStyle"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_60dp"

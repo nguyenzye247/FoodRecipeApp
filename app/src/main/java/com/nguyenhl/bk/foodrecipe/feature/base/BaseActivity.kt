@@ -1,5 +1,6 @@
 package com.nguyenhl.bk.foodrecipe.feature.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
@@ -9,9 +10,16 @@ import android.net.Network
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
+import com.nguyenhl.bk.foodrecipe.core.extension.views.setPaddingBottom
+import com.nguyenhl.bk.foodrecipe.core.extension.views.setPaddingTop
+import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
@@ -36,12 +44,27 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupInit()
+        makeStatusBarLight()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         subscription.clear()
         unregisterNetworkCallback()
+    }
+
+    fun adjustScreenSize(view: View){
+        binding.apply {
+            ViewCompat.setOnApplyWindowInsetsListener(
+                view
+            ) { v, insets ->
+                val marginTop = insets.systemWindowInsetTop()
+                val marginBottom = insets.systemWindowInsetBottom()
+                root.setPaddingTop(marginTop)
+                root.setPaddingBottom(marginBottom)
+                insets
+            }
+        }
     }
 
     fun makeStatusBarTransparent() {
@@ -96,6 +119,18 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
+    }
+
+    @SuppressLint("WrongConstant")
+    fun WindowInsetsCompat.systemWindowInsetTop(): Int = when {
+        AppUtil.isAndroid_TIRAMISU_AndAbove() -> getInsets(WindowInsets.Type.statusBars()).top
+        else -> @Suppress("DEPRECATION") systemWindowInsetTop
+    }
+
+    @SuppressLint("WrongConstant")
+    fun WindowInsetsCompat.systemWindowInsetBottom(): Int = when {
+        AppUtil.isAndroid_TIRAMISU_AndAbove() -> getInsets(WindowInsets.Type.navigationBars()).bottom
+        else -> @Suppress("DEPRECATION") systemWindowInsetBottom
     }
 
     fun rotateScreen() {

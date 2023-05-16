@@ -20,4 +20,16 @@
     <string name="skip">Skip</string>
     <string name="preferred_any_food">Preferred\nany food?</string>
     <string name="continue_txt">Continue</string>
+    <string name="your_info">Your info</string>
+    <string name="name_title">Name</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="your_date_of_birth">Your date of birth</string>
+    <string name="gender">Gender</string>
+    <string name="your_gender">Your gender</string>
+    <string name="height">Height</string>
+    <string name="your_current_height">Your current height</string>
+    <string name="weight">Weight</string>
+    <string name="your_current_weight">Your current weight</string>
+    <string name="health_status">Health status</string>
 </resources>

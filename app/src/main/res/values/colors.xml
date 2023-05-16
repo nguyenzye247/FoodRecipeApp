@@ -18,6 +18,8 @@
 
     <color name="rcp_cream_100">#FFF3EB</color>
 
+    <color name="rcp_brown_100">#73503D</color>
+
     <color name="rcp_red_100">#FD3250</color>
     <color name="rcp_red_200">#FF9D9D</color>
 </resources>

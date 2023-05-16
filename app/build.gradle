@@ -109,4 +109,9 @@ dependencies {
 
     //Calendar
     implementation 'com.kizitonwose.calendar:view:2.3.0'
+    //Date picker
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    //Input mask
+    implementation 'com.redmadrobot:input-mask-android:7.2.4'
+//    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 }

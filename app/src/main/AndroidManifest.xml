@@ -21,8 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodRecipe"
         tools:targetApi="31">
+
+        <!--            android:name=".feature.ui.splash.SplashActivity"-->
         <activity
-            android:name=".feature.ui.main.MainActivity"
+            android:name=".feature.ui.authentication.createinfo.ActivityCreateInfo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +37,33 @@
                 android:value="" />
         </activity>
 
+        <activity
+            android:name=".feature.ui.authentication.createaccount.CreateAccountActivity"
+            android:screenOrientation="portrait" />
+
+<!--        <activity-->
+<!--            android:name=".feature.ui.authentication.createinfo.ActivityCreateInfo"-->
+<!--            android:screenOrientation="portrait" />-->
+
+        <activity
+            android:name=".feature.ui.authentication.forgot.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.ui.authentication.login.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.ui.authentication.register.ActivityRegister"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.ui.dishprefered.ActivityDishPreferred"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.ui.main.MainActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
