@@ -51,6 +51,7 @@
         <item name="errorEnabled">true</item>
         <item name="hintAnimationEnabled">false</item>
         <item name="expandedHintEnabled">false</item>
+        <item name="boxStrokeWidthFocused">@dimen/dimen_0dp</item>
         <item name="android:paddingTop">@dimen/dimen_0dp</item>
         <item name="android:paddingBottom">@dimen/dimen_0dp</item>
         <item name="boxBackgroundColor">@color/rcp_blue_100</item>
