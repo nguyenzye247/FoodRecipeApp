@@ -3,7 +3,6 @@ package com.nguyenhl.bk.foodrecipe.core.extension.livedata
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
 
 @ObsoleteSplittiesLifecycleApi
 inline fun <T> LifecycleOwner.observe(
@@ -41,26 +40,26 @@ inline fun <T : Any> LifecycleOwner.observeNotNull(
  * @param Y           a type of resulting LiveData.
  * @return            a LiveData which emits resulting values
  */
-@ObsoleteSplittiesLifecycleApi
-inline fun <X, Y> LiveData<X>.map(
-    crossinline transform: (X?) -> Y
-): LiveData<Y> = Transformations.map(this) { input -> transform(input) }
-
-@ObsoleteSplittiesLifecycleApi
-inline fun <X, Y> LiveData<X>.mapNotNull(
-    crossinline transform: (X) -> Y
-): LiveData<Y> = Transformations.map(this) { input: X? ->
-    input?.let { transform(it) }
-}
-
-@ObsoleteSplittiesLifecycleApi
-inline fun <X, Y> LiveData<X>.switchMap(
-    crossinline transform: (X?) -> LiveData<Y>?
-): LiveData<Y> = Transformations.switchMap(this) { input -> transform(input) }
-
-@ObsoleteSplittiesLifecycleApi
-inline fun <X, Y> LiveData<X>.switchMapNotNull(
-    crossinline transform: (X) -> LiveData<Y>?
-): LiveData<Y> = Transformations.switchMap(this) { input: X? ->
-    input?.let { transform(it) }
-}
+//@ObsoleteSplittiesLifecycleApi
+//inline fun <X, Y> LiveData<X>.map(
+//    crossinline transform: (X?) -> Y
+//): LiveData<Y> = Transformations.map(this) { input -> transform(input) }
+//
+//@ObsoleteSplittiesLifecycleApi
+//inline fun <X, Y> LiveData<X>.mapNotNull(
+//    crossinline transform: (X) -> Y
+//): LiveData<Y> = Transformations.map(this) { input: X? ->
+//    input?.let { transform(it) }
+//}
+//
+//@ObsoleteSplittiesLifecycleApi
+//inline fun <X, Y> LiveData<X>.switchMap(
+//    crossinline transform: (X?) -> LiveData<Y>?
+//): LiveData<Y> = Transformations.switchMap(this) { input -> transform(input) }
+//
+//@ObsoleteSplittiesLifecycleApi
+//inline fun <X, Y> LiveData<X>.switchMapNotNull(
+//    crossinline transform: (X) -> LiveData<Y>?
+//): LiveData<Y> = Transformations.switchMap(this) { input: X? ->
+//    input?.let { transform(it) }
+//}

@@ -30,8 +30,8 @@ class ActivityCreateInfo : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             etDobInput.onClick {
                 showDatePicker()
             }
-            etGenderInput.onClick {
-                //TODO: show gender selection dialog
+            tipGenderInput.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newText ->
+                
             }
             etHealthInput.onClick {
                 //TODO: show health status selection dialog
@@ -44,14 +44,17 @@ class ActivityCreateInfo : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     }
 
     private fun showDatePicker() {
+
         //DatePicker
         TimePickerBuilder(this) { date, v -> //Callback
             val dateText = DateFormatUtil.formatSimpleDate(date)
             binding.etDobInput.setText(dateText)
         }
-            .setTitleSize(20)
-            .setSubmitColor(R.color.rcp_blue_200)
-            .setCancelColor(R.color.black)
+            .setSubCalSize(16)
+            .isDialog(true)
+            .setTitleBgColor(getColor(R.color.rcp_blue_300))
+            .setSubmitColor(getColor(R.color.rcp_blue_200))
+            .setCancelColor(getColor(R.color.rcp_grey_100))
             .build()
             .show()
     }
