@@ -30,8 +30,8 @@ class ActivityCreateInfo : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             etDobInput.onClick {
                 showDatePicker()
             }
-            etGenderInput.onClick {
-                //TODO: show gender selection dialog
+            tipGenderInput.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newText ->
+                
             }
             etHealthInput.onClick {
                 //TODO: show health status selection dialog
