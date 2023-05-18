@@ -24,7 +24,7 @@
 
         <!--            android:name=".feature.ui.splash.SplashActivity"-->
         <activity
-            android:name=".feature.ui.authentication.createinfo.ActivityCreateInfo"
+            android:name=".feature.presentation.authentication.register.ActivityRegister"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,31 +38,31 @@
         </activity>
 
         <activity
-            android:name=".feature.ui.authentication.createaccount.CreateAccountActivity"
+            android:name=".feature.presentation.authentication.createaccount.CreateAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.authentication.createinfo.ActivityCreateInfo"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.authentication.forgot.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.authentication.login.LoginActivity"
             android:screenOrientation="portrait" />
 
 <!--        <activity-->
-<!--            android:name=".feature.ui.authentication.createinfo.ActivityCreateInfo"-->
+<!--            android:name=".feature.presentation.authentication.register.ActivityRegister"-->
 <!--            android:screenOrientation="portrait" />-->
 
         <activity
-            android:name=".feature.ui.authentication.forgot.ForgotPasswordActivity"
+            android:name=".feature.presentation.dishprefered.ActivityDishPreferred"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.ui.authentication.login.LoginActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".feature.ui.authentication.register.ActivityRegister"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".feature.ui.dishprefered.ActivityDishPreferred"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".feature.ui.main.MainActivity"
+            android:name=".feature.presentation.main.MainActivity"
             android:screenOrientation="portrait" />
 
     </application>

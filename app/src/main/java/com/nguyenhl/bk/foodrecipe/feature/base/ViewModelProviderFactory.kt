@@ -2,16 +2,21 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.createaccount.CreateAccountViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.createinfo.CreateInfoViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.forgot.ForgotPasswordViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.login.LoginViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.authentication.register.RegisterViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.dishprefered.DishPreferredViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.main.MainViewModel
-import com.nguyenhl.bk.foodrecipe.feature.ui.splash.SplashViewModel
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.RegisterRepository
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createaccount.CreateAccountViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider.Factory {
+class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider.Factory,
+    KoinComponent {
+    private val registerRepository: RegisterRepository by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -25,7 +30,10 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return LoginViewModel(input as BaseInput.LoginInput) as T
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                return RegisterViewModel(input as BaseInput.RegisterInput) as T
+                return RegisterViewModel(
+                    input as BaseInput.RegisterInput,
+                    registerRepository
+                ) as T
             }
             modelClass.isAssignableFrom(CreateAccountViewModel::class.java) -> {
                 return CreateAccountViewModel(input as BaseInput.CreateAccountInput) as T

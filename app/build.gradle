@@ -54,6 +54,9 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.3'
 
+    //Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
     // Splash screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
 
@@ -68,6 +71,12 @@ dependencies {
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    // koin
+    implementation "org.koin:koin-android:2.0.1"
+    implementation "org.koin:koin-android-scope:2.0.1"
+    implementation "org.koin:koin-android-viewmodel:2.0.1"
 
     //Gson
     implementation "com.google.code.gson:gson:$gson_version"
@@ -116,4 +125,6 @@ dependencies {
 //    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
     //Dropdown
     implementation "com.github.skydoves:powerspinner:1.2.6"
+    //Valid dation
+    implementation "com.wajahatkarim:easyvalidation-core:1.0.4"
 }
