@@ -110,6 +110,9 @@ dependencies {
     //PermissionX
     implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 
+    //Timber logging
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
     //Lotte animation
     implementation 'com.airbnb.android:lottie:5.2.0'
 

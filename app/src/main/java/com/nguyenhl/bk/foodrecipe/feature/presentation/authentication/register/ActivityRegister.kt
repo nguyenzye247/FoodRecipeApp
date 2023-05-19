@@ -6,7 +6,6 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRegisterBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
-import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.wajahatkarim3.easyvalidation.core.view_ktx.minLength
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
@@ -20,10 +19,9 @@ class ActivityRegister : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 //        ViewModelProviderFactory(BaseInput.RegisterInput(application))
 //    }
 
-    override fun getLazyViewModel() =
-        viewModel<RegisterViewModel> {
-            parametersOf(ViewModelProviderFactory(BaseInput.RegisterInput(application)))
-        }
+    override fun getLazyViewModel() = viewModel<RegisterViewModel> {
+        parametersOf(BaseInput.RegisterInput(application))
+    }
 
     override fun initViews() {
 
@@ -32,19 +30,36 @@ class ActivityRegister : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     override fun initListener() {
         binding.apply {
             btnRegister.onClick {
-                validateInputs {
-                    toast("Register success")
-//                viewModel.registerNewAccount()
+                val e = "levanhuy94pbc@gmail.com"
+                val p = "12345678"
+                validateInputs { email, password, confirmedPassword ->
+                    viewModel.registerNewAccount(email, password, confirmedPassword)
                 }
             }
         }
     }
 
     override fun initObservers() {
+        viewModel.liveRegisterStatus().observe(this@ActivityRegister) { registerStatus ->
+            if (registerStatus == null) return@observe
+            val message = registerStatus.first
+            val status = registerStatus.second
+
+            toast(message)
+            if (status) {
+                goToLogin()
+                return@observe
+            }
+        }
+    }
+
+    private fun goToLogin() {
 
     }
 
-    private fun validateInputs(onValid: () -> Unit) {
+    private fun validateInputs(
+        onValid: (email: String, password: String, confirmedPassword: String) -> Unit
+    ) {
         var isValid = true
         binding.apply {
             val emailInput = etEmail.text.toString()
@@ -74,10 +89,10 @@ class ActivityRegister : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     "Confirmed password must be matched with password"
                 )
             }
-        }
-        if (isValid) {
-            setAllInputValid()
-            onValid()
+            if (isValid) {
+                setAllInputValid()
+                onValid(emailInput, passwordInput, confirmedPasswordInput)
+            }
         }
     }
 

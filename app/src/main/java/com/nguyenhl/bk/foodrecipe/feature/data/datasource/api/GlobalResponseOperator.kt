@@ -11,6 +11,7 @@ import com.skydoves.sandwich.message
 import com.skydoves.sandwich.operators.ApiResponseSuspendOperator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class GlobalResponseOperator<T> constructor(
     private val application: Application
@@ -21,16 +22,16 @@ class GlobalResponseOperator<T> constructor(
     override suspend fun onError(apiResponse: ApiResponse.Failure.Error<T>) {
         withContext(Dispatchers.Main) {
             apiResponse.run {
-                Log.d("ApiResponse.Failure.Error", message())
+                Timber.d(message())
 
                 when(statusCode) {
                     StatusCode.InternalServerError -> toast("InternalServerError")
                     StatusCode.BadGateway -> toast("BadGateway")
-                    else -> toast("$statusCode(${statusCode.code}): ${message()}")
+                    else -> {}
                 }
 
                 map(ErrorResponseMapper) {
-                    Log.d("RegisterErrorResponse", message())
+                    Timber.d(message)
                 }
             }
         }
@@ -39,7 +40,7 @@ class GlobalResponseOperator<T> constructor(
     override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) {
         withContext(Dispatchers.Main) {
             apiResponse.run {
-                Log.d("ApiResponse.Failure.Exception", message())
+                Timber.d(message)
                 toast(message())
             }
         }

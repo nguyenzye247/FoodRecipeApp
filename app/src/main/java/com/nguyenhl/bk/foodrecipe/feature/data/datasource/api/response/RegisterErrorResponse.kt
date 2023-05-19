@@ -7,4 +7,8 @@ data class RegisterErrorResponse(
     val message: String,
     @SerializedName("status")
     val status: Boolean
-)
+) {
+    override fun toString(): String {
+        return this.message
+    }
+}

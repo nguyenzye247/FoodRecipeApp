@@ -35,7 +35,7 @@
 
     <style name="ForgotPasswordTextStyle" parent="Theme.AppCompat.Light">
         <item name="fontFamily">@font/gordita_regular</item>
-        <item name="android:textColor">@color/rcp_black_100</item>
+        <item name="android:textColor">@color/rcp_blue_200</item>
         <item name="android:textSize">@dimen/text_size_10sp</item>
     </style>
 

@@ -6,6 +6,7 @@ import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.getColor
 
 fun TextInputLayout.setError(isError: Boolean, errorText: String?) {
+    this.errorContentDescription = errorText
     this.isErrorEnabled = isError
     this.error = errorText
     this.boxBackgroundColor = if (isError)
