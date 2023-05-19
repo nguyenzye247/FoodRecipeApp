@@ -24,14 +24,16 @@ class ActivityRegister : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     }
 
     override fun initViews() {
+        binding.apply {
 
+        }
     }
 
     override fun initListener() {
         binding.apply {
             btnRegister.onClick {
-                val e = "levanhuy94pbc@gmail.com"
-                val p = "12345678"
+                val e = "lenguyen2470@gmail.com"
+                val p = "11111111"
                 validateInputs { email, password, confirmedPassword ->
                     viewModel.registerNewAccount(email, password, confirmedPassword)
                 }

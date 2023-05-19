@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.RegisterErrorResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.RegisterResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.RegisterRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(
+class RegisterViewModel constructor(
     val input: BaseInput.RegisterInput,
     private val registerRepository: RegisterRepository
 ) : BaseViewModel(input) {
@@ -31,7 +31,7 @@ class RegisterViewModel(
                             _registerStatus.postValue(Pair(it.message, it.status))
                         }
 
-                        is RegisterErrorResponse -> {
+                        is ErrorResponse -> {
                             _registerStatus.postValue(Pair(it.message, it.status))
                         }
 
