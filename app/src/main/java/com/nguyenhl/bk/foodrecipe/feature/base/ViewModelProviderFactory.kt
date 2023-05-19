@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.LoginRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.RegisterRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createaccount.CreateAccountViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordViewModel
@@ -19,6 +20,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     KoinComponent {
     private val registerRepository: RegisterRepository by inject()
     private val loginRepository: LoginRepository by inject()
+    private val userInfoRepository: UserInfoRepository by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -33,7 +35,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 return LoginViewModel(
                     input as BaseInput.LoginInput,
-                    loginRepository
+                    loginRepository,
+                    userInfoRepository
                 ) as T
             }
 

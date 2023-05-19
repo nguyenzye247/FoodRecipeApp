@@ -1,17 +1,21 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo
 
+import android.content.Context
+import android.content.Intent
 import androidx.activity.viewModels
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.nguyenhl.bk.foodrecipe.R
+import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
 
 
-class ActivityCreateInfo : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
+class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
     override fun getLazyBinding() = lazy { ActivityCreateInfoBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModels<CreateInfoViewModel> {
@@ -54,5 +58,15 @@ class ActivityCreateInfo : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             .setCancelColor(getColor(R.color.rcp_grey_100))
             .build()
             .show()
+    }
+
+    companion object {
+        fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
+            context?.let {
+                it.start<CreateInfoActivity> {
+                    apply(configIntent)
+                }
+            }
+        }
     }
 }

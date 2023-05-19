@@ -3,6 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.repository
 import androidx.annotation.WorkerThread
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.LoginBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.ErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.LoginErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.LoginRetrofitService
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnSuccess
@@ -24,7 +25,7 @@ class LoginRepository constructor(
             .suspendOnSuccess {
                 emit(data)
             }
-            .suspendOnError(ErrorResponseMapper) {
+            .suspendOnError(LoginErrorResponseMapper) {
                 emit(this)
             }
 
