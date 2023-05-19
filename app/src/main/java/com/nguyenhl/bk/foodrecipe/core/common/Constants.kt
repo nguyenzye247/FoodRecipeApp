@@ -1,5 +1,4 @@
 package com.nguyenhl.bk.foodrecipe.core.common
 
-const val PREFS_KEY = "Prefs"
-
-const val KEY_USER_NAME = "userName"
+const val EMPTY_TEXT = ""
+const val SPACE_TEXT = " "

@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import com.bumptech.glide.Glide
 
 /**
  * Sets a drawable resource as the content of this ImageView.
@@ -34,3 +35,9 @@ inline var ImageView.imageDrawable: Drawable?
 inline var ImageView.imageBitmap: Bitmap
     @Deprecated(NO_GETTER, level = DeprecationLevel.HIDDEN) get() = noGetter
     set(value) = setImageBitmap(value)
+
+fun ImageView.loadImage(url: String?) {
+    Glide.with(this)
+        .load(url)
+        .into(this)
+}

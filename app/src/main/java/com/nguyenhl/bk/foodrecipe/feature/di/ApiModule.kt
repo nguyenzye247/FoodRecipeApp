@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.di
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.interceptor.RequestInterceptor
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.LoginRetrofitService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RegisterRetrofitService
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -30,5 +31,6 @@ val apiModule = module {
     }
 
     single { get<Retrofit>().create(RegisterRetrofitService::class.java) }
+    single { get<Retrofit>().create(LoginRetrofitService::class.java) }
     //TODO: add more services
 }
