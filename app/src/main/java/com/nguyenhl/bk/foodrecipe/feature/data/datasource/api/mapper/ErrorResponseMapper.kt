@@ -1,22 +1,27 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper
 
 import com.google.gson.Gson
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.RegisterErrorResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.skydoves.sandwich.ApiErrorModelMapper
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
 import com.skydoves.sandwich.message
 
-object ErrorResponseMapper : ApiErrorModelMapper<RegisterErrorResponse> {
-
-    override fun map(apiErrorResponse: ApiResponse.Failure.Error<*>): RegisterErrorResponse {
+abstract class BaseApiErrorModelMapper(
+    private val uniqueMessage: String
+) : ApiErrorModelMapper<ErrorResponse> {
+    override fun map(apiErrorResponse: ApiResponse.Failure.Error<*>): ErrorResponse {
         return try {
-            Gson().fromJson(apiErrorResponse.message(), RegisterErrorResponse::class.java)
+            Gson().fromJson(apiErrorResponse.message(), ErrorResponse::class.java)
         } catch (ex: Exception) {
-            RegisterErrorResponse(
-                "Error: Email is already existed",
+            ErrorResponse(
+                uniqueMessage,
                 apiErrorResponse.statusCode == StatusCode.OK
             )
         }
     }
+
 }
+
+object ErrorResponseMapper : BaseApiErrorModelMapper("Error: Email is already existed")
+object LoginErrorResponseMapper : BaseApiErrorModelMapper("Error: Wrong email or password")

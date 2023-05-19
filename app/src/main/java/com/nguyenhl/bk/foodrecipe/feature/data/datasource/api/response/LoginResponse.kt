@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.AuthenticationData
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.AuthenticationModel
 
-data class RegisterResponse(
-    @SerializedName("message")
-    val message: String,
+data class LoginResponse(
+    @SerializedName("token")
+    val token: String,
     @SerializedName("status")
     val status: Boolean
 )
 
-internal fun RegisterResponse.toAuthenticationModel(): AuthenticationModel =
+internal fun LoginResponse.toAuthenticationModel(): AuthenticationModel =
     AuthenticationModel(
-        AuthenticationData(message),
+        AuthenticationData(token),
         status
     )

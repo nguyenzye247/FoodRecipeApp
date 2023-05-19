@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import androidx.activity.ComponentActivity
+import androidx.activity.addCallback
 
 /*
  * Copyright 2019 Louis Cognault Ayeva Derman. Use of this source code is governed by the Apache 2.0 license.
@@ -30,4 +32,13 @@ inline fun <reified A : Activity> Context.start(configIntent: Intent.() -> Unit 
 @Throws(ActivityNotFoundException::class)
 inline fun Context.startActivity(action: String, configIntent: Intent.() -> Unit = {}) {
     startActivity(Intent(action).apply(configIntent))
+}
+
+inline fun ComponentActivity.backPressed(crossinline onAllowFinish: () -> Boolean) {
+    onBackPressedDispatcher.addCallback {
+        val allowFinish = onAllowFinish.invoke()
+        if (allowFinish) {
+            finish()
+        }
+    }
 }

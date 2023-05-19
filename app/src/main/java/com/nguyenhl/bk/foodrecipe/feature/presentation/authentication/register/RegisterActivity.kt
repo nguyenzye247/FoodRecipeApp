@@ -1,59 +1,83 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register
 
-import com.nguyenhl.bk.foodrecipe.core.extension.toast
+import android.content.Context
+import android.content.Intent
+import com.nguyenhl.bk.foodrecipe.core.extension.*
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
+import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRegisterBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
-import com.wajahatkarim3.easyvalidation.core.view_ktx.minLength
-import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
-import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ActivityRegister : BaseActivity<ActivityRegisterBinding, RegisterViewModel>() {
-    override fun getLazyBinding() = lazy { ActivityRegisterBinding.inflate(layoutInflater) }
+class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>() {
+    val e = "lenguyen2470@gmail.com"
+    val p = "11111111"
 
-//    override fun getLazyViewModel() = viewModels<RegisterViewModel> {
-//        ViewModelProviderFactory(BaseInput.RegisterInput(application))
-//    }
+    override fun getLazyBinding() = lazy { ActivityRegisterBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModel<RegisterViewModel> {
         parametersOf(BaseInput.RegisterInput(application))
     }
 
     override fun initViews() {
+        binding.apply {
 
+        }
     }
 
     override fun initListener() {
         binding.apply {
             btnRegister.onClick {
-                val e = "levanhuy94pbc@gmail.com"
-                val p = "12345678"
                 validateInputs { email, password, confirmedPassword ->
+                    viewModel.setLoading(true)
                     viewModel.registerNewAccount(email, password, confirmedPassword)
                 }
+            }
+            btnBack.onClick {
+                onBackPressed()
+            }
+            tvLogin.onClick {
+                goToLogin()
+            }
+            tvForgotPassword.onClick {
+                goToForgotPassword()
             }
         }
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
-        viewModel.liveRegisterStatus().observe(this@ActivityRegister) { registerStatus ->
-            if (registerStatus == null) return@observe
-            val message = registerStatus.first
-            val status = registerStatus.second
+        observe(viewModel.liveRegisterStatus()) { registerStatus ->
+            viewModel.setLoading(false)
 
-            toast(message)
+            if (registerStatus == null) return@observe
+            val message = registerStatus.data.value
+            val status = registerStatus.status
+
+            longToast(message)
             if (status) {
                 goToLogin()
                 return@observe
             }
         }
+        observe(viewModel.liveIsLoading()) {
+            binding.loading.progressBar.setVisible(it ?: false)
+        }
     }
 
     private fun goToLogin() {
+        LoginActivity.startActivity(this) {
+            // put stuffs
+        }
+    }
+
+    private fun goToForgotPassword() {
 
     }
 
@@ -96,48 +120,21 @@ class ActivityRegister : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         }
     }
 
-    private fun String.checkEmail(onInvalid: (message: String) -> Unit) {
-        var isValid = true
-        var message = ""
-        nonEmpty {
-            // error
-            isValid = false
-            message = "Field can not be empty"
-        }
-        validEmail {
-            // error
-            isValid = false
-            message = "Wrong email format"
-        }
-        if (!isValid) {
-            onInvalid(message)
-        }
-    }
-
-    private fun String.checkPassword(onInvalid: (str: String) -> Unit) {
-        var isValid = true
-        var message = ""
-        nonEmpty {
-            // error
-            isValid = false
-            message = "Field can not be empty"
-        }
-        minLength(8) {
-            // error
-            isValid = false
-            message = "Password length must be greater than 8"
-        }
-        if (!isValid) {
-            onInvalid(message)
-            return
-        }
-    }
-
     private fun setAllInputValid() {
         binding.apply {
             tipEmail.setError(false, null)
             tipPassword.setError(false, null)
             tipConfirmPassword.setError(false, null)
+        }
+    }
+
+    companion object {
+        fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
+            context?.let {
+                it.start<RegisterActivity> {
+                    apply(configIntent)
+                }
+            }
         }
     }
 }
