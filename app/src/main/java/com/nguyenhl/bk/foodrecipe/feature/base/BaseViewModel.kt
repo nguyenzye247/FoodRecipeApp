@@ -3,8 +3,9 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import org.koin.core.KoinComponent
 
-open class BaseViewModel(val inputData: BaseInput) : ViewModel() {
+open class BaseViewModel(val inputData: BaseInput) : ViewModel(), KoinComponent {
     protected val subscription: CompositeDisposable = CompositeDisposable()
 
     protected fun addDisposables(vararg ds: Disposable) {

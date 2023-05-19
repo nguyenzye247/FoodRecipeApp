@@ -17,6 +17,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.txt
+import timber.log.Timber
 
 fun Context.createToast(text: CharSequence, duration: Int): Toast {
     val ctx = if (SDK_INT == 25) SafeToastCtx(this) else this
@@ -73,7 +74,7 @@ private class SafeToastCtx(ctx: Context) : ContextWrapper(ctx) {
             try {
                 base.addView(view, params)
             } catch (e: WindowManager.BadTokenException) {
-                Log.e("SafeToast", "Couldn't add Toast to WindowManager", e)
+                Timber.tag("SafeToast").e("Couldn't add Toast to WindowManager")
             }
         }
     }
