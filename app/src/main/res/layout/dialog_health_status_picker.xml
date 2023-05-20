@@ -30,11 +30,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_12dp"
+            android:layout_marginVertical="@dimen/dimen_10dp"
             android:background="@android:color/white"
             android:gravity="center"
             android:minHeight="150dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/separator_view"
+            app:layout_constraintBottom_toTopOf="@id/btn_apply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_health_status_title">
@@ -59,30 +60,19 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/separator_view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:background="@color/rcp_grey_200"
-            app:layout_constraintBottom_toTopOf="@id/btn_apply"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/optionspicker" />
-
         <TextView
             android:id="@+id/btn_apply"
             style="@style/DialogYesButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dimen_16dp"
+            android:layout_marginVertical="@dimen/dimen_10dp"
             android:layout_marginEnd="@dimen/dimen_12dp"
             android:text="@string/apply"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@id/separator_view" />
+            app:layout_constraintTop_toBottomOf="@id/optionspicker" />
 
         <TextView
             android:id="@+id/btn_cancel"
