@@ -78,6 +78,12 @@ class LoginViewModel constructor(
         }
     }
 
+    fun doOnUserLoggedIn(action: () -> Unit) {
+        if (SessionManager.isTokenSaved(input.application)) {
+            action.invoke()
+        }
+    }
+
     private fun saveLoginToken(token: String) {
         token.ifNotEmpty {
             SessionManager.saveToken(input.application, it)

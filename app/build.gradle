@@ -126,7 +126,7 @@ dependencies {
     //Input mask
     implementation 'com.redmadrobot:input-mask-android:7.2.4'
 //    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-    //Dropdown
+    //Powerspinner
     implementation "com.github.skydoves:powerspinner:1.2.6"
     //Valid dation
     implementation "com.wajahatkarim:easyvalidation-core:1.0.4"

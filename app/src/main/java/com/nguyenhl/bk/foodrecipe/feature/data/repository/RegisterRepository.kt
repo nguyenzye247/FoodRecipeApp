@@ -2,7 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.repository
 
 import androidx.annotation.WorkerThread
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.RegisterBody
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.ErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RegisterRetrofitService
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnSuccess
@@ -25,7 +25,7 @@ class RegisterRepository constructor(
             .suspendOnSuccess {
                 emit(data)
             }
-            .suspendOnError(ErrorResponseMapper) {
+            .suspendOnError(RegisterResponseMapper) {
                 emit(this)
             }
     }.flowOn(Dispatchers.IO)

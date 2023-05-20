@@ -1,9 +1,8 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api
 
 import android.app.Application
-import android.util.Log
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.ErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
 import com.skydoves.sandwich.map
@@ -30,7 +29,7 @@ class GlobalResponseOperator<T> constructor(
                     else -> {}
                 }
 
-                map(ErrorResponseMapper) {
+                map(RegisterResponseMapper) {
                     Timber.d(message)
                 }
             }

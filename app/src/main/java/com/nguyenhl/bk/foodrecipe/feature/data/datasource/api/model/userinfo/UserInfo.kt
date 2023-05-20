@@ -18,5 +18,5 @@ data class UserInfo(
     @SerializedName("likeDishes")
     val preferredDishes: List<PreferredDish>,
     @SerializedName("healthcare")
-    val healthStatus: HealthStatus
+    val healthStatus: UserHealthStatus
 )

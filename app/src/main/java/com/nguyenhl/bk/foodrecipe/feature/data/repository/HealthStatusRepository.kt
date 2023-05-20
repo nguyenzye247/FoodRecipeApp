@@ -1,25 +1,25 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.repository
 
 import androidx.annotation.WorkerThread
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.UserInfoService
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.HealthStatusErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.HealthStatusService
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class UserInfoRepository constructor(
-    private val userInfoService: UserInfoService
-): Repository {
+class HealthStatusRepository constructor(
+    private val healthStatusService: HealthStatusService
+) : Repository {
 
     @WorkerThread
-    fun getUserInfoService(token: String) = flow {
-        userInfoService.getUserInfo(token)
+    fun getAllHealthStatus() = flow {
+        healthStatusService.getAllHealthStatuses()
             .suspendOnSuccess {
                 emit(data)
             }
-            .suspendOnError(RegisterResponseMapper) {
+            .suspendOnError(HealthStatusErrorResponseMapper) {
                 emit(this)
             }
     }.flowOn(Dispatchers.IO)

@@ -30,7 +30,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     override fun initViews() {
-
+        viewModel.doOnUserLoggedIn {
+            goToCreateUserInfo()
+            finish()
+        }
     }
 
     override fun initListener() {

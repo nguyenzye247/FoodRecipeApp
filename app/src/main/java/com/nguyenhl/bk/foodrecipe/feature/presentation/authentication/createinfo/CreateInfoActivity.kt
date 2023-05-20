@@ -1,18 +1,25 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.nguyenhl.bk.foodrecipe.R
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.views.bg
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
+import com.skydoves.powerspinner.IconSpinnerAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
+import com.skydoves.powerspinner.OnSpinnerDismissListener
+import com.skydoves.powerspinner.PowerSpinnerView
 
 
 class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
@@ -23,25 +30,39 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     }
 
     override fun initViews() {
+        viewModel.getAllHealthStatuses()
         adjustScreenSize(binding.btnBack)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun initListener() {
         binding.apply {
             etDobInput.onClick {
                 showDatePicker()
             }
-            tipGenderInput.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newText ->
-                
+            tipGenderInput.apply {
+                setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newText ->
+                    tipGenderInput.setInputBg()
+                }
+                onSpinnerDismissListener = OnSpinnerDismissListener {
+                    tipGenderInput.setInputBg()
+                }
             }
-            etHealthInput.onClick {
-                //TODO: show health status selection dialog
+            tipHealthInput.apply {
+
+            }
+            btnBack.onClick {
+
             }
         }
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
+        observe(viewModel.liveHealthStatuses()) { healthStatusResponse ->
+            if (healthStatusResponse == null) return@observe
 
+        }
     }
 
     private fun showDatePicker() {
@@ -58,6 +79,11 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             .setCancelColor(getColor(R.color.rcp_grey_100))
             .build()
             .show()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun PowerSpinnerView.setInputBg() {
+        bg = getDrawable(R.drawable.bg_app_input)
     }
 
     companion object {
