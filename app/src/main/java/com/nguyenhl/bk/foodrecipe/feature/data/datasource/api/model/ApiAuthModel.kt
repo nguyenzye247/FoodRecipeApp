@@ -1,10 +1,10 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model
 
-data class AuthenticationModel(
-    val data: AuthenticationData,
+data class ApiAuthModel(
+    val data: ApiAuthData,
     val status: Boolean
 )
 
-data class AuthenticationData(
+data class ApiAuthData(
     val value: String,
 )

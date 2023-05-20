@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.core.extension.ifNotEmpty
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.AuthenticationModel
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthModel
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.LoginResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.UserInfoResponse
@@ -24,8 +24,8 @@ class LoginViewModel constructor(
     private val userInfoRepository: UserInfoRepository
 ) : BaseViewModel(input) {
 
-    private val _loginStatus: MutableLiveData<AuthenticationModel?> = MutableLiveData()
-    fun liveLoginStatus(): LiveData<AuthenticationModel?> = _loginStatus
+    private val _loginStatus: MutableLiveData<ApiAuthModel?> = MutableLiveData()
+    fun liveLoginStatus(): LiveData<ApiAuthModel?> = _loginStatus
 
     private val _isValidUserInfo: MutableLiveData<Boolean> = MutableLiveData()
     fun liveIsValidUserInfo(): LiveData<Boolean> = _isValidUserInfo

@@ -2,7 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo
 
 import com.google.gson.annotations.SerializedName
 
-data class UserInfo(
+data class ApiUserInfo(
     @SerializedName("_id")
     val id: String,
     @SerializedName("name")
@@ -16,7 +16,7 @@ data class UserInfo(
     @SerializedName("weight")
     val weight: Float,
     @SerializedName("likeDishes")
-    val preferredDishes: List<PreferredDish>,
+    val preferredDishes: List<ApiPreferredDish>,
     @SerializedName("healthcare")
-    val healthStatus: UserHealthStatus
+    val healthStatus: ApiUserHealthStatus
 )

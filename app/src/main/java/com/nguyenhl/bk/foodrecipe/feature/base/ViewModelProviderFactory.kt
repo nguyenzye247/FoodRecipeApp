@@ -27,7 +27,10 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> {
-                return SplashViewModel(input as BaseInput.NoInput) as T
+                return SplashViewModel(
+                    input as BaseInput.NoInput,
+                    healthStatusRepository
+                ) as T
             }
 
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {

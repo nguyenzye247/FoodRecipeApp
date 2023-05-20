@@ -14,8 +14,8 @@
         android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -23,9 +23,9 @@
         android:theme="@style/Theme.FoodRecipe"
         tools:targetApi="tiramisu">
 
-        <!--            android:name=".feature.ui.splash.SplashActivity"-->
+
         <activity
-            android:name=".feature.presentation.authentication.register.RegisterActivity"
+            android:name=".feature.presentation.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,9 +54,9 @@
             android:name=".feature.presentation.authentication.login.LoginActivity"
             android:screenOrientation="portrait" />
 
-<!--        <activity-->
-<!--            android:name=".feature.presentation.authentication.register.ActivityRegister"-->
-<!--            android:screenOrientation="portrait" />-->
+        <activity
+            android:name=".feature.presentation.authentication.register.RegisterActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".feature.presentation.dishprefered.ActivityDishPreferred"

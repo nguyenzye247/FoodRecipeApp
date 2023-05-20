@@ -1,12 +1,10 @@
-package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model
+package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo
 
 import com.google.gson.annotations.SerializedName
 
-data class HealthStatus(
+data class ApiUserHealthStatus(
     @SerializedName("_id")
     val id: String,
-    @SerializedName("_id_health_care")
-    val idHealthStatus: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("key")

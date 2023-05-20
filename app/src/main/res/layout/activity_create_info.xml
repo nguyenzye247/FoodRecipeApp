@@ -295,13 +295,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_health_input"
                     style="@style/ETInputStyle"
+                    android:textSize="@dimen/text_size_14sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:cursorVisible="false"
                     android:focusable="false"
-                    android:gravity="center_vertical"
-                    android:hint="@string/your_current_weight"
+                    android:gravity="center"
+                    android:text="@string/none"
                     android:paddingTop="@dimen/dimen_4dp"
                     android:paddingBottom="@dimen/dimen_4dp" />
             </com.google.android.material.textfield.TextInputLayout>

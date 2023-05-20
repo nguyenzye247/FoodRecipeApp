@@ -32,4 +32,8 @@
     <string name="weight">Weight</string>
     <string name="your_current_weight">Your current weight</string>
     <string name="health_status">Health status</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
+    <string name="your_health_status">Your health status</string>
+    <string name="none">None</string>
 </resources>

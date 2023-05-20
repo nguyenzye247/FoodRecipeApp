@@ -41,3 +41,9 @@ fun ImageView.loadImage(url: String?) {
         .load(url)
         .into(this)
 }
+
+fun ImageView.loadImage(@DrawableRes resourceId: Int?) {
+    Glide.with(this)
+        .load(resourceId)
+        .into(this)
+}

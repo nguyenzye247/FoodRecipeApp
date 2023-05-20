@@ -17,5 +17,6 @@ val databaseModule = module {
     }
 
     single { get<RecipeDatabase>().userDao() }
+    single { get<RecipeDatabase>().healthStatusDao() }
     //TODO: add mode dao
 }
