@@ -2,10 +2,10 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login
 
 import android.content.Context
 import android.content.Intent
-import com.nguyenhl.bk.foodrecipe.core.extension.*
-import com.nguyenhl.bk.foodrecipe.core.extension.checkEmail
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
@@ -15,6 +15,8 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
+import com.nguyenhl.bk.foodrecipe.feature.util.checkEmail
+import com.nguyenhl.bk.foodrecipe.feature.util.checkPassword
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

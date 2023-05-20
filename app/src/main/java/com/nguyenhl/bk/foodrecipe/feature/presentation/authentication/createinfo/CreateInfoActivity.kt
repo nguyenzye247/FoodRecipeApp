@@ -3,14 +3,12 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinf
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder
-import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
+import com.bigkoo.pickerview.view.TimePickerView
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.txtString
 import com.nguyenhl.bk.foodrecipe.core.extension.start
@@ -21,17 +19,18 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
+import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
 import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
+import com.nguyenhl.bk.foodrecipe.feature.util.DialogUtil
 import com.skydoves.powerspinner.OnSpinnerDismissListener
 import com.skydoves.powerspinner.PowerSpinnerView
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
-    private var healthStatusPicker: OptionsPickerView<String>? = null
-    private val healthStatuses: ArrayList<String> = arrayListOf()
+    private var datePicker: TimePickerView? = null
+    private var healthStatusPicker: OptionsPickerView<HealthStatusDto>? = null
+    private val healthStatuses: ArrayList<HealthStatusDto> = arrayListOf()
 
     override fun getLazyBinding() = lazy { ActivityCreateInfoBinding.inflate(layoutInflater) }
 
@@ -46,6 +45,9 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun initListener() {
         binding.apply {
+            btnContinue.onClick {
+
+            }
             etDobInput.onClick {
                 showDatePicker()
             }
@@ -70,62 +72,64 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 val healthStatuses = viewModel.getAllDbHealthStatuses()
-                withContext(Dispatchers.Main) {
-                    loadHealthStatusesToUI(healthStatuses)
-                }
+                loadHealthStatusesToUI(healthStatuses)
             }
         }
     }
 
     private fun loadHealthStatusesToUI(healthStatuses: ArrayList<HealthStatus>) {
         this.healthStatuses.clear()
-        this.healthStatuses.add(txtString(R.string.none))
-        this.healthStatuses.addAll(healthStatuses.map { it.name })
+        this.healthStatuses.add(HealthStatusDto("", txtString(R.string.none)))
+        this.healthStatuses.addAll(healthStatuses.map {
+            HealthStatusDto(
+                it.idHealthStatus,
+                it.name
+            )
+        })
     }
 
     private fun showDatePicker() {
-
         //DatePicker
-        TimePickerBuilder(this) { date, v -> //Callback
+        datePicker = DialogUtil.buildDatePicker(
+            this@CreateInfoActivity,
+            onApply = {
+                datePicker?.returnData()
+                datePicker?.dismiss()
+            },
+            onCancel = {
+                datePicker?.dismiss()
+            }
+        ) { date ->
             val dateText = DateFormatUtil.formatSimpleDate(date)
             binding.etDobInput.setText(dateText)
         }
-            .setSubCalSize(16)
-            .isDialog(true)
-            .setTitleBgColor(getColor(R.color.white))
-            .setSubmitColor(getColor(R.color.rcp_blue_200))
-            .setCancelColor(getColor(R.color.rcp_grey_100))
-            .build()
-            .show()
+        datePicker?.show()
     }
 
     private fun showHealthStatusPicker() {
-        healthStatusPicker =
-            OptionsPickerBuilder(this@CreateInfoActivity) { oldIndex, oldItem, newIndex, newText ->
-                if (healthStatuses.size > newIndex) {
-                    setHeathStatusView(healthStatuses[oldIndex])
-                }
-            }.apply {
-                setLayoutRes(R.layout.dialog_health_status_picker) { parentView ->
-                    val btnApply: TextView = parentView.findViewById(R.id.btn_apply)
-                    val btnCancel: TextView = parentView.findViewById(R.id.btn_cancel)
-                    btnApply.onClick {
-                        healthStatusPicker?.returnData()
-                        healthStatusPicker?.dismiss()
-                    }
-                    btnCancel.onClick {
-                        healthStatusPicker?.dismiss()
-                    }
-                }
-                isDialog(true)
-                setSelectOptions(0)
-                setContentTextSize(16)
-                isRestoreItem(true)
-                setOutSideCancelable(false)
-            }.build()
+        healthStatusPicker = DialogUtil.buildHealthStatusPicker(
+            this@CreateInfoActivity,
+            onApply = {
+                healthStatusPicker?.returnData()
+                healthStatusPicker?.dismiss()
+            },
+            onCancel = {
+                healthStatusPicker?.dismiss()
+            }
+        ) { index ->
+            if (healthStatuses.size > index) {
+                setHeathStatusView(healthStatuses[index].name)
+            }
+        }
         healthStatusPicker?.apply {
             setPicker(healthStatuses)
         }?.show()
+    }
+
+    private fun validateInputs(
+        onValid: (email: String, password: String) -> Unit
+    ) {
+
     }
 
     private fun setHeathStatusView(healthStatusName: String) {
