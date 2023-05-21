@@ -49,7 +49,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             etHealthInput.setText(HealthStatusDto.noneHealthStatus.name)
             tipGenderInput.apply {
                 setSpinnerAdapter(IconSpinnerAdapter(this))
-                setItems(genders.map { IconSpinnerItem(it.titlegit ) })
+                setItems(genders.map { IconSpinnerItem(it.title) })
                 lifecycleOwner = this@CreateInfoActivity
             }
         }
