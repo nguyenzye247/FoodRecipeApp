@@ -2,7 +2,9 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo.UserInfoPostBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo.UserInfoPutBody
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.UserInfoResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.UserInfoGetResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.UserInfoPostResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.UserInfoPutResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -18,15 +20,15 @@ interface UserInfoService {
     @POST(USER_INFO_GET_EP)
     suspend fun getUserInfo(
         @Header("Authorization") token: String
-    ): ApiResponse<UserInfoResponse>
+    ): ApiResponse<UserInfoGetResponse>
 
     @POST(USER_INFO_PUT_EP)
     suspend fun updateUserInfo(
         @Body userInfoBody: UserInfoPutBody
-    ): ApiResponse<UserInfoResponse>
+    ): ApiResponse<UserInfoPutResponse>
 
     @POST(USER_INFO_POST_EP)
     suspend fun createUserInfo(
         @Body userInfoBody: UserInfoPostBody
-    ): ApiResponse<UserInfoResponse>
+    ): ApiResponse<UserInfoPostResponse>
 }

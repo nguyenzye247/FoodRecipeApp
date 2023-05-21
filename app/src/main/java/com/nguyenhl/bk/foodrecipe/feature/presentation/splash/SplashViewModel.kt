@@ -25,7 +25,7 @@ class SplashViewModel constructor(
         getAllHealthStatuses()
     }
 
-    fun getAllHealthStatuses() {
+    private fun getAllHealthStatuses() {
         viewModelScope.launch {
             healthStatusRepository.getApiAllHealthStatus().collectLatest { response ->
                 when (response) {
@@ -34,13 +34,9 @@ class SplashViewModel constructor(
                         closeDelaySplash()
                     }
 
-                    is ErrorResponse -> {
+                    else -> {
                         timeFinish = 4000
                         closeDelaySplash()
-                    }
-
-                    else -> {
-
                     }
                 }
             }

@@ -5,6 +5,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.RegisterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RegisterRetrofitService
 import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -27,6 +28,9 @@ class RegisterRepository constructor(
             }
             .suspendOnError(RegisterResponseMapper) {
                 emit(this)
+            }
+            .suspendOnException {
+                emit(null)
             }
     }.flowOn(Dispatchers.IO)
 }

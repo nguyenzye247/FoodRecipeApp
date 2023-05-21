@@ -1,8 +1,8 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response
 
 import com.google.gson.annotations.SerializedName
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthData
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthModel
+import com.nguyenhl.bk.foodrecipe.feature.dto.CommonResponseData
+import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 
 data class ErrorResponse(
     @SerializedName("message")
@@ -15,9 +15,9 @@ data class ErrorResponse(
     }
 }
 
-internal fun ErrorResponse.toAuthenticationModel(): ApiAuthModel =
-    ApiAuthModel(
-        ApiAuthData(message),
+internal fun ErrorResponse.toApiCommonResponse(): ApiCommonResponse =
+    ApiCommonResponse(
+        CommonResponseData(message),
         status
     )
 

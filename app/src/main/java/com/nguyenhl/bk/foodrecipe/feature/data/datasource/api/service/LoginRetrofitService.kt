@@ -2,7 +2,6 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.LoginBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.LoginResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.UserInfoResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.POST

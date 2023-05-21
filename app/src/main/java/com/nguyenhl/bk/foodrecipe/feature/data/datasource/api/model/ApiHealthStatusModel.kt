@@ -3,7 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model
 import com.google.gson.annotations.SerializedName
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
 
-data class ApiHealthStatus(
+data class  ApiHealthStatus(
     @SerializedName("_id")
     val id: String,
     @SerializedName("id_health_care")

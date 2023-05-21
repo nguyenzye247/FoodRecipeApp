@@ -62,7 +62,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     override fun initObservers() {
         observe(viewModel.liveLoginStatus()) { loginStatus ->
             viewModel.setLoading(false)
-            if (loginStatus == null) return@observe
+            if (loginStatus == null) {
+                return@observe
+            }
             val status = loginStatus.status
 
             if (status) {

@@ -4,7 +4,9 @@ import androidx.annotation.WorkerThread
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.LoginBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.LoginErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.LoginRetrofitService
+import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -26,6 +28,9 @@ class LoginRepository constructor(
             }
             .suspendOnError(LoginErrorResponseMapper) {
                 emit(this)
+            }
+            .suspendOnException {
+                emit(null)
             }
 
     }.flowOn(Dispatchers.IO)

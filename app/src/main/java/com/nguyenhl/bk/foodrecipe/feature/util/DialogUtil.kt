@@ -11,6 +11,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import java.util.*
 
 object DialogUtil {
+    private const val isOutSideCancelable = true
 
     fun <T> buildHealthStatusPicker(
         context: Context,
@@ -35,7 +36,7 @@ object DialogUtil {
             setSelectOptions(0)
             setContentTextSize(16)
             isRestoreItem(true)
-            setOutSideCancelable(false)
+            setOutSideCancelable(isOutSideCancelable)
         }.build()
     }
 
@@ -60,7 +61,7 @@ object DialogUtil {
             }
             isDialog(true)
             setContentTextSize(16)
-            setOutSideCancelable(false)
+            setOutSideCancelable(isOutSideCancelable)
         }
             .setContentTextSize(16)
             .isDialog(true)

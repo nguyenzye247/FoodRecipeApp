@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include
         android:id="@+id/iv_ornament"
@@ -172,7 +173,6 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_gender_title"
                     app:spinner_arrow_animate="true"
                     app:spinner_arrow_tint="@color/rcp_grey_100"
-                    app:spinner_item_array="@array/gender_array"
                     app:spinner_popup_animation="bounce" />
 
                 <!--                <com.google.android.material.textfield.TextInputLayout-->
@@ -323,5 +323,18 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

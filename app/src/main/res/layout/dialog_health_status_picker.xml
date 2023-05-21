@@ -10,27 +10,28 @@
         android:background="@drawable/bg_app_dialog"
         android:elevation="@dimen/dimen_8dp">
 
-        <TextView
-            android:id="@+id/tv_health_status_title"
-            style="@style/TextDialogTitleStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:maxLines="1"
-            android:text="@string/health_status"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@id/optionspicker"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_health_status_title"-->
+<!--            style="@style/TextDialogTitleStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/dimen_10dp"-->
+<!--            android:maxLines="1"-->
+<!--            android:text="@string/health_status"-->
+<!--            app:layout_constrainedWidth="true"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/optionspicker"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_chainStyle="packed" />-->
 
         <LinearLayout
             android:id="@+id/optionspicker"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_12dp"
-            android:layout_marginVertical="@dimen/dimen_10dp"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:paddingVertical="@dimen/dimen_10dp"
             android:background="@android:color/white"
             android:gravity="center"
             android:minHeight="150dp"
@@ -38,7 +39,7 @@
             app:layout_constraintBottom_toTopOf="@id/btn_apply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_health_status_title">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.contrarywind.view.WheelView
                 android:id="@+id/options1"
@@ -65,12 +66,11 @@
             style="@style/DialogYesButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dimen_10dp"
-            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:layout_marginBottom="@dimen/dimen_10dp"
+            app:layout_constraintStart_toStartOf="parent"
             android:text="@string/apply"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintTop_toBottomOf="@id/optionspicker" />
 
@@ -80,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_12dp"
+            android:visibility="gone"
             android:text="@string/cancel"
             app:layout_constraintBottom_toBottomOf="@id/btn_apply"
             app:layout_constraintEnd_toStartOf="@id/btn_apply"

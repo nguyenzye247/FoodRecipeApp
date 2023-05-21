@@ -1,8 +1,8 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response
 
 import com.google.gson.annotations.SerializedName
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthData
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthModel
+import com.nguyenhl.bk.foodrecipe.feature.dto.CommonResponseData
+import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 
 data class RegisterResponse(
     @SerializedName("message")
@@ -11,8 +11,8 @@ data class RegisterResponse(
     val status: Boolean
 )
 
-internal fun RegisterResponse.toAuthenticationModel(): ApiAuthModel =
-    ApiAuthModel(
-        ApiAuthData(message),
+internal fun RegisterResponse.toApiCommonResponse(): ApiCommonResponse =
+    ApiCommonResponse(
+        CommonResponseData(message),
         status
     )

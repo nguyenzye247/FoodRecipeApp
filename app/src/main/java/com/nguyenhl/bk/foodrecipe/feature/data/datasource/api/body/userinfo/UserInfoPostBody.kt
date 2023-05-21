@@ -3,8 +3,6 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo
 import com.google.gson.annotations.SerializedName
 
 data class UserInfoPostBody(
-    @SerializedName("_id")
-    val id: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("dateOfBirth")

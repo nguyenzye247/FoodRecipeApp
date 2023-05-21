@@ -7,4 +7,8 @@ data class HealthStatusDto(
     override fun toString(): String {
         return name
     }
+
+    companion object {
+        val noneHealthStatus: HealthStatusDto = HealthStatusDto("", "None")
+    }
 }

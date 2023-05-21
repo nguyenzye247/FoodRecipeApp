@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api
 
 import android.app.Application
+import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.skydoves.sandwich.ApiResponse
@@ -46,6 +47,6 @@ class GlobalResponseOperator<T> constructor(
     }
 
     private fun toast(message: String) {
-        application.toast(message)
+        application.longToast(message)
     }
 }

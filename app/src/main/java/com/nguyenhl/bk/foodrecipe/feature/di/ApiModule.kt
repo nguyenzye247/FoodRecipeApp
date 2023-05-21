@@ -15,7 +15,7 @@ val apiModule = module {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor(RequestInterceptor())
-            .callTimeout(5, TimeUnit.SECONDS)
+            .callTimeout(7, TimeUnit.SECONDS)
 //            .addInterceptor(
             .build()
     }
@@ -24,7 +24,7 @@ val apiModule = module {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
             .baseUrl(
-                "https://recipe-app-api.herokuapp.com/"
+                "https://recipe-app-api.herokuapp.com"
             )
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())

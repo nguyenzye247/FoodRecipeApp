@@ -6,6 +6,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.HealthStat
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.HealthStatusDao
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
 import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -24,6 +25,9 @@ class HealthStatusRepository constructor(
             }
             .suspendOnError(HealthStatusErrorResponseMapper) {
                 emit(this)
+            }
+            .suspendOnException {
+                emit(null)
             }
     }.flowOn(Dispatchers.IO)
 

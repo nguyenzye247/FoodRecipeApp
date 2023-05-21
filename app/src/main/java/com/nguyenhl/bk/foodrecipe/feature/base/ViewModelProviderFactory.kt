@@ -67,6 +67,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(CreateInfoViewModel::class.java) -> {
                 return CreateInfoViewModel(
                     input as BaseInput.CreateInfoInput,
+                    userInfoRepository,
                     healthStatusRepository
                 ) as T
             }

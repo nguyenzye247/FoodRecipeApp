@@ -10,6 +10,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryD
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryDetailDao
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
 import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -30,6 +31,9 @@ class CategoryRepository constructor(
             }
             .suspendOnError(CategoryErrorResponseMapper) {
                 emit(this)
+            }
+            .suspendOnException {
+                emit(null)
             }
     }.flowOn(Dispatchers.IO)
 

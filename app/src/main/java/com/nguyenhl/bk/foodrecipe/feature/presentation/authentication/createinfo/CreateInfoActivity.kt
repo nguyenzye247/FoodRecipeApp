@@ -10,18 +10,21 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.bigkoo.pickerview.view.TimePickerView
 import com.nguyenhl.bk.foodrecipe.R
-import com.nguyenhl.bk.foodrecipe.core.extension.resources.txtString
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.start
-import com.nguyenhl.bk.foodrecipe.core.extension.views.bg
-import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
+import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
 import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
-import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
-import com.nguyenhl.bk.foodrecipe.feature.util.DialogUtil
+import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.Gender
+import com.nguyenhl.bk.foodrecipe.feature.util.*
+import com.skydoves.powerspinner.IconSpinnerAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
 import com.skydoves.powerspinner.OnSpinnerDismissListener
 import com.skydoves.powerspinner.PowerSpinnerView
 import kotlinx.coroutines.launch
@@ -30,7 +33,9 @@ import kotlinx.coroutines.launch
 class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
     private var datePicker: TimePickerView? = null
     private var healthStatusPicker: OptionsPickerView<HealthStatusDto>? = null
+
     private val healthStatuses: ArrayList<HealthStatusDto> = arrayListOf()
+    private val genders = enumValues<Gender>()
 
     override fun getLazyBinding() = lazy { ActivityCreateInfoBinding.inflate(layoutInflater) }
 
@@ -40,13 +45,24 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
 
     override fun initViews() {
         adjustScreenSize(binding.btnBack)
+        binding.apply {
+            etHealthInput.setText(HealthStatusDto.noneHealthStatus.name)
+            tipGenderInput.apply {
+                setSpinnerAdapter(IconSpinnerAdapter(this))
+                setItems(genders.map { IconSpinnerItem(it.titlegit ) })
+                lifecycleOwner = this@CreateInfoActivity
+            }
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun initListener() {
         binding.apply {
             btnContinue.onClick {
-
+                viewModel.setLoading(true)
+                validateInputs { userInfoDto ->
+                    viewModel
+                }
             }
             etDobInput.onClick {
                 showDatePicker()
@@ -68,6 +84,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         }
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -75,11 +92,14 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 loadHealthStatusesToUI(healthStatuses)
             }
         }
+        observe(viewModel.liveIsLoading()) {
+            binding.loading.progressBar.setVisible(it ?: false)
+        }
     }
 
     private fun loadHealthStatusesToUI(healthStatuses: ArrayList<HealthStatus>) {
         this.healthStatuses.clear()
-        this.healthStatuses.add(HealthStatusDto("", txtString(R.string.none)))
+        this.healthStatuses.add(HealthStatusDto.noneHealthStatus)
         this.healthStatuses.addAll(healthStatuses.map {
             HealthStatusDto(
                 it.idHealthStatus,
@@ -127,9 +147,60 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     }
 
     private fun validateInputs(
-        onValid: (email: String, password: String) -> Unit
+        onValid: (userInfo: UserInfoDto) -> Unit
     ) {
+        var isValid = true
+        binding.apply {
+            val nameInput = etNameInput.textString
+            val dobInput = etDobInput.textString
+            val genderInput = genders[tipGenderInput.selectedIndex].title
+            val heightInput = etHeightInput.textString
+            val weightInput = etWeightInput.textString
+            val healthStatusInput = viewModel.selectedHealthStatus.name
 
+            nameInput.checkEmpty { errorMessage ->
+                isValid = false
+                etNameInput.setError(true)
+                tipNameInput.setError(true, errorMessage)
+            }
+            dobInput.checkDate { errorMessage ->
+                isValid = false
+                etDobInput.setError(true)
+                tipDobInput.setError(true, errorMessage)
+            }
+            heightInput.checkNumber { errorMessage ->
+                isValid = false
+                etHeightInput.setError(true)
+                tipHealthInput.setError(true, errorMessage)
+            }
+            weightInput.checkNumber { errorMessage ->
+                isValid = false
+                etWeightInput.setError(true)
+                tipWeightInput.setError(true, errorMessage)
+            }
+            if (isValid) {
+                setAllInputValid()
+                onValid(
+                    UserInfoDto(
+                        nameInput,
+                        dobInput,
+                        genders[tipGenderInput.selectedIndex].value,
+                        heightInput.toFloat(),
+                        weightInput.toFloat(),
+                        viewModel.selectedHealthStatus.idHealthStatus
+                    )
+                )
+            }
+        }
+    }
+
+    private fun setAllInputValid() {
+        binding.apply {
+            tipNameInput.setError(false, null)
+            tipDobInput.setError(false, null)
+            tipHealthInput.setError(false, null)
+            tipWeightInput.setError(false, null)
+        }
     }
 
     private fun setHeathStatusView(healthStatusName: String) {
