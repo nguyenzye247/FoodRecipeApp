@@ -59,7 +59,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.presentation.dishprefered.ActivityDishPreferred"
+            android:name=".feature.presentation.dishprefered.DishPreferredActivity"
             android:screenOrientation="portrait" />
 
         <activity

@@ -22,8 +22,8 @@ class CreateInfoViewModel constructor(
     private val userInfoRepository: UserInfoRepository,
     private val healthStatusRepository: HealthStatusRepository
 ) : BaseViewModel(input) {
-    private val _createInfoStatus: MutableLiveData<ApiCommonResponse> = MutableLiveData()
-    fun liveCreateInfoStatus(): LiveData<ApiCommonResponse> = _createInfoStatus
+    private val _createInfoStatus: MutableLiveData<ApiCommonResponse?> = MutableLiveData()
+    fun liveCreateInfoStatus(): LiveData<ApiCommonResponse?> = _createInfoStatus
 
     var selectedHealthStatus: HealthStatusDto = HealthStatusDto.noneHealthStatus
 

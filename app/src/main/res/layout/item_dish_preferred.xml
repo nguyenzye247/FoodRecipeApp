@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="@dimen/dimen_3dp"
-    android:layout_marginVertical="@dimen/dimen_3dp">
+    android:layout_margin="@dimen/dimen_5dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_0dp"
+        android:layout_gravity="center"
         android:background="@drawable/bg_item_dish_preferred"
         android:orientation="vertical"
+        android:padding="@dimen/dimen_2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,24 +22,52 @@
 
         <ImageView
             android:id="@+id/iv_dish_preferred"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_0dp"
+            android:layout_margin="@dimen/dimen_2dp"
             android:contentDescription="@null"
-            android:scaleType="center"
+            android:padding="@dimen/dimen_12dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@id/tv_dish_preferred"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tool:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tv_dish_preferred"
             style="@style/TextRegularStyle"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.2"
+            android:layout_marginVertical="@dimen/dimen_4dp"
             android:gravity="center"
-            android:textSize="@dimen/text_size_20sp"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_dish_preferred"
+            app:layout_constraintVertical_chainStyle="packed"
             tool:text="Taco" />
 
-    </LinearLayout>
+        <FrameLayout
+            android:id="@+id/fl_selected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@drawable/bg_cover_view"
+            tool:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_check"
+                app:tint="@color/white" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
