@@ -1,11 +1,19 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.splash
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.activity.viewModels
-import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.asLiveData
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.databinding.ActivitySplashBinding
+import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
+import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
+import kotlinx.coroutines.Dispatchers
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
@@ -16,15 +24,40 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         ViewModelProviderFactory(BaseInput.NoInput)
     }
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+        super.onCreate(savedInstanceState)
 
+        if (AppUtil.isAndroid_TIRAMISU_AndAbove()) {
+            // Keep the splash screen visible for this Activity
+            splashScreen.setKeepOnScreenCondition { true }
+        }
+    }
+
+    override fun initViews() {
+        hideStatusAndNavigationBar()
+        binding.apply {
+            // TODO: load app logo drawable
+//            ivAppLogo.loadImage()
+        }
     }
 
     override fun initListener() {
 
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
+        observe(viewModel.isFinish.asLiveData(Dispatchers.Main)) { isFinish ->
+            isFinish ?: return@observe
+            if (!isFinish) return@observe
+            goToLogin()
+        }
+    }
 
+    private fun goToLogin() {
+        LoginActivity.startActivity(this) {
+            // put stuffs
+        }
     }
 }

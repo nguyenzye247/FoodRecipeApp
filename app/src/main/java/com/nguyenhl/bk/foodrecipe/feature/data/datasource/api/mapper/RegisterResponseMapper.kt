@@ -23,5 +23,17 @@ abstract class BaseApiErrorModelMapper(
 
 }
 
-object ErrorResponseMapper : BaseApiErrorModelMapper("Error: Email is already existed")
-object LoginErrorResponseMapper : BaseApiErrorModelMapper("Error: Wrong email or password")
+object RegisterResponseMapper :
+    BaseApiErrorModelMapper("Error: Email is already existed")
+object LoginErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Wrong email or password")
+object HealthStatusErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Can not retrieve health status data")
+object CategoryErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Can not retrieve category data")
+object CreateUserInfoErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to create user information")
+object UpdateUserInfoErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to update user information")
+object GetUserInfoErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get user information")

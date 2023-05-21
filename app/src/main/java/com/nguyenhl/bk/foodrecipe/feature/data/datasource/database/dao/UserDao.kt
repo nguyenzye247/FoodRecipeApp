@@ -7,5 +7,5 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
 @Dao
 interface UserDao {
     @Insert
-    fun insertUser(user: User)
+    suspend fun insertUser(user: User)
 }

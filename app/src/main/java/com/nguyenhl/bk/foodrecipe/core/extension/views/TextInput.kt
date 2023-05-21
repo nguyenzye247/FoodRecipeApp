@@ -22,3 +22,6 @@ fun TextInputEditText.setError(isError: Boolean) {
         this.getColor(R.color.black)
     this.setTextColor(textColor)
 }
+
+inline val TextInputEditText.textString: String
+    get() = text.toString()

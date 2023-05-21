@@ -2,18 +2,21 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login
 
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.*
-import com.nguyenhl.bk.foodrecipe.core.extension.*
-import com.nguyenhl.bk.foodrecipe.core.extension.checkEmail
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityLoginBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
+import com.nguyenhl.bk.foodrecipe.feature.util.checkEmail
+import com.nguyenhl.bk.foodrecipe.feature.util.checkPassword
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -29,7 +32,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     override fun initViews() {
-
+        viewModel.doOnUserLoggedIn {
+            goToCreateUserInfo()
+            finish()
+        }
     }
 
     override fun initListener() {
@@ -56,16 +62,32 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     override fun initObservers() {
         observe(viewModel.liveLoginStatus()) { loginStatus ->
             viewModel.setLoading(false)
-            if (loginStatus == null) return@observe
+            if (loginStatus == null) {
+                return@observe
+            }
             val status = loginStatus.status
 
             if (status) {
-                // TODO: implement check info api
+                toast("Login success")
+                viewModel.checkForUserInfo {
+                    // empty token
+                    toast("Error on login, please try again")
+                }
                 return@observe
             }
         }
-        observe(viewModel.liveIsLoading().distinctUntilChanged()) {
+        observe(viewModel.liveIsLoading()) {
             binding.loading.progressBar.setVisible(it ?: false)
+        }
+        observe(viewModel.liveIsValidUserInfo()) { isValid ->
+            isValid?.let {
+                if (isValid) {
+                    goToMain()
+                } else {
+                    goToCreateUserInfo()
+                }
+                finish()
+            }
         }
     }
 
@@ -77,7 +99,21 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     private fun goToForgotPassword() {
 
-    }private fun validateInputs(
+    }
+
+    private fun goToCreateUserInfo() {
+        CreateInfoActivity.startActivity(this) {
+            // put stuffs
+        }
+    }
+
+    private fun goToMain() {
+        MainActivity.startActivity(this) {
+            // put stuffs
+        }
+    }
+
+    private fun validateInputs(
         onValid: (email: String, password: String) -> Unit
     ) {
         var isValid = true

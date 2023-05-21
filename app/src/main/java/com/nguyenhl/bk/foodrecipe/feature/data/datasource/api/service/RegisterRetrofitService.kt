@@ -8,10 +8,10 @@ import retrofit2.http.POST
 
 interface RegisterRetrofitService {
     companion object {
-        const val REGISTER_EP = "user/register"
+        const val REGISTER_POST_EP = "user/register"
     }
 
-    @POST(REGISTER_EP)
+    @POST(REGISTER_POST_EP)
     suspend fun registerNewAccount(
         @Body registerBody: RegisterBody
     ): ApiResponse<RegisterResponse>

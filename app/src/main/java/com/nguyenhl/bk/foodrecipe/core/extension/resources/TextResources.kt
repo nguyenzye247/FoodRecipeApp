@@ -12,5 +12,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 inline fun Context.txt(@StringRes stringResId: Int): CharSequence = resources.getText(stringResId)
+inline fun Context.txtString(@StringRes stringResId: Int): String = resources.getText(stringResId).toString()
 inline fun Fragment.txt(@StringRes stringResId: Int) = context!!.txt(stringResId)
 inline fun View.txt(@StringRes stringResId: Int) = context.txt(stringResId)

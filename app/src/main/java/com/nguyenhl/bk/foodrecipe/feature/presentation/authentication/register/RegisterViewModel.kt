@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.AuthenticationModel
+import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.RegisterResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.toAuthenticationModel
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.toApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.RegisterRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -17,8 +17,8 @@ class RegisterViewModel constructor(
     val input: BaseInput.RegisterInput,
     private val registerRepository: RegisterRepository
 ) : BaseViewModel(input) {
-    private val _registerStatus: MutableLiveData<AuthenticationModel?> = MutableLiveData()
-    fun liveRegisterStatus(): LiveData<AuthenticationModel?> = _registerStatus
+    private val _registerStatus: MutableLiveData<ApiCommonResponse?> = MutableLiveData()
+    fun liveRegisterStatus(): LiveData<ApiCommonResponse?> = _registerStatus
 
     fun registerNewAccount(
         email: String,
@@ -30,11 +30,11 @@ class RegisterViewModel constructor(
                 .collectLatest {
                     when (it) {
                         is RegisterResponse -> {
-                            _registerStatus.postValue(it.toAuthenticationModel())
+                            _registerStatus.postValue(it.toApiCommonResponse())
                         }
 
                         is ErrorResponse -> {
-                            _registerStatus.postValue(it.toAuthenticationModel())
+                            _registerStatus.postValue(it.toApiCommonResponse())
                         }
 
                         else -> {

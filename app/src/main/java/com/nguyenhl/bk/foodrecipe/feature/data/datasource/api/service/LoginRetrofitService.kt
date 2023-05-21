@@ -8,10 +8,10 @@ import retrofit2.http.POST
 
 interface LoginRetrofitService {
     companion object {
-        const val LOGIN_EP = "user/login"
+        const val LOGIN_POST_EP = "user/login"
     }
 
-    @POST(LOGIN_EP)
+    @POST(LOGIN_POST_EP)
     suspend fun loginToAccount(
         @Body loginBody: LoginBody
     ): ApiResponse<LoginResponse>

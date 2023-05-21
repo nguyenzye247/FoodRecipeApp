@@ -12,6 +12,8 @@ object SessionManager {
 
     fun fetchToken(pContext: Context) = pContext.getBaseConfig().token
 
+    fun isTokenSaved(pContext: Context) = fetchToken(pContext).isNotEmpty()
+
     fun clearData(pContext: Context) {
         pContext.getBaseConfig().token = EMPTY_TEXT
     }
