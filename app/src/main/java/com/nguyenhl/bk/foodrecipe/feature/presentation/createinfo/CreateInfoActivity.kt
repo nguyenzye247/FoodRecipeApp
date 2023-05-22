@@ -3,7 +3,6 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,12 +15,10 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
-import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
-import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
@@ -35,6 +32,8 @@ import com.skydoves.powerspinner.IconSpinnerItem
 import com.skydoves.powerspinner.OnSpinnerDismissListener
 import com.skydoves.powerspinner.PowerSpinnerView
 import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
@@ -49,8 +48,8 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
 
     override fun getLazyBinding() = lazy { ActivityCreateInfoBinding.inflate(layoutInflater) }
 
-    override fun getLazyViewModel() = viewModels<CreateInfoViewModel> {
-        ViewModelProviderFactory(BaseInput.CreateInfoInput(application))
+    override fun getLazyViewModel() = viewModel<CreateInfoViewModel> {
+        parametersOf(BaseInput.CreateInfoInput(application))
     }
 
     override fun initViews() {

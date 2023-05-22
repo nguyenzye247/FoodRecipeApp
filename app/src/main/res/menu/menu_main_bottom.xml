@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/menu_home_selector"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/menu_ingredient"
+        android:icon="@drawable/menu_ingredient_selector"
+        android:title="@string/ingredients" />
+    <item
+        android:id="@+id/menu_place_holder"
+        android:enabled="false"
+        android:title="" />
+    <item
+        android:id="@+id/menu_calendar"
+        android:icon="@drawable/menu_calendar_selector"
+        android:title="@string/calendar" />
+    <item
+        android:id="@+id/menu_user_profile"
+        android:icon="@drawable/menu_profile_selector"
+        android:title="@string/profile" />
+
+</menu>

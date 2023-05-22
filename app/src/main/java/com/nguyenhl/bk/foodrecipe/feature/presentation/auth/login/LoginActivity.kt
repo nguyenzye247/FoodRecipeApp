@@ -36,8 +36,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun initViews() {
         viewModel.doOnUserLoggedIn {
-            goToDishPreferred()
-            finish()
+            viewModel.checkForUserInfo()
         }
     }
 
@@ -84,11 +83,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             val status = loginStatus.status
 
             if (status) {
+                // Check user info if user is logged in
                 longToast("Login success")
-                viewModel.checkForUserInfo {
-                    // empty token
-                    toast("Error on login, please try again")
-                }
+                viewModel.checkForUserInfo()
                 return@observe
             }
         }

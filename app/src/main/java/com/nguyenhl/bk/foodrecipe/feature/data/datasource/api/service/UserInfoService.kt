@@ -7,8 +7,10 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.UserInfoPutResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface UserInfoService {
     companion object {
@@ -17,12 +19,12 @@ interface UserInfoService {
         const val USER_INFO_POST_EP = "info/create"
     }
 
-    @POST(USER_INFO_GET_EP)
+    @GET(USER_INFO_GET_EP)
     suspend fun getUserInfo(
         @Header("Authorization") token: String
     ): ApiResponse<UserInfoGetResponse>
 
-    @POST(USER_INFO_PUT_EP)
+    @PUT(USER_INFO_PUT_EP)
     suspend fun updateUserInfo(
         @Header("Authorization") token: String,
         @Body userInfoBody: UserInfoPutBody

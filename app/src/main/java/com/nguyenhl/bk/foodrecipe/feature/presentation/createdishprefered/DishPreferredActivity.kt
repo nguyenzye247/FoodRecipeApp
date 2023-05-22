@@ -2,7 +2,6 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
@@ -16,24 +15,25 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.show
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityDishPreferredBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
-import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.helper.GridLayoutManagerWithSmoothScroller
-import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.items.DishPreferredAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoActivity
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPreferredViewModel>() {
     private val selectedDishes: ArrayList<DishPreferredDto> = arrayListOf()
 
     override fun getLazyBinding() = lazy { ActivityDishPreferredBinding.inflate(layoutInflater) }
 
-    override fun getLazyViewModel() = viewModels<DishPreferredViewModel> {
-        ViewModelProviderFactory(BaseInput.DishPreferredInput(application))
+    override fun getLazyViewModel() = viewModel<DishPreferredViewModel> {
+        parametersOf(BaseInput.DishPreferredInput(application))
     }
 
     override fun initViews() {
         binding.apply {
-            rvDishPreferred.addOnScrollListener( object: OnScrollListener() {
+            rvDishPreferred.addOnScrollListener(object : OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!viewModel.hasDishSelectedValue()) return

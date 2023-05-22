@@ -30,8 +30,9 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
         when {
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> {
                 return SplashViewModel(
-                    input as BaseInput.NoInput,
-                    healthStatusRepository
+                    input as BaseInput.SplashInput,
+                    healthStatusRepository,
+                    userInfoRepository
                 ) as T
             }
 

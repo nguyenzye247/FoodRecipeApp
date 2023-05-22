@@ -37,4 +37,9 @@
     <string name="your_health_status">Your health status</string>
     <string name="none">None</string>
     <string name="send_to_email">Send to email</string>
+    <string name="home">Home</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="calendar">Calendar</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
 </resources>
