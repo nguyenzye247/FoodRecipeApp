@@ -39,27 +39,27 @@
         </activity>
 
         <activity
-            android:name=".feature.presentation.authentication.createaccount.CreateAccountActivity"
+            android:name=".feature.presentation.auth.createaccount.CreateAccountActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.presentation.authentication.createinfo.CreateInfoActivity"
+            android:name=".feature.presentation.createinfo.CreateInfoActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.presentation.authentication.forgot.ForgotPasswordActivity"
+            android:name=".feature.presentation.auth.forgot.ForgotPasswordActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.presentation.authentication.login.LoginActivity"
+            android:name=".feature.presentation.auth.login.LoginActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.presentation.authentication.register.RegisterActivity"
+            android:name=".feature.presentation.auth.register.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.presentation.dishprefered.DishPreferredActivity"
+            android:name=".feature.presentation.createdishprefered.DishPreferredActivity"
             android:screenOrientation="portrait" />
 
         <activity

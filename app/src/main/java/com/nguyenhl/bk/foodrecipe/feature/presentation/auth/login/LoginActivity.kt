@@ -1,9 +1,11 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login
+package com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login
 
 import android.content.Context
 import android.content.Intent
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
+import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
@@ -12,10 +14,9 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityLoginBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoActivity
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordActivity
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterActivity
-import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.checkEmail
 import com.nguyenhl.bk.foodrecipe.feature.util.checkPassword
@@ -62,6 +63,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
+        observeDistinct(viewModel.liveIsLoading()) {
+            showLoadingView(it ?: false)
+        }
+        observeDistinct(viewModel.liveIsValidUserInfo()) { isValid ->
+            isValid?.let {
+                if (isValid) {
+                    goToMain()
+                } else {
+                    goToDishPreferred()
+                }
+                finish()
+            }
+        }
         observe(viewModel.liveLoginStatus()) { loginStatus ->
             viewModel.setLoading(false)
             if (loginStatus == null) {
@@ -70,25 +84,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             val status = loginStatus.status
 
             if (status) {
-                toast("Login success")
+                longToast("Login success")
                 viewModel.checkForUserInfo {
                     // empty token
                     toast("Error on login, please try again")
                 }
                 return@observe
-            }
-        }
-        observe(viewModel.liveIsLoading()) {
-            binding.loading.progressBar.setVisible(it ?: false)
-        }
-        observe(viewModel.liveIsValidUserInfo()) { isValid ->
-            isValid?.let {
-                if (isValid) {
-                    goToMain()
-                } else {
-                    goToDishPreferred()
-                }
-                finish()
             }
         }
     }
@@ -147,6 +148,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             tipEmail.setError(false, null)
             tipPassword.setError(false, null)
         }
+    }
+
+    private fun showLoadingView(isShow: Boolean) {
+        binding.loading.progressBar.setVisible(isShow)
     }
 
     companion object {

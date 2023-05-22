@@ -18,11 +18,11 @@ sealed class BaseInput {
         val application: Application
     ) : BaseInput()
 
-    data class CreateAccountInput(
+    data class ForgotPasswordInput(
         val application: Application
     ) : BaseInput()
 
-    data class ForgotPasswordInput(
+    data class CreateAccountInput(
         val application: Application
     ) : BaseInput()
 

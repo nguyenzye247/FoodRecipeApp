@@ -33,6 +33,7 @@ val apiModule = module {
 
     single { get<Retrofit>().create(RegisterRetrofitService::class.java) }
     single { get<Retrofit>().create(LoginRetrofitService::class.java) }
+    single { get<Retrofit>().create(ForgotPasswordService::class.java) }
     single { get<Retrofit>().create(UserInfoService::class.java) }
     single { get<Retrofit>().create(HealthStatusService::class.java) }
     single { get<Retrofit>().create(CategoryService::class.java) }

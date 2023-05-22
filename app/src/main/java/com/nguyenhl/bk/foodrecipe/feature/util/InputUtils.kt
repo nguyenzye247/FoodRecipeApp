@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.util
 
 import androidx.core.text.isDigitsOnly
+import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil.changeDateFormat
 import com.wajahatkarim3.easyvalidation.core.view_ktx.minLength
 import com.wajahatkarim3.easyvalidation.core.view_ktx.nonEmpty
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
@@ -40,14 +41,15 @@ internal fun String.checkEmpty(onInvalid: (message: String) -> Unit) {
 }
 
 internal fun String.checkDate(onInvalid: (message: String) -> Unit) {
+    val dateString = changeDateFormat(this)
     var isValid = true
     var message = ""
-    nonEmpty {
+    dateString.nonEmpty {
         // error
         isValid = false
         message = "Field can not be empty"
     }
-    validDate {
+    dateString.validDate {
         // error
         isValid = false
         message = "Invalid date format"

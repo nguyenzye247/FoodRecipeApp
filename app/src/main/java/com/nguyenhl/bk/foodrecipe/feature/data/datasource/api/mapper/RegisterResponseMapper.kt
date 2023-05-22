@@ -27,6 +27,8 @@ object RegisterResponseMapper :
     BaseApiErrorModelMapper("Error: Email is already existed")
 object LoginErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Wrong email or password")
+object ForgotPasswordErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get preferred dishes data")
 object HealthStatusErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Can not retrieve health status data")
 object CategoryErrorResponseMapper :

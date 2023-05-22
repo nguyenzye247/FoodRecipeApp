@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo
+package com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,8 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
+import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
@@ -25,7 +27,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.Gender
-import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredActivity.Companion.KEY_PREFERRED_DISHES
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity.Companion.KEY_PREFERRED_DISHES
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.*
 import com.skydoves.powerspinner.IconSpinnerAdapter
@@ -67,8 +69,8 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     override fun initListener() {
         binding.apply {
             btnContinue.onClick {
-                viewModel.setLoading(true)
                 validateInputs { userInfoDto ->
+                    viewModel.setLoading(true)
                     viewModel.createUserInfo(userInfoDto)
                 }
             }
@@ -76,7 +78,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 showDatePicker()
             }
             tipGenderInput.apply {
-                setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newText ->
+                setOnSpinnerItemSelectedListener<IconSpinnerItem> { oldIndex, oldItem, newIndex, newText ->
                     tipGenderInput.setInputBg()
                 }
                 onSpinnerDismissListener = OnSpinnerDismissListener {
@@ -100,7 +102,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 loadHealthStatusesToUI(healthStatuses)
             }
         }
-        observe(viewModel.liveIsLoading()) {
+        observeDistinct(viewModel.liveIsLoading()) {
             binding.loading.progressBar.setVisible(it ?: false)
         }
         observe(viewModel.liveCreateInfoStatus()) { createUserInfoStatus ->
@@ -109,9 +111,10 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 return@observe
             }
             val status = createUserInfoStatus.status
+            val message = createUserInfoStatus.data.value
 
+            longToast(message)
             if (status) {
-                toast("Create user information success")
                 goToMain()
                 return@observe
             }

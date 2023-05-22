@@ -3,12 +3,15 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createaccount.CreateAccountViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredViewModel
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.ForgotPasswordRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.LoginRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.RegisterRepository
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.createaccount.CreateAccountViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import org.koin.core.KoinComponent
@@ -21,6 +24,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val userInfoRepository: UserInfoRepository by inject()
     private val healthStatusRepository: HealthStatusRepository by inject()
     private val dishPreferredRepository: DishPreferredRepository by inject()
+    private val forgotPasswordRepository: ForgotPasswordRepository by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -55,7 +59,10 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             }
 
             modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> {
-                return ForgotPasswordViewModel(input as BaseInput.ForgotPasswordInput) as T
+                return ForgotPasswordViewModel(
+                    input as BaseInput.ForgotPasswordInput,
+                    forgotPasswordRepository
+                ) as T
             }
 
             modelClass.isAssignableFrom(DishPreferredViewModel::class.java) -> {

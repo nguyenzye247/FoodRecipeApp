@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createaccount
+package com.nguyenhl.bk.foodrecipe.feature.presentation.auth.createaccount
 
 import androidx.activity.viewModels
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateAccountBinding

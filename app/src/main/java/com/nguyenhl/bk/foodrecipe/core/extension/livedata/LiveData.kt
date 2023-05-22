@@ -11,6 +11,14 @@ inline fun <T> LifecycleOwner.observe(
     crossinline observer: (t: T?) -> Unit
 ): Observer<T> = Observer<T> {
     observer(it)
+}.also { liveData.observe(this, it) }
+
+@ObsoleteSplittiesLifecycleApi
+inline fun <T> LifecycleOwner.observeDistinct(
+    liveData: LiveData<T>,
+    crossinline observer: (t: T?) -> Unit
+): Observer<T> = Observer<T> {
+    observer(it)
 }.also { liveData.distinctUntilChanged().observe(this, it) }
 
 @ObsoleteSplittiesLifecycleApi

@@ -36,8 +36,8 @@ class UserInfoRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun createApiUserInfo(userInfo: UserInfoPostBody) = flow {
-        userInfoService.createUserInfo(userInfo)
+    fun createApiUserInfo(token: String, userInfo: UserInfoPostBody) = flow {
+        userInfoService.createUserInfo(token, userInfo)
             .suspendOnSuccess {
                 emit(data)
             }
@@ -50,8 +50,8 @@ class UserInfoRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun updateApiUserInfo(userInfo: UserInfoPutBody) = flow {
-        userInfoService.updateUserInfo(userInfo)
+    fun updateApiUserInfo(token: String, userInfo: UserInfoPutBody) = flow {
+        userInfoService.updateUserInfo(token,  userInfo)
             .suspendOnSuccess {
                 emit(data)
             }

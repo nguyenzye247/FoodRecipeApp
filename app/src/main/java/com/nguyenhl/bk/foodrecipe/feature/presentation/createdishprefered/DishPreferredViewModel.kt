@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered
+package com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
