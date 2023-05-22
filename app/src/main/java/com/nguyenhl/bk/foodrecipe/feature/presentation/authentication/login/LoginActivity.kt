@@ -13,6 +13,7 @@ import com.nguyenhl.bk.foodrecipe.databinding.ActivityLoginBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
@@ -99,17 +100,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun goToForgotPassword() {
-
-    }
-
-    private fun goToDishPreferred() {
-        DishPreferredActivity.startActivity(this@LoginActivity) {
+        ForgotPasswordActivity.startActivity(this@LoginActivity) {
             // put stuffs
         }
     }
 
-    private fun goToCreateUserInfo() {
-        CreateInfoActivity.startActivity(this) {
+    private fun goToDishPreferred() {
+        DishPreferredActivity.startActivity(this@LoginActivity) {
             // put stuffs
         }
     }
