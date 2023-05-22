@@ -7,11 +7,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.asLiveData
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.databinding.ActivitySplashBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
 import kotlinx.coroutines.Dispatchers
 
@@ -48,9 +49,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
-        observe(viewModel.isFinish.asLiveData(Dispatchers.Main)) { isFinish ->
-            isFinish ?: return@observe
-            if (!isFinish) return@observe
+        observeDistinct(viewModel.isFinish.asLiveData(Dispatchers.Main)) { isFinish ->
+            isFinish ?: return@observeDistinct
+            if (!isFinish) return@observeDistinct
             goToLogin()
         }
     }

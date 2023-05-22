@@ -2,7 +2,6 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Color
@@ -17,11 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
-import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
-import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setPaddingBottom
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setPaddingTop
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 

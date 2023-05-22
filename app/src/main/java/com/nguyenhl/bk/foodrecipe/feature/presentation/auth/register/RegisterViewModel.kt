@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register
+package com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,9 +7,10 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.RegisterResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.auth.RegisterResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.auth.toApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.toApiCommonResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.repository.RegisterRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.RegisterRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.items
+package com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.items
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

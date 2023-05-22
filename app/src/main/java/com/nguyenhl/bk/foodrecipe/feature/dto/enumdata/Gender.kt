@@ -1,8 +1,8 @@
 package com.nguyenhl.bk.foodrecipe.feature.dto.enumdata
 
 enum class Gender(val value: Int, val title: String) {
-    MALE(0, "Male"),
-    FEMALE(1, "Female"),
+    FEMALE(0, "Female"),
+    MALE(1, "Male"),
     OTHER(2, "Other");
 
     companion object {

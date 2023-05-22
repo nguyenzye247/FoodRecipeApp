@@ -1,9 +1,10 @@
-package com.nguyenhl.bk.foodrecipe.feature.data.repository
+package com.nguyenhl.bk.foodrecipe.feature.data.repository.auth
 
 import androidx.annotation.WorkerThread
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.RegisterBody
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.auth.RegisterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RegisterRetrofitService
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.Repository
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess

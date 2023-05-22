@@ -2,10 +2,11 @@ package com.nguyenhl.bk.foodrecipe.feature.di
 
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -16,6 +17,10 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.LoginInput) ->
         ViewModelProviderFactory(input).create(LoginViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.ForgotPasswordInput) ->
+        ViewModelProviderFactory(input).create(ForgotPasswordViewModel::class.java)
     }
 
     viewModel { (input: BaseInput.CreateInfoInput) ->

@@ -24,11 +24,13 @@ interface UserInfoService {
 
     @POST(USER_INFO_PUT_EP)
     suspend fun updateUserInfo(
+        @Header("Authorization") token: String,
         @Body userInfoBody: UserInfoPutBody
     ): ApiResponse<UserInfoPutResponse>
 
     @POST(USER_INFO_POST_EP)
     suspend fun createUserInfo(
+        @Header("Authorization") token: String,
         @Body userInfoBody: UserInfoPostBody
     ): ApiResponse<UserInfoPostResponse>
 }

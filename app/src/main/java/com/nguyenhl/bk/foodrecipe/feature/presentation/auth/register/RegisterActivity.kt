@@ -1,9 +1,10 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register
+package com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register
 
 import android.content.Context
 import android.content.Intent
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
@@ -12,8 +13,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRegisterBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordActivity
-import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.checkEmail
 import com.nguyenhl.bk.foodrecipe.feature.util.checkPassword
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -57,6 +58,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
+        observeDistinct(viewModel.liveIsLoading()) {
+            showLoadingView(it ?: false)
+        }
         observe(viewModel.liveRegisterStatus()) { registerStatus ->
             viewModel.setLoading(false)
 
@@ -69,9 +73,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 goToLogin()
                 return@observe
             }
-        }
-        observe(viewModel.liveIsLoading()) {
-            binding.loading.progressBar.setVisible(it ?: false)
         }
     }
 
@@ -133,6 +134,10 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             tipPassword.setError(false, null)
             tipConfirmPassword.setError(false, null)
         }
+    }
+
+    private fun showLoadingView(isShow: Boolean) {
+        binding.loading.progressBar.setVisible(isShow)
     }
 
     companion object {

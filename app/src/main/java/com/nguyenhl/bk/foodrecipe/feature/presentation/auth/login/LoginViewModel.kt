@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login
+package com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +8,11 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.LoginResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.auth.LoginResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.UserInfoGetResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.auth.toApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.toApiCommonResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.repository.LoginRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.LoginRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import kotlinx.coroutines.flow.collectLatest
@@ -33,16 +34,16 @@ class LoginViewModel constructor(
     fun loginToAccount(email: String, password: String) {
         viewModelScope.launch {
             loginRepository.loginToAccount(email, password)
-                .collectLatest {
-                    when (it) {
+                .collectLatest { response ->
+                    when (response) {
                         is LoginResponse -> {
-                            _loginStatus.postValue(it.toApiCommonResponse())
-                            saveLoginToken(it.token)
-                            Timber.tag("TOKEN_1").d(it.token)
+                            _loginStatus.postValue(response.toApiCommonResponse())
+                            saveLoginToken(response.token)
+                            Timber.tag("TOKEN_1").d(response.token)
                         }
 
                         is ErrorResponse -> {
-                            _loginStatus.postValue(it.toApiCommonResponse())
+                            _loginStatus.postValue(response.toApiCommonResponse())
                         }
 
                         else -> {
