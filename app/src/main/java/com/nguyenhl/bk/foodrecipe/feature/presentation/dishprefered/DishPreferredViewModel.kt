@@ -7,7 +7,6 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo.toDishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.DishPreferredResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.DishPreferredRepository
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import kotlinx.coroutines.flow.collectLatest
@@ -19,6 +18,13 @@ class DishPreferredViewModel constructor(
 ) : BaseViewModel(input) {
     private val _preferredDishes: MutableLiveData<List<DishPreferredDto>?> = MutableLiveData()
     fun livePreferredDishes(): LiveData<List<DishPreferredDto>?> = _preferredDishes
+
+    private val _hasDishSelected: MutableLiveData<Boolean> = MutableLiveData(false)
+    fun liveHasDishSelected(): LiveData<Boolean> = _hasDishSelected
+    fun hasDishSelectedValue(): Boolean = _hasDishSelected.value == true
+    fun hasDishSelected(hasSelected: Boolean) {
+        _hasDishSelected.value = hasSelected
+    }
 
     init {
         setLoading(true)

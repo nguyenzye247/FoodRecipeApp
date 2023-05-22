@@ -77,6 +77,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     private fun goToLogin() {
         LoginActivity.startActivity(this) {
             // put stuffs
+
         }
     }
 

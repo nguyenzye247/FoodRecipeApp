@@ -12,16 +12,21 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
+import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.Gender
+import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredActivity.Companion.KEY_PREFERRED_DISHES
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.*
 import com.skydoves.powerspinner.IconSpinnerAdapter
 import com.skydoves.powerspinner.IconSpinnerItem
@@ -36,6 +41,9 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
 
     private val healthStatuses: ArrayList<HealthStatusDto> = arrayListOf()
     private val genders = enumValues<Gender>()
+    private val preferredDishes: ArrayList<DishPreferredDto> by lazy {
+        intent.parcelableArrayListExtra(KEY_PREFERRED_DISHES) ?: arrayListOf()
+    }
 
     override fun getLazyBinding() = lazy { ActivityCreateInfoBinding.inflate(layoutInflater) }
 
@@ -61,7 +69,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             btnContinue.onClick {
                 viewModel.setLoading(true)
                 validateInputs { userInfoDto ->
-                    viewModel
+                    viewModel.createUserInfo(userInfoDto)
                 }
             }
             etDobInput.onClick {
@@ -79,7 +87,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 showHealthStatusPicker()
             }
             btnBack.onClick {
-
+                onBackPressed()
             }
         }
     }
@@ -94,6 +102,19 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         }
         observe(viewModel.liveIsLoading()) {
             binding.loading.progressBar.setVisible(it ?: false)
+        }
+        observe(viewModel.liveCreateInfoStatus()) { createUserInfoStatus ->
+            viewModel.setLoading(false)
+            if (createUserInfoStatus == null) {
+                return@observe
+            }
+            val status = createUserInfoStatus.status
+
+            if (status) {
+                toast("Create user information success")
+                goToMain()
+                return@observe
+            }
         }
     }
 
@@ -187,7 +208,8 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                         genders[tipGenderInput.selectedIndex].value,
                         heightInput.toFloat(),
                         weightInput.toFloat(),
-                        viewModel.selectedHealthStatus.idHealthStatus
+                        viewModel.selectedHealthStatus.idHealthStatus,
+                        preferredDishes.map { it.idDishPreferred }
                     )
                 )
             }
@@ -210,6 +232,12 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun PowerSpinnerView.setInputBg() {
         bg = getDrawable(R.drawable.bg_app_input)
+    }
+
+    private fun goToMain() {
+        MainActivity.startActivity(this@CreateInfoActivity) {
+            // put stuffs
+        }
     }
 
     companion object {

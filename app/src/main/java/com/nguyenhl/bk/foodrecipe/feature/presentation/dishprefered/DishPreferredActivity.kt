@@ -19,11 +19,12 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.helper.GridLayoutManagerWithSmoothScroller
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.items.DishPreferredAdapter
 
 class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPreferredViewModel>() {
-    private val selectedDishes: MutableSet<DishPreferredDto> = mutableSetOf()
+    private val selectedDishes: ArrayList<DishPreferredDto> = arrayListOf()
 
     override fun getLazyBinding() = lazy { ActivityDishPreferredBinding.inflate(layoutInflater) }
 
@@ -36,6 +37,7 @@ class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPre
             rvDishPreferred.addOnScrollListener( object: OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+                    if (!viewModel.hasDishSelectedValue()) return
                     if (dy < 0) {
                         // Scrolled down
                         btnContinue.show()
@@ -51,13 +53,13 @@ class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPre
     override fun initListener() {
         binding.apply {
             btnContinue.onClick {
-
+                goToCreateInfo()
             }
             tvSkip.onClick {
-
+                goToCreateInfo()
             }
             btnBack.onClick {
-
+                onBackPressed()
             }
         }
     }
@@ -76,6 +78,9 @@ class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPre
             }
             initPreferredDishesList(dishes)
         }
+        observe(viewModel.liveHasDishSelected()) { hasSelected ->
+            showContinueButton(hasSelected ?: false)
+        }
     }
 
     private fun initPreferredDishesList(dishes: List<DishPreferredDto>) {
@@ -88,6 +93,7 @@ class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPre
                     } else {
                         selectedDishes.add(dish)
                     }
+                    viewModel.hasDishSelected(selectedDishes.isNotEmpty())
                 }
             )
             layoutManager = GridLayoutManagerWithSmoothScroller(
@@ -115,7 +121,16 @@ class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPre
         binding.btnContinue.setVisible(isShow)
     }
 
+    private fun goToCreateInfo() {
+        CreateInfoActivity.startActivity(this@DishPreferredActivity) {
+            // put stuffs
+            putParcelableArrayListExtra(KEY_PREFERRED_DISHES, selectedDishes)
+        }
+    }
+
     companion object {
+        const val KEY_PREFERRED_DISHES = "key_preferred_dishes"
+
         fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
             context?.let {
                 it.start<DishPreferredActivity> {
