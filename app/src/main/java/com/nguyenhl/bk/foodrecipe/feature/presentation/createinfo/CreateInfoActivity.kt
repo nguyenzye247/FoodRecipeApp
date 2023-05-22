@@ -162,6 +162,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             }
         ) { index ->
             if (healthStatuses.size > index) {
+                viewModel.selectedHealthStatus = healthStatuses[index]
                 setHeathStatusView(healthStatuses[index].name)
             }
         }
