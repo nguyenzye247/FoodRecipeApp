@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinf
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
@@ -16,14 +17,15 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.toUserInfoPostBody
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CreateInfoViewModel constructor(
     val input: BaseInput.CreateInfoInput,
     private val userInfoRepository: UserInfoRepository,
     private val healthStatusRepository: HealthStatusRepository
 ) : BaseViewModel(input) {
-    private val _createInfoStatus: MutableLiveData<ApiCommonResponse> = MutableLiveData()
-    fun liveCreateInfoStatus(): LiveData<ApiCommonResponse> = _createInfoStatus
+    private val _createInfoStatus: MutableLiveData<ApiCommonResponse?> = MutableLiveData()
+    fun liveCreateInfoStatus(): LiveData<ApiCommonResponse?> = _createInfoStatus
 
     var selectedHealthStatus: HealthStatusDto = HealthStatusDto.noneHealthStatus
 
@@ -31,22 +33,24 @@ class CreateInfoViewModel constructor(
         return healthStatusRepository.getAllDbHealthStatus() as ArrayList<HealthStatus>
     }
 
-    suspend fun createUserInfo(userInfoDto: UserInfoDto) {
-        val userInfoPostBody = userInfoDto.toUserInfoPostBody()
-        userInfoRepository.createApiUserInfo(userInfoPostBody)
-            .collectLatest { response ->
-                when (response) {
-                    is UserInfoPostResponse -> {
-                        _createInfoStatus.postValue(response.toApiCommonResponse())
-                    }
-                    is ErrorResponse -> {
-                        _createInfoStatus.postValue(response.toApiCommonResponse())
-                    }
-                    else -> {
-                        _createInfoStatus.postValue(null)
+    fun createUserInfo(userInfoDto: UserInfoDto) {
+        viewModelScope.launch {
+            val userInfoPostBody = userInfoDto.toUserInfoPostBody()
+            userInfoRepository.createApiUserInfo(userInfoPostBody)
+                .collectLatest { response ->
+                    when (response) {
+                        is UserInfoPostResponse -> {
+                            _createInfoStatus.postValue(response.toApiCommonResponse())
+                        }
+                        is ErrorResponse -> {
+                            _createInfoStatus.postValue(response.toApiCommonResponse())
+                        }
+                        else -> {
+                            _createInfoStatus.postValue(null)
+                        }
                     }
                 }
-            }
+        }
     }
 
 }

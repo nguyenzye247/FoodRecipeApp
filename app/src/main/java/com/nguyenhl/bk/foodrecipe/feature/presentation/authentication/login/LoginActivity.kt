@@ -13,7 +13,9 @@ import com.nguyenhl.bk.foodrecipe.databinding.ActivityLoginBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.createinfo.CreateInfoActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.register.RegisterActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.dishprefered.DishPreferredActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.checkEmail
 import com.nguyenhl.bk.foodrecipe.feature.util.checkPassword
@@ -33,7 +35,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun initViews() {
         viewModel.doOnUserLoggedIn {
-            goToCreateUserInfo()
+            goToDishPreferred()
             finish()
         }
     }
@@ -84,7 +86,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 if (isValid) {
                     goToMain()
                 } else {
-                    goToCreateUserInfo()
+                    goToDishPreferred()
                 }
                 finish()
             }
@@ -98,11 +100,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun goToForgotPassword() {
-
+        ForgotPasswordActivity.startActivity(this@LoginActivity) {
+            // put stuffs
+        }
     }
 
-    private fun goToCreateUserInfo() {
-        CreateInfoActivity.startActivity(this) {
+    private fun goToDishPreferred() {
+        DishPreferredActivity.startActivity(this@LoginActivity) {
             // put stuffs
         }
     }

@@ -18,7 +18,7 @@
     <string name="next">Next</string>
     <string name="forgot_password_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
     <string name="skip">Skip</string>
-    <string name="preferred_any_food">Preferred\nany food?</string>
+    <string name="preferred_any_food">Prefer\nany food?</string>
     <string name="continue_txt">Continue</string>
     <string name="your_info">Your info</string>
     <string name="name_title">Name</string>
@@ -36,4 +36,5 @@
     <string name="cancel">Cancel</string>
     <string name="your_health_status">Your health status</string>
     <string name="none">None</string>
+    <string name="send_to_email">Send to email</string>
 </resources>

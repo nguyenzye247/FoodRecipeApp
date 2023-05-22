@@ -12,6 +12,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRegisterBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.forgot.ForgotPasswordActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.authentication.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.checkEmail
 import com.nguyenhl.bk.foodrecipe.feature.util.checkPassword
@@ -77,11 +78,14 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     private fun goToLogin() {
         LoginActivity.startActivity(this) {
             // put stuffs
+
         }
     }
 
     private fun goToForgotPassword() {
-
+        ForgotPasswordActivity.startActivity(this@RegisterActivity) {
+            // put stuffs
+        }
     }
 
     private fun validateInputs(

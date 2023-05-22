@@ -37,3 +37,5 @@ object UpdateUserInfoErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to update user information")
 object GetUserInfoErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get user information")
+object GetDishPreferredErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get preferred dishes data")
