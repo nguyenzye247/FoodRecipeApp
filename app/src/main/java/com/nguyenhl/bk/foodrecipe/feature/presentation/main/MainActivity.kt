@@ -1,9 +1,12 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityMainBinding
@@ -39,14 +42,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val lottieDrawable = LottieDrawable()
         LottieCompositionFactory.fromRawRes(this, R.raw.anim_search).addListener { lottieComposition ->
             lottieDrawable.composition = lottieComposition
+            lottieDrawable.maintainOriginalImageBounds = true
             lottieDrawable.repeatCount = LottieDrawable.INFINITE
             lottieDrawable.playAnimation()
         }
-        binding.btnFabSearch.apply {
-//            background = lottieDrawable
-//            foreground = lottieDrawable
-//            setImageDrawable()
-        }
+        binding.btnFabSearch.setImageDrawable(lottieDrawable)
     }
 
     private fun initViewpager() {

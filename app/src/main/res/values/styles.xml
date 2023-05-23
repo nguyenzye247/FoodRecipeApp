@@ -7,6 +7,12 @@
         <item name="android:textSize">@dimen/text_size_12sp</item>
     </style>
 
+    <style name="TextMediumStyle" parent="Theme.AppCompat.Light">
+        <item name="fontFamily">@font/gordita_medium</item>
+        <item name="android:textColor">@color/rcp_black_100</item>
+        <item name="android:textSize">@dimen/text_size_12sp</item>
+    </style>
+
     <style name="TextBoldStyle" parent="Theme.AppCompat.Light">
         <item name="fontFamily">@font/gordita_bold</item>
         <item name="android:textColor">@color/rcp_black_100</item>
