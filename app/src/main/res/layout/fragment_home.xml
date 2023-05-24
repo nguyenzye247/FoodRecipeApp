@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/iv_ornament"
+        layout="@layout/layout_bg_ornament_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,8 +26,8 @@
                 android:id="@+id/iv_avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="@dimen/dimen_30dp"
-                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +37,7 @@
                 android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_30dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@null"
                 android:padding="@dimen/dimen_4dp"
@@ -58,6 +64,279 @@
                 app:layout_constraintStart_toStartOf="@id/iv_avatar"
                 app:layout_constraintTop_toBottomOf="@id/iv_avatar" />
 
+            <TextView
+                android:id="@+id/tv_try_something_new"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/try_something_new"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintStart_toStartOf="@id/tv_cook_today"
+                app:layout_constraintTop_toBottomOf="@id/tv_cook_today" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_something_new"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_try_something_new" />
+
+            <TextView
+                android:id="@+id/tv_suggest_title"
+                style="@style/MainListTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/suggest_for_you"
+                app:layout_constraintStart_toStartOf="@id/tv_try_something_new"
+                app:layout_constraintTop_toBottomOf="@id/rv_something_new" />
+
+            <TextView
+                android:id="@+id/btn_view_all_suggest"
+                style="@style/ViewAllTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                app:layout_constraintBottom_toBottomOf="@id/tv_suggest_title"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="@id/tv_suggest_title" />
+
+            <TextView
+                android:id="@+id/tv_suggest_for_you"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/so_many_health_conscious_recipes"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/btn_view_all_suggest"
+                app:layout_constraintStart_toStartOf="@id/tv_suggest_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_suggest_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_suggest_for_you"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_suggest_for_you" />
+
+            <TextView
+                android:id="@+id/tv_collection_title"
+                style="@style/MainListTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/collection"
+                app:layout_constraintStart_toStartOf="@id/tv_suggest_for_you"
+                app:layout_constraintTop_toBottomOf="@id/rv_suggest_for_you" />
+
+            <TextView
+                android:id="@+id/btn_view_all_collection"
+                style="@style/ViewAllTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                app:layout_constraintBottom_toBottomOf="@id/tv_collection_title"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="@id/tv_collection_title" />
+
+            <TextView
+                android:id="@+id/tv_collection"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/find_the_perfect_recipe"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/btn_view_all_collection"
+                app:layout_constraintStart_toStartOf="@id/tv_collection_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_collection_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_collection"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_collection" />
+
+            <TextView
+                android:id="@+id/tv_top_chef_title"
+                style="@style/MainListTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/top_chef"
+                app:layout_constraintStart_toStartOf="@id/tv_collection"
+                app:layout_constraintTop_toBottomOf="@id/rv_collection" />
+
+            <TextView
+                android:id="@+id/btn_view_all_top_chef"
+                style="@style/ViewAllTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                app:layout_constraintBottom_toBottomOf="@id/tv_top_chef_title"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="@id/tv_top_chef_title" />
+
+            <TextView
+                android:id="@+id/tv_top_chef"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/over_100_chefs"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/btn_view_all_top_chef"
+                app:layout_constraintStart_toStartOf="@id/tv_top_chef_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_top_chef_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_top_chef"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_top_chef" />
+
+            <TextView
+                android:id="@+id/tv_daily_inspiration_title"
+                style="@style/MainListTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/daily_inspirations"
+                app:layout_constraintStart_toStartOf="@id/tv_top_chef"
+                app:layout_constraintTop_toBottomOf="@id/rv_top_chef" />
+
+            <TextView
+                android:id="@+id/btn_view_all_daily_inspiration"
+                style="@style/ViewAllTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                app:layout_constraintBottom_toBottomOf="@id/tv_daily_inspiration_title"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="@id/tv_daily_inspiration_title" />
+
+            <TextView
+                android:id="@+id/tv_daily_inspiration"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/recipes_picked_by_our_editor"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/btn_view_all_daily_inspiration"
+                app:layout_constraintStart_toStartOf="@id/tv_daily_inspiration_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_daily_inspiration_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_daily_inspiration"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_daily_inspiration" />
+
+            <TextView
+                android:id="@+id/tv_ingredients_title"
+                style="@style/MainListTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/ingredients"
+                app:layout_constraintStart_toStartOf="@id/tv_daily_inspiration"
+                app:layout_constraintTop_toBottomOf="@id/rv_daily_inspiration" />
+
+            <TextView
+                android:id="@+id/btn_view_all_ingredients"
+                style="@style/ViewAllTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ingredients_title"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="@id/tv_ingredients_title" />
+
+            <TextView
+                android:id="@+id/tv_ingredients"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/recipes_picked_by_our_editor"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/btn_view_all_ingredients"
+                app:layout_constraintStart_toStartOf="@id/tv_ingredients_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredients_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ingredients"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredients" />
+
+            <TextView
+                android:id="@+id/tv_recently_viewed_title"
+                style="@style/MainListTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/recently_viewed"
+                app:layout_constraintStart_toStartOf="@id/tv_ingredients"
+                app:layout_constraintTop_toBottomOf="@id/rv_ingredients" />
+
+            <TextView
+                android:id="@+id/btn_view_all_recently_viewed"
+                style="@style/ViewAllTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                app:layout_constraintBottom_toBottomOf="@id/tv_recently_viewed_title"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="@id/tv_recently_viewed_title" />
+
+            <TextView
+                android:id="@+id/tv_recently_viewed"
+                style="@style/MainListDescriptionTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/recipes_picked_by_our_editor"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/btn_view_all_recently_viewed"
+                app:layout_constraintStart_toStartOf="@id/tv_recently_viewed_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_recently_viewed_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recently_viewed"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_recently_viewed" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
