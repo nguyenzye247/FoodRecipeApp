@@ -9,8 +9,15 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
     override fun getLazyBinding() = lazy { FragmentCalendarBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = activityViewModels<MainViewModel>()
+    override fun initViews() {
 
-    override fun setupInit() {
+    }
+
+    override fun initListener() {
+
+    }
+
+    override fun initObservers() {
 
     }
 

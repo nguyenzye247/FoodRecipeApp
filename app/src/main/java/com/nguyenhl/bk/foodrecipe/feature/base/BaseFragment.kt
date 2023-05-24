@@ -13,10 +13,18 @@ abstract class BaseFragment<T : ViewBinding, V : BaseViewModel> : Fragment() {
     var isCreated = false
     abstract fun getLazyBinding(): Lazy<T>
     abstract fun getLazyViewModel(): Lazy<V>
-    abstract fun setupInit()
+    open fun setupInit() {
+        initViews()
+        initListener()
+        initObservers()
+    }
 
     protected val binding by getLazyBinding()
     protected val viewModel by getLazyViewModel()
+
+    abstract fun initViews()
+    abstract fun initListener()
+    abstract fun initObservers()
 
     override fun onCreateView(
         inflater: LayoutInflater,

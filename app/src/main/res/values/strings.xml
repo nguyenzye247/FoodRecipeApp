@@ -54,4 +54,5 @@
     <string name="daily_inspirations">Daily Inspirations</string>
     <string name="recipes_picked_by_our_editor">Recipes picked by our editor</string>
     <string name="recently_viewed">Recently Viewed</string>
+    <string name="minute">min</string>
 </resources>

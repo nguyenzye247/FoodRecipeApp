@@ -9,8 +9,15 @@ class IngredientsFragment : BaseFragment<FragmentIngredientsBinding, MainViewMod
     override fun getLazyBinding() = lazy { FragmentIngredientsBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = activityViewModels<MainViewModel>()
+    override fun initViews() {
 
-    override fun setupInit() {
+    }
+
+    override fun initListener() {
+
+    }
+
+    override fun initObservers() {
 
     }
 

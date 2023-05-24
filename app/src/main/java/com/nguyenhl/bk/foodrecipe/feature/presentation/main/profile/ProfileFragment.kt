@@ -9,8 +9,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
     override fun getLazyBinding() = lazy { FragmentProfileBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = activityViewModels<MainViewModel>()
-
-    override fun setupInit() {
+    override fun initViews() {
 
     }
+
+    override fun initListener() {
+
+    }
+
+    override fun initObservers() {
+
+    }
+
 }

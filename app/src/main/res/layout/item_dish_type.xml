@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_item_dish_type"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/dimen_14dp"
+    android:paddingVertical="@dimen/dimen_7dp">
+
+    <ImageView
+        android:id="@+id/iv_dish_type"
+        android:layout_width="@dimen/dimen_24dp"
+        android:layout_height="@dimen/dimen_24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/dimen_10dp"
+        android:contentDescription="@null"
+        android:gravity="center"
+        tools:src="@drawable/ic_ingredient" />
+
+    <TextView
+        android:id="@+id/tv_dish_type"
+        style="@style/TextRegularStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textColor="@color/black"
+        tools:text="Soup" />
+
+</LinearLayout>

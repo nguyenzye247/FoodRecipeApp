@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="@dimen/dimen_6dp"
+    app:cardCornerRadius="@dimen/dimen_10dp"
+    app:cardElevation="@dimen/dimen_0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_0dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="266:203"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/rcp_blue_200"
+            tools:src="@drawable/img_splash_bg" />
+
+        <ImageButton
+            android:id="@+id/_btn_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:padding="@dimen/dimen_3dp"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintEnd_toEndOf="@id/iv_background"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <TextView
+            android:id="@+id/tv_cook_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:drawablePadding="@dimen/dimen_5dp"
+            android:gravity="center"
+            android:textColor="@color/rcp_cream_100"
+            android:textSize="@dimen/text_size_10sp"
+            app:drawableStartCompat="@drawable/ic_clock"
+            app:drawableTint="@color/rcp_cream_100"
+            app:layout_constraintBottom_toTopOf="@id/tv_recipe_name"
+            app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
+            tools:text="12 min" />
+
+        <TextView
+            android:id="@+id/tv_recipe_name"
+            style="@style/TextBoldStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_12dp"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/tv_chef_name"
+            app:layout_constraintEnd_toEndOf="@id/iv_background"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/tv_chef_name"
+            tools:text="Fried Egg" />
+
+        <TextView
+            android:id="@+id/tv_chef_name"
+            style="@style/TextMediumStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_background"
+            app:layout_constraintStart_toStartOf="@id/iv_background"
+            tools:text="Good Food Team" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
