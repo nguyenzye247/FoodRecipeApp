@@ -9,12 +9,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.bigkoo.pickerview.view.TimePickerView
 import com.nguyenhl.bk.foodrecipe.R
+import com.nguyenhl.bk.foodrecipe.core.extension.*
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
-import com.nguyenhl.bk.foodrecipe.core.extension.longToast
-import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
-import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
@@ -112,11 +110,12 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             val status = createUserInfoStatus.status
             val message = createUserInfoStatus.data.value
 
-            longToast(message)
             if (status) {
+                toastSuccess(message)
                 goToMain()
                 return@observe
             }
+            toastError(message)
         }
     }
 

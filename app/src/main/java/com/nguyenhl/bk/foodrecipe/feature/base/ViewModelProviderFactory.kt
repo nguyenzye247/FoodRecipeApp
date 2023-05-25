@@ -25,6 +25,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val healthStatusRepository: HealthStatusRepository by inject()
     private val dishPreferredRepository: DishPreferredRepository by inject()
     private val forgotPasswordRepository: ForgotPasswordRepository by inject()
+    private val categoryRepository: CategoryRepository by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -37,7 +38,11 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             }
 
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                return MainViewModel(input as BaseInput.MainInput) as T
+                return MainViewModel(
+                    input as BaseInput.MainInput,
+                    healthStatusRepository,
+                    categoryRepository
+                ) as T
             }
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {

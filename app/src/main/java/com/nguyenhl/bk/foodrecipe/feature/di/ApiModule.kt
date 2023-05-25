@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.di
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.interceptor.RequestInterceptor
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.*
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.HealthStatusCategoryDetailDao
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,7 +27,7 @@ val apiModule = module {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
             .baseUrl(
-                "https://recipe-app-api.herokuapp.com"
+                "https://recipe-app-api.herokuapp.com/"
             )
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())

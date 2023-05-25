@@ -3,6 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api
 import android.app.Application
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
@@ -47,6 +48,6 @@ class GlobalResponseOperator<T> constructor(
     }
 
     private fun toast(message: String) {
-        application.longToast(message)
+        application.toastError(message)
     }
 }

@@ -7,6 +7,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
+import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
@@ -68,11 +70,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             val message = registerStatus.data.value
             val status = registerStatus.status
 
-            longToast(message)
             if (status) {
+                toastSuccess(message)
                 goToLogin()
                 return@observe
             }
+            toastError(message)
         }
     }
 

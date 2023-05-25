@@ -32,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun initObservers() {
-
+        viewModel.init()
     }
 
     private fun initLottieFab() {
@@ -77,6 +77,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 true
             }
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 
     companion object {

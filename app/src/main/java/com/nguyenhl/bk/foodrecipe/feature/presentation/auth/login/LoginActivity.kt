@@ -8,6 +8,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
+import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
@@ -84,7 +85,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
             if (status) {
                 // Check user info if user is logged in
-                longToast("Login success")
+                toastSuccess("Login success")
                 viewModel.checkForUserInfo()
                 return@observe
             }

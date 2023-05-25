@@ -1,9 +1,11 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model
 
 import com.google.gson.annotations.SerializedName
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.ApiCategory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatusCategoryDetailCrossRef
 
-data class  ApiHealthStatus(
+data class ApiHealthStatus(
     @SerializedName("_id")
     val id: String,
     @SerializedName("id_health_care")
@@ -20,3 +22,12 @@ internal fun ApiHealthStatus.toHealthStatus(): HealthStatus =
         idHealthStatus = this.idHealthStatus,
         name = this.name,
     )
+
+internal fun ApiHealthStatus.toHealthStatusCategoryDetails(): List<HealthStatusCategoryDetailCrossRef> {
+    return this.keys.map {
+        HealthStatusCategoryDetailCrossRef(
+            this.idHealthStatus,
+            it
+        )
+    }
+}
