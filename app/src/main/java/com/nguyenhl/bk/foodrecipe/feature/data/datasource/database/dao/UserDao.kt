@@ -8,4 +8,6 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
 interface UserDao {
     @Insert
     suspend fun insertUser(user: User)
+
+//    suspend fun getUserInfoBy()
 }

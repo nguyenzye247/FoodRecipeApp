@@ -16,14 +16,15 @@ data class ApiHealthStatus(
     val keys: List<String>
 )
 
-internal fun ApiHealthStatus.toHealthStatus(): HealthStatus =
+fun ApiHealthStatus.toHealthStatus(): HealthStatus =
     HealthStatus(
         idApi = this.id,
         idHealthStatus = this.idHealthStatus,
         name = this.name,
+        userId = ""
     )
 
-internal fun ApiHealthStatus.toHealthStatusCategoryDetails(): List<HealthStatusCategoryDetailCrossRef> {
+fun ApiHealthStatus.toHealthStatusCategoryDetails(): List<HealthStatusCategoryDetailCrossRef> {
     return this.keys.map {
         HealthStatusCategoryDetailCrossRef(
             this.idHealthStatus,

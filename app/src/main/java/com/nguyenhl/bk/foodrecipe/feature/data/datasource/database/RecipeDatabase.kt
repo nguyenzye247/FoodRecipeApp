@@ -10,6 +10,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.*
         User::class,
         HealthStatus::class,
         Category::class,
+        PreferredDish::class,
         CategoryDetail::class,
         HealthStatusCategoryDetailCrossRef::class],
     version = 1,
@@ -19,6 +20,7 @@ abstract class RecipeDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun healthStatusDao(): HealthStatusDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun preferredDishDao(): PreferredDishDao
     abstract fun categoryDetailDao(): CategoryDetailDao
     abstract fun healthStatusCategoryDetailDao(): HealthStatusCategoryDetailDao
 }

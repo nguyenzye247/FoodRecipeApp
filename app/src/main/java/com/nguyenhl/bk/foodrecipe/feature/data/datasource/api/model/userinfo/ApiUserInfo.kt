@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo
 
 import com.google.gson.annotations.SerializedName
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
 
 data class ApiUserInfo(
     @SerializedName("_id")
@@ -20,3 +21,14 @@ data class ApiUserInfo(
     @SerializedName("healthcare")
     val healthStatus: ApiUserHealthStatus
 )
+
+internal fun ApiUserInfo.toUser(): User {
+    return User(
+        userId = this.id,
+        name = this.name,
+        dateOfBirth = this.dateOfBirth,
+        gender = this.gender,
+        height = this.height,
+        weight = this.weight
+    )
+}

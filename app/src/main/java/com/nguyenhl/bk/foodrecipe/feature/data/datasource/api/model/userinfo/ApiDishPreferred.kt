@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo
 
 import com.google.gson.annotations.SerializedName
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.PreferredDish
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 
 data class ApiDishPreferred(
@@ -20,5 +21,15 @@ internal fun ApiDishPreferred.toDishPreferredDto(): DishPreferredDto {
         idDishPreferred = this.idDishPreferred,
         name = this.name,
         imageUrl = this.imageUrl
+    )
+}
+
+internal fun ApiDishPreferred.toPreferredDish(userId: String): PreferredDish {
+    return PreferredDish(
+        idApi = this.id,
+        idDishPreferred = this.idDishPreferred,
+        name = this.name,
+        imageUrl = this.imageUrl,
+        userId = userId
     )
 }

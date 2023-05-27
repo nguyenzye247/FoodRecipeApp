@@ -48,4 +48,9 @@ class HealthStatusRepository constructor(
     suspend fun saveAllHealthStatusCatDetails(healthStatusCatDetails: List<HealthStatusCategoryDetailCrossRef>) {
         healthStatusCategoryDetailDao.insertAll(healthStatusCatDetails)
     }
+
+    @WorkerThread
+    suspend fun saveHealthStatus(healthStatus: HealthStatus) {
+        healthStatusDao.insert(healthStatus)
+    }
 }

@@ -3,10 +3,7 @@ package com.nguyenhl.bk.foodrecipe
 import android.app.Application
 import android.view.Gravity
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalResponseOperator
-import com.nguyenhl.bk.foodrecipe.feature.di.apiModule
-import com.nguyenhl.bk.foodrecipe.feature.di.databaseModule
-import com.nguyenhl.bk.foodrecipe.feature.di.repositoryModule
-import com.nguyenhl.bk.foodrecipe.feature.di.viewModelModule
+import com.nguyenhl.bk.foodrecipe.feature.di.*
 import com.skydoves.sandwich.SandwichInitializer
 import es.dmoral.toasty.Toasty
 import org.koin.android.ext.koin.androidContext
@@ -23,6 +20,7 @@ class App : Application() {
             modules(databaseModule)
             modules(repositoryModule)
             modules(viewModelModule)
+            modules(useCaseModule)
         }
 
         // initialize global sandwich operator

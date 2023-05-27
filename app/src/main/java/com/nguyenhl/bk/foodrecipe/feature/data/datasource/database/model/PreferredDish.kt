@@ -7,22 +7,19 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+@Entity(indices = [Index(value = ["id_dish_preferred"], unique = true)])
 @Parcelize
-@Entity(indices = [Index(value = ["id_health_status"], unique = true)])
-data class HealthStatus(
-
+data class PreferredDish(
     @ColumnInfo(name = "api_id")
     val idApi: String,
-
-    @ColumnInfo(name = "id_health_status")
-    val idHealthStatus: String,
-
+    @ColumnInfo(name = "id_dish_preferred")
+    val idDishPreferred: String,
     @ColumnInfo(name = "name")
     val name: String,
-
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String,
     @ColumnInfo(name = "user_id")
     val userId: String,
-
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L
-) : Parcelable
+): Parcelable

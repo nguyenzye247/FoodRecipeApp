@@ -98,7 +98,7 @@ fun Context.toastError(@StringRes resId: Int, duration: Int) {
 }
 
 fun Context.createToastSuccess(text: CharSequence, duration: Int): Toast {
-    return Toasty.error(this, text, duration, true)
+    return Toasty.success(this, text, duration, true)
 }
 
 fun Context.createToastSuccess(@StringRes resId: Int, duration: Int): Toast {
