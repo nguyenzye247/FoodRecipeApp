@@ -16,7 +16,7 @@ data class ApiUserInfo(
     val height: Float,
     @SerializedName("weight")
     val weight: Float,
-    @SerializedName("likeDishes")
+    @SerializedName("likedishes")
     val preferredDishes: List<ApiDishPreferred>,
     @SerializedName("healthcare")
     val healthStatus: ApiUserHealthStatus

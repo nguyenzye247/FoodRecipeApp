@@ -10,6 +10,11 @@ class UserRepository(
 
     @WorkerThread
     suspend fun saveUser(user: User) {
-        userDao.insertUser(user)
+        val userExisted = userDao.getUserByUserId(user.userId) != null
+        if (userExisted) {
+            userDao.updateUser(user)
+        } else {
+            userDao.insertUser(user)
+        }
     }
 }

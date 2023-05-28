@@ -18,7 +18,7 @@ class DishPreferredRepository constructor(
 ): Repository {
 
     @WorkerThread
-    fun getAllPreferredDishes() = flow {
+    fun fetchAllPreferredDishes() = flow {
         dishPreferredService.getAllPreferredDishes()
             .suspendOnSuccess {
                 emit(data)
@@ -39,5 +39,9 @@ class DishPreferredRepository constructor(
     @WorkerThread
     suspend fun savePreferredDish(preferredDish: PreferredDish) {
         preferredDishDao.insert(preferredDish)
+    }
+
+    suspend fun getAllPreferredDishByUserId(userId: String): List<PreferredDish> {
+        return preferredDishDao.getAllPreferredDishesByUserId(userId)
     }
 }

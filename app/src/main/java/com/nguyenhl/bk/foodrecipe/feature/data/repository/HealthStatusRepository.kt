@@ -51,6 +51,16 @@ class HealthStatusRepository constructor(
 
     @WorkerThread
     suspend fun saveHealthStatus(healthStatus: HealthStatus) {
-        healthStatusDao.insert(healthStatus)
+        val healthStatusExisted = healthStatusDao.getHealthStatusById(healthStatus.idHealthStatus) != null
+        if (healthStatusExisted) {
+            healthStatusDao.updateById(
+                healthStatus.idApi,
+                healthStatus.idHealthStatus,
+                healthStatus.name,
+                healthStatus.userId
+            )
+        } else {
+            healthStatusDao.insert(healthStatus)
+        }
     }
 }

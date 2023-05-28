@@ -12,7 +12,6 @@ class DispatchGroup(
     private val job = Job()
     private val scope = CoroutineScope(dispatcherScope + job)
 
-    @Suppress("DeferredResultUnused")
     suspend fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T> {
         return scope.async { block() }
     }

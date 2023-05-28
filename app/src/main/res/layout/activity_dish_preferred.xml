@@ -24,7 +24,8 @@
         android:elevation="@dimen/dimen_2dp"
         android:src="@drawable/ic_back_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/tv_skip"
@@ -37,7 +38,8 @@
         android:text="@string/skip"
         app:layout_constraintBottom_toBottomOf="@id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_back" />
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tv_preferred_dish_title"
@@ -48,7 +50,6 @@
         android:lineSpacingExtra="@dimen/dimen_8dp"
         android:maxLines="2"
         android:text="@string/preferred_any_food"
-        app:layout_constraintBottom_toTopOf="@id/rv_dish_preferred"
         app:layout_constraintStart_toStartOf="@id/btn_back"
         app:layout_constraintTop_toBottomOf="@id/btn_back"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -91,7 +92,7 @@
     <include
         android:id="@+id/empty"
         layout="@layout/layout_empty"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/dimen_10dp"
         android:visibility="gone"

@@ -15,20 +15,6 @@ class HomeUseCase constructor(
     private val categoryRepository: CategoryRepository
 ) {
 
-    suspend fun getAllHealthStatuses() {
-        healthStatusRepository.getApiAllHealthStatus().collectLatest { response ->
-            when (response) {
-                is HealthStatusResponse -> {
-                    saveAllHealthStatuses(response)
-                }
-
-                else -> {
-
-                }
-            }
-        }
-    }
-
     suspend fun getAllCategories() {
         categoryRepository.getApiAllCategories().collectLatest { response ->
             when (response) {
@@ -41,13 +27,6 @@ class HomeUseCase constructor(
                 }
             }
         }
-    }
-
-    private suspend fun saveAllHealthStatuses(response: HealthStatusResponse) {
-        val healthStatuses = response.data.map { it.toHealthStatus() }
-        val healthStatusCatDetails = response.data.flatMap { it.toHealthStatusCategoryDetails() }
-        healthStatusRepository.saveAllHealthStatuses(healthStatuses)
-        healthStatusRepository.saveAllHealthStatusCatDetails(healthStatusCatDetails)
     }
 
     private suspend fun saveAllCategories(response: CategoryReponse) {

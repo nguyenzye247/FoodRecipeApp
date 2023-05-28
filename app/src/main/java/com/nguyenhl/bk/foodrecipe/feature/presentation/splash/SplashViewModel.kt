@@ -3,15 +3,19 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.nguyenhl.bk.foodrecipe.core.extension.getBaseConfig
 import com.nguyenhl.bk.foodrecipe.core.extension.observeOnUiThread
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiHealthStatus
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toHealthStatus
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toHealthStatusCategoryDetails
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo.ApiUserInfo
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo.toHealthStatus
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo.toPreferredDish
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.userinfo.toUser
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.HealthStatusResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.userinfo.UserInfoGetResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.DishPreferredRepository
@@ -66,7 +70,7 @@ class SplashViewModel constructor(
         healthStatusRepository.getApiAllHealthStatus().collectLatest { response ->
             when (response) {
                 is HealthStatusResponse -> {
-                    healthStatusRepository.saveAllHealthStatuses(response.data.map { it.toHealthStatus() })
+                    saveHealthStatusData(response.data)
                 }
 
                 else -> {
@@ -82,7 +86,7 @@ class SplashViewModel constructor(
             return
         }
         Timber.tag("TOKEN").d(token)
-        userInfoRepository.getApiUserInfo(token)
+        userInfoRepository.fetchApiUserInfo(token)
             .collectLatest { response ->
                 when (response) {
                     is UserInfoGetResponse -> {
@@ -93,23 +97,38 @@ class SplashViewModel constructor(
                         infoData?.let { info -> saveUserInfoData(info) }
                     }
 
+                    is ErrorResponse -> {
+                        _isValidUserInfo.postValue(false)
+                    }
+
                     else -> {
+                        //TODO: Modify this for redirect to Error screen
                         _isValidUserInfo.postValue(false)
                     }
                 }
             }
     }
 
+    private suspend fun saveHealthStatusData(healthStatusData: List<ApiHealthStatus>) {
+        val healthStatuses = healthStatusData.map { it.toHealthStatus() }
+        val healthStatusCatDetails = healthStatusData.flatMap { it.toHealthStatusCategoryDetails() }
+        healthStatusRepository.saveAllHealthStatuses(healthStatuses)
+        healthStatusRepository.saveAllHealthStatusCatDetails(healthStatusCatDetails)
+    }
+
     private suspend fun saveUserInfoData(userInfoApi: ApiUserInfo) {
         val user = userInfoApi.toUser()
+        input.application.getBaseConfig().userId = user.userId
+
         val preferredDishes = userInfoApi.preferredDishes
             .map {
                 it.toPreferredDish(user.userId)
             }
         val healthStatus = userInfoApi.healthStatus.toHealthStatus(user.userId)
-        userRepository.saveUser(user)
+
         dishPreferredRepository.saveAllPreferredDishes(preferredDishes)
         healthStatusRepository.saveHealthStatus(healthStatus)
+        userRepository.saveUser(user)
     }
 
     private fun closeDelaySplash() {

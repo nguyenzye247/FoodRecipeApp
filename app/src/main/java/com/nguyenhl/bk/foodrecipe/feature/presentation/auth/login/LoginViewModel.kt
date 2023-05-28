@@ -61,7 +61,7 @@ class LoginViewModel constructor(
             return
         }
         viewModelScope.launch {
-            userInfoRepository.getApiUserInfo(token)
+            userInfoRepository.fetchApiUserInfo(token)
                 .collectLatest {
                     when (it) {
                         is UserInfoGetResponse -> {
