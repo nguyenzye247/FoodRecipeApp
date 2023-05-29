@@ -2,19 +2,23 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nguyenhl.bk.foodrecipe.core.extension.collection.getRandomSubset
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiCollection
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.toRecipeDto
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toCollection
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toCollectionDto
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.CollectionResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.SearchRecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.PreferredDish
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.UserInfo
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toDishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toUserInfoDto
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.CollectionRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.DishPreferredRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.RecipeRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
-import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserRepository
+import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
@@ -25,7 +29,8 @@ import kotlinx.coroutines.flow.collectLatest
 class HomeFetchRecipeUseCase constructor(
     private val dishPreferredRepository: DishPreferredRepository,
     private val userInfoRepository: UserInfoRepository,
-    private val recipeRepository: RecipeRepository
+    private val recipeRepository: RecipeRepository,
+    private val collectionRepository: CollectionRepository
 ) {
     private val dispatchGroup = DispatchGroup(Dispatchers.IO)
 
@@ -37,6 +42,11 @@ class HomeFetchRecipeUseCase constructor(
 
     private val _suggestRecipes: MutableLiveData<List<RecipeDto>> = MutableLiveData()
     fun liveSuggestRecipes(): LiveData<List<RecipeDto>> = _suggestRecipes
+
+    private val _collections: MutableLiveData<List<CollectionDto>> = MutableLiveData()
+    fun liveCollections(): LiveData<List<CollectionDto>> = _collections
+
+
 
     suspend fun fetchRecipeData(userId: String, onFetchFinished: () -> Unit) {
         val userInfo = userInfoRepository.getUserInfoByUserId(userId) ?: return
@@ -50,7 +60,7 @@ class HomeFetchRecipeUseCase constructor(
                 fetchSuggestRecipes(userInfo.healthStatusWithCategoryDetail.categoryDetails)
             }
             async {
-
+                fetchCollections()
             }
         }
 
@@ -83,5 +93,33 @@ class HomeFetchRecipeUseCase constructor(
                 }
             }
         }
+    }
+
+    private suspend fun fetchCollections() {
+        collectionRepository.fetchAllCollections().collectLatest { response ->
+            when (response) {
+                is CollectionResponse -> {
+                    val top10Collections = response.collections
+                        .getRandomSubset(ITEM_SIZE)
+                        .map { it.toCollectionDto() }
+                    _collections.postValue(top10Collections)
+
+                    saveCollections(response.collections)
+                }
+
+                else -> {
+                    _collections.postValue(emptyList())
+                }
+            }
+        }
+    }
+
+    private suspend fun saveCollections(apiCollections: List<ApiCollection>) {
+        val collections = apiCollections.map { it.toCollection() }
+        collectionRepository.saveCollections(collections)
+    }
+
+    companion object {
+        private const val ITEM_SIZE = 10
     }
 }

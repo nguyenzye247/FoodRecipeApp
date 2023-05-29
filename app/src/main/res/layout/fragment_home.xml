@@ -33,6 +33,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
 
+            <TextView
+                android:id="@+id/tv_user_name"
+                style="@style/TextRegularStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+                app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                app:layout_constraintTop_toTopOf="@id/iv_avatar"
+                tools:text="Hi, nguyen" />
+
             <ImageButton
                 android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
@@ -77,7 +90,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_something_new"
+                android:id="@+id/rv_dish_preferred"
                 android:layout_width="@dimen/dimen_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
@@ -94,7 +107,7 @@
                 android:layout_marginTop="@dimen/dimen_30dp"
                 android:text="@string/suggest_for_you"
                 app:layout_constraintStart_toStartOf="@id/tv_try_something_new"
-                app:layout_constraintTop_toBottomOf="@id/rv_something_new" />
+                app:layout_constraintTop_toBottomOf="@id/rv_dish_preferred" />
 
             <TextView
                 android:id="@+id/btn_view_all_suggest"

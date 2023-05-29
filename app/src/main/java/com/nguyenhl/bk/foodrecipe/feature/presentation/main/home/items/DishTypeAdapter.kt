@@ -4,13 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhl.bk.foodrecipe.databinding.ItemDishTypeBinding
+import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 
-class DishTypeAdapter : RecyclerView.Adapter<DishTypeAdapter.DishTypeViewHolder>() {
+class DishTypeAdapter(
+    private val dishTypes: List<DishPreferredDto>
+) : RecyclerView.Adapter<DishTypeAdapter.DishTypeViewHolder>() {
 
     inner class DishTypeViewHolder(val binding: ItemDishTypeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        fun bind(dishType: DishPreferredDto) {
+            binding.apply {
 
+            }
         }
     }
 
@@ -25,8 +30,8 @@ class DishTypeAdapter : RecyclerView.Adapter<DishTypeAdapter.DishTypeViewHolder>
     }
 
     override fun onBindViewHolder(holder: DishTypeViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(dishTypes[position])
     }
 
-    override fun getItemCount(): Int = 0
+    override fun getItemCount(): Int = dishTypes.size
 }

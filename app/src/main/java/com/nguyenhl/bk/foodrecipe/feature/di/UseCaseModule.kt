@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     single { HomeUseCase(get(), get()) }
-    single { HomeFetchRecipeUseCase(get(), get(), get()) }
+    single { HomeFetchRecipeUseCase(get(), get(), get(), get()) }
 }
