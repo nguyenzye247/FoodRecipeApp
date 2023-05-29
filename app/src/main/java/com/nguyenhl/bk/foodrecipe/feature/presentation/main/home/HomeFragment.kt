@@ -17,6 +17,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     override fun getLazyViewModel() = activityViewModels<MainViewModel>()
 
     override fun initViews() {
+        adjustScreenSize(binding.ivAvatar)
         binding.apply {
 
         }
