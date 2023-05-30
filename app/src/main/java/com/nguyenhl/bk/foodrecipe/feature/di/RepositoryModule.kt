@@ -17,4 +17,6 @@ val repositoryModule = module {
     single { DishPreferredRepository(get(), get()) }
     single { RecipeRepository(get()) }
     single { CollectionRepository(get(), get()) }
+    single { AuthorRepository(get()) }
+    single { IngredientRepository(get()) }
 }

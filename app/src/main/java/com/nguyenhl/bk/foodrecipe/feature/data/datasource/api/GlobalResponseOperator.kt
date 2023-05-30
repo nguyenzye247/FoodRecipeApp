@@ -38,14 +38,16 @@ class GlobalResponseOperator<T> constructor(
         }
     }
 
-    override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) {
-        withContext(Dispatchers.Main) {
-            apiResponse.run {
-                Timber.d(message)
-                toast("Exception!")
-            }
-        }
-    }
+//    override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) {
+//        withContext(Dispatchers.Main) {
+//            apiResponse.run {
+//                Timber.d(message)
+//                toast("Exception!")
+//            }
+//        }
+//    }
+
+    override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) = Unit
 
     private fun toast(message: String) {
         application.toastError(message)

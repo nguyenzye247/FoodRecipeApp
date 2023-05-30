@@ -27,6 +27,7 @@ import com.nguyenhl.bk.foodrecipe.feature.util.DispatchGroup
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -47,7 +48,7 @@ class SplashViewModel constructor(
     fun liveIsValidUserInfo(): LiveData<Boolean> = _isValidUserInfo
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             fetchInitData()
         }
     }
@@ -67,7 +68,7 @@ class SplashViewModel constructor(
     }
 
     private suspend fun getAllHealthStatuses() {
-        healthStatusRepository.getApiAllHealthStatus().collectLatest { response ->
+        healthStatusRepository.getApiAllHealthStatus().collect { response ->
             when (response) {
                 is HealthStatusResponse -> {
                     saveHealthStatusData(response.data)
@@ -87,7 +88,7 @@ class SplashViewModel constructor(
         }
         Timber.tag("TOKEN").d(token)
         userInfoRepository.fetchApiUserInfo(token)
-            .collectLatest { response ->
+            .collect { response ->
                 when (response) {
                     is UserInfoGetResponse -> {
                         val status = response.status

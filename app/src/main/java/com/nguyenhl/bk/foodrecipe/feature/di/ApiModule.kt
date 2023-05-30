@@ -43,5 +43,7 @@ val apiModule = module {
     single { get<Retrofit>().create(DishPreferredService::class.java) }
     single { get<Retrofit>().create(RecipeService::class.java) }
     single { get<Retrofit>().create(CollectionService::class.java) }
+    single { get<Retrofit>().create(AuthorService::class.java) }
+    single { get<Retrofit>().create(IngredientService::class.java) }
     //TODO: add more services
 }

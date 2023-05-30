@@ -59,6 +59,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                     } else {
                         goToDishPreferred()
                     }
+                } ?: run {
+                    goToLogin()
                 }
             }
         }

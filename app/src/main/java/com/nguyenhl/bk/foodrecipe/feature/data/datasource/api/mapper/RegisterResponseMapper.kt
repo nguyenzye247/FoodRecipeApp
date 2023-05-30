@@ -43,5 +43,11 @@ object GetDishPreferredErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get preferred dishes data")
 object SearchRecipeByFiltersErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Search failed!")
+object GetRandomRecipeErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get random recipes")
 object GetCollectionErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get collection data")
+object GetAuthorErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get author data")
+object GetIngredientErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get ingredient data")

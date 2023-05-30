@@ -25,26 +25,26 @@ class MainViewModel(
         setLoading(true)
         viewModelScope.launch {
             homeUseCase.getAllCategories()
-            homeFetchRecipeUseCase.fetchRecipeData(userId) {
+            homeFetchRecipeUseCase.fetchRecipeData(input.application, userId) {
                 // on Finish
                 setLoading(false)
             }
         }
     }
 
-    fun liveUserInfo(): LiveData<UserInfoDto> {
+    fun liveUserInfo(): LiveData<UserInfoDto?> {
         return homeFetchRecipeUseCase.liveUserInfo()
     }
 
-    fun livePreferredDishes(): LiveData<List<DishPreferredDto>> {
+    fun livePreferredDishes(): LiveData<List<DishPreferredDto>?> {
         return homeFetchRecipeUseCase.livePreferredDishes()
     }
 
-    fun liveSuggestRecipes(): LiveData<List<RecipeDto>> {
+    fun liveSuggestRecipes(): LiveData<List<RecipeDto>?> {
         return homeFetchRecipeUseCase.liveSuggestRecipes()
     }
 
-    fun liveCollections(): LiveData<List<CollectionDto>> {
+    fun liveCollections(): LiveData<List<CollectionDto>?> {
         return homeFetchRecipeUseCase.liveCollections()
     }
 
