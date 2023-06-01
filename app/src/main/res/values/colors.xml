@@ -11,6 +11,7 @@
     <color name="rcp_black_100">#462F4D</color>
     <color name="rcp_black_transparent">#80000000</color>
     <color name="rcp_black_transparent_2">#34000000</color>
+    <color name="rcp_black_transparent_3">#A6000000</color>
 
     <color name="rcp_blue_100">#E8F6F6</color>
     <color name="rcp_blue_200">#3FB4B1</color>

@@ -2,15 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginHorizontal="@dimen/dimen_6dp"
     app:cardCornerRadius="@dimen/dimen_10dp"
-    app:cardElevation="@dimen/dimen_0dp">
+    app:cardElevation="@dimen/dimen_1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <ImageView
@@ -19,20 +19,22 @@
             android:layout_height="@dimen/dimen_0dp"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
+            android:foreground="@drawable/bg_home_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="266:203"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_min="266dp"
             tools:background="@color/rcp_blue_200"
             tools:src="@drawable/img_splash_bg" />
 
         <ImageButton
-            android:id="@+id/_btn_favorite"
+            android:id="@+id/btn_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_12dp"
-            android:layout_marginEnd="@dimen/dimen_12dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@null"
             android:padding="@dimen/dimen_3dp"
@@ -44,7 +46,6 @@
             android:id="@+id/tv_cook_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_8dp"
             android:drawablePadding="@dimen/dimen_5dp"
             android:gravity="center"
             android:textColor="@color/rcp_cream_100"
@@ -60,7 +61,6 @@
             style="@style/TextBoldStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_12dp"
             android:ellipsize="marquee"
             android:maxLines="1"
             android:textColor="@color/white"
@@ -77,8 +77,8 @@
             style="@style/TextMediumStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_20dp"
-            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginBottom="@dimen/dimen_12dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"

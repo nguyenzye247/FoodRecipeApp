@@ -8,7 +8,7 @@ interface HealthStatusDao {
     @Insert
     suspend fun insert(healthStatus: HealthStatus)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(healthStatuses: List<HealthStatus>)
 
     @Query("UPDATE healthstatus SET api_id = :apiId, name = :name, user_id = :userId WHERE id_health_status = :idHealthStatus")

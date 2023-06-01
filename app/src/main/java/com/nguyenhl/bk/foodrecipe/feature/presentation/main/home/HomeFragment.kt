@@ -10,15 +10,18 @@ import com.nguyenhl.bk.foodrecipe.core.extension.resources.txt
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
-import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
-import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.items.DishTypeAdapter
-import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.items.SuggestForYouAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.CollectionAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.DishTypeAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.SuggestForYouAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.TopChefAdapter
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private lateinit var dishTypeAdapter: DishTypeAdapter
     private lateinit var suggestForYouAdapter: SuggestForYouAdapter
+    private lateinit var collectionAdapter: CollectionAdapter
+    private lateinit var topChefAdapter: TopChefAdapter
 
 
     override fun getLazyBinding() = lazy { FragmentHomeBinding.inflate(layoutInflater) }
@@ -45,6 +48,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             observe(livePreferredDishes()) { preferredDishes ->
                 bindPreferredDishesViewData(preferredDishes)
             }
+            observe(liveSuggestRecipes()) { suggestRecipes ->
+                bindingSuggestRecipesViewData(suggestRecipes)
+            }
+            observe(liveCollections()) { collections ->
+                bindingCollectionsViewData(collections)
+            }
+            observe(liveTopChefs()) { topChefs ->
+                bindingTopChefsViewData(topChefs)
+            }
+            observe(liveIngredients()) { ingredients ->
+
+            }
+            observe(liveDailyInspirations()) { randomRecipes ->
+
+            }
         }
     }
 
@@ -62,15 +80,57 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         preferredDishes ?: return
 
         dishTypeAdapter = DishTypeAdapter(preferredDishes)
-        binding.apply {
-            rvDishPreferred.apply {
-                adapter = dishTypeAdapter
-                layoutManager = LinearLayoutManager(
-                    context,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            }
+        binding.rvDishPreferred.apply {
+            adapter = dishTypeAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+    }
+
+    private fun bindingSuggestRecipesViewData(suggestRecipes: List<RecipeDto>?) {
+        suggestRecipes ?: return
+
+        suggestForYouAdapter = SuggestForYouAdapter(suggestRecipes) { recipe ->
+            // set favorite
+        }
+        binding.rvSuggestForYou.apply {
+            adapter = suggestForYouAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+    }
+
+    private fun bindingCollectionsViewData(collections: List<CollectionDto>?) {
+        collections ?: return
+
+        collectionAdapter = CollectionAdapter(collections)
+        binding.rvCollection.apply {
+            adapter = collectionAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+    }
+
+    private fun bindingTopChefsViewData(topChefs: List<AuthorDto>?) {
+        topChefs ?: return
+
+        topChefAdapter = TopChefAdapter(topChefs)
+        binding.rvTopChef.apply {
+            adapter = topChefAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
         }
     }
 }

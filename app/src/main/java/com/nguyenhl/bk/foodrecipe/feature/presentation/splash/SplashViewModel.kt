@@ -26,6 +26,8 @@ import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import com.nguyenhl.bk.foodrecipe.feature.util.DispatchGroup
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -54,16 +56,11 @@ class SplashViewModel constructor(
     }
 
     private suspend fun fetchInitData() {
-        dispatchGroup.apply {
-            async {
-                getAllHealthStatuses()
-            }
-            async {
-                checkForUserInfo()
-            }
-        }
-        dispatchGroup.awaitAll {
-            closeDelaySplash()
+        viewModelScope.launch {
+            val healthStatusDeferred = async { getAllHealthStatuses() }
+            val userInfoDeferred = async { checkForUserInfo() }
+
+            awaitAll(healthStatusDeferred, userInfoDeferred)
         }
     }
 

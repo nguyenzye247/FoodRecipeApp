@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class HealthStatusRepository constructor(
+    class HealthStatusRepository constructor(
     private val healthStatusService: HealthStatusService,
     private val healthStatusDao: HealthStatusDao,
     private val healthStatusCategoryDetailDao: HealthStatusCategoryDetailDao

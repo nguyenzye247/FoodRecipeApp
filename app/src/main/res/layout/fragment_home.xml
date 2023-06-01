@@ -26,7 +26,7 @@
                 android:id="@+id/iv_avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginStart="@dimen/dimen_16dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +95,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_try_something_new" />
@@ -137,6 +140,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingEnd="@dimen/dimen_0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_suggest_for_you" />
@@ -179,6 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_collection" />
@@ -221,6 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_top_chef" />
@@ -263,6 +271,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_daily_inspiration" />
@@ -305,6 +314,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ingredients" />
@@ -347,6 +357,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_recently_viewed" />

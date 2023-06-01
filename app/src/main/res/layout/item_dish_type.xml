@@ -6,8 +6,9 @@
     android:layout_gravity="center"
     android:background="@drawable/bg_item_dish_type"
     android:orientation="horizontal"
+    android:layout_marginStart="@dimen/dimen_12dp"
     android:paddingHorizontal="@dimen/dimen_14dp"
-    android:paddingVertical="@dimen/dimen_7dp">
+    android:paddingVertical="@dimen/dimen_10dp">
 
     <ImageView
         android:id="@+id/iv_dish_type"
@@ -15,6 +16,7 @@
         android:layout_height="@dimen/dimen_24dp"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/dimen_10dp"
+        android:scaleType="centerInside"
         android:contentDescription="@null"
         android:gravity="center"
         tools:src="@drawable/ic_ingredient" />

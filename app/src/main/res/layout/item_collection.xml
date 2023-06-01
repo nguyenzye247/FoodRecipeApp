@@ -2,15 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginHorizontal="@dimen/dimen_6dp"
     app:cardCornerRadius="@dimen/dimen_10dp"
-    app:cardElevation="@dimen/dimen_0dp">
+    app:cardElevation="@dimen/dimen_1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <ImageView
@@ -18,10 +18,13 @@
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="@dimen/dimen_0dp"
             android:contentDescription="@null"
+            android:foreground="@drawable/bg_home_item"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="270:295"
+            app:layout_constraintDimensionRatio="4:5"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="@dimen/dimen_240dp"
+            app:layout_constraintHeight_min="@dimen/dimen_240dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/rcp_blue_200"
@@ -30,19 +33,22 @@
         <TextView
             android:id="@+id/tv_collection_name"
             style="@style/TextRegularStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_8dp"
             android:layout_marginBottom="@dimen/dimen_12dp"
             android:ellipsize="marquee"
+            android:gravity="center"
             android:maxLines="1"
+            android:paddingHorizontal="@dimen/dimen_8dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"
+            android:textSize="@dimen/text_size_18sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
-            tools:text="Fried Egg" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            app:layout_constraintVertical_bias="1"
+            tools:text="Fried Egg dasddasda" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

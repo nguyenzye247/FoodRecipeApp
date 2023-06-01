@@ -17,18 +17,19 @@ class RecipeRepository constructor(
     private val recipeService: RecipeService
 ) : Repository {
     @WorkerThread
-    fun searchRecipeByFilters(searchRecipeFilterBody: SearchRecipeFilterBody) = flow {
-        recipeService.searchRecipeByFilters(searchRecipeFilterBody, MAIN_RECIPE_PAGE)
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(SearchRecipeByFiltersErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                emit(null)
-            }
-    }.flowOn(Dispatchers.IO)
+    fun searchRecipeByFilters(token: String, searchRecipeFilterBody: SearchRecipeFilterBody) =
+        flow {
+            recipeService.searchRecipeByFilters(token, searchRecipeFilterBody, MAIN_RECIPE_PAGE)
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(SearchRecipeByFiltersErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    emit(null)
+                }
+        }.flowOn(Dispatchers.IO)
 
     @WorkerThread
     fun fetchRandomRecipes(token: String) = flow {

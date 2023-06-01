@@ -17,6 +17,7 @@ interface RecipeService {
 
     @POST(RECIPE_SEARCH_POST_EP)
     suspend fun searchRecipeByFilters(
+        @Header("Authorization") token: String,
         @Body searchFilterBody: SearchRecipeFilterBody,
         @Query("page") page: Int
     ): ApiResponse<RecipeResponse>

@@ -8,9 +8,6 @@ import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.*
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.toRecipeDto
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toAuthorDto
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toCollection
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toCollectionDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.AuthorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.CollectionResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
@@ -23,7 +20,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import com.nguyenhl.bk.foodrecipe.feature.util.DispatchGroup
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 class HomeFetchRecipeUseCase constructor(
     private val dishPreferredRepository: DishPreferredRepository,
@@ -56,46 +53,50 @@ class HomeFetchRecipeUseCase constructor(
     private val _ingredients: MutableLiveData<List<IngredientDto>?> = MutableLiveData()
     fun liveIngredients(): LiveData<List<IngredientDto>?> = _ingredients
 
-
     suspend fun fetchRecipeData(context: Context, userId: String, onFetchFinished: () -> Unit) {
         val userInfo = userInfoRepository.getUserInfoByUserId(userId) ?: return
         _userInfo.postValue(userInfo.toUserInfoDto())
 
-        dispatchGroup.apply {
-            async {
-                fetchPreferredDishes(userInfo.user.userId)
-            }
-            async {
-                fetchSuggestRecipes(userInfo.healthStatusWithCategoryDetail.categoryDetails)
-            }
-            async {
-                fetchCollections()
-            }
-            async {
-                fetchAuthors()
-            }
-            async {
-                fetchRandomRecipes(context)
-            }
-            async {
-                fetchIngredients()
-            }
-            async {
-
-            }
-        }
-
-        dispatchGroup.awaitAll {
-            onFetchFinished.invoke()
-        }
+//        dispatchGroup.apply {
+//            async {
+        fetchPreferredDishes(userInfo.user.userId)
+//            }
+//            async {
+        fetchSuggestRecipes(context, userInfo.healthStatusWithCategoryDetail.categoryDetails)
+//            }
+//            async {
+        fetchCollections()
+//            }
+//            async {
+        fetchAuthors()
+//            }
+//            async {
+        fetchRandomRecipes(context)
+//            }
+//            async {
+        fetchIngredients()
+//            }
+//
+//            awaitAll {
+//                onFetchFinished.invoke()
+//            }
+//        }
     }
 
     private suspend fun fetchPreferredDishes(userId: String) {
         val preferredDishes = dishPreferredRepository.getAllPreferredDishByUserId(userId)
         _preferredDishes.postValue(preferredDishes.map { it.toDishPreferredDto() })
+        Timber.tag(TAG).d("PreferredDishes: ${preferredDishes.size}")
     }
 
-    private suspend fun fetchSuggestRecipes(categoryDetails: List<CategoryDetail>) {
+    private suspend fun fetchSuggestRecipes(
+        context: Context,
+        categoryDetails: List<CategoryDetail>
+    ) {
+        val token = SessionManager.fetchToken(context).ifEmpty {
+            context.toast("Empty token")
+            return
+        }
         val searchRecipeFilterBody = SearchRecipeFilterBody(
             idCategoryDetails = categoryDetails.map { it.idCategoryDetail },
             null,
@@ -103,10 +104,11 @@ class HomeFetchRecipeUseCase constructor(
             null,
             null
         )
-        recipeRepository.searchRecipeByFilters(searchRecipeFilterBody).collect { response ->
+        recipeRepository.searchRecipeByFilters(token, searchRecipeFilterBody).collect { response ->
             when (response) {
                 is RecipeResponse -> {
                     _suggestRecipes.postValue(response.recipes.map { it.toRecipeDto() })
+                    Timber.tag(TAG).d("SuggestRecipes: ${response.recipes.size}")
                 }
 
                 else -> {
@@ -124,6 +126,7 @@ class HomeFetchRecipeUseCase constructor(
                         .getRandomSubset(ITEM_SIZE)
                         .map { it.toCollectionDto() }
                     _collections.postValue(top10Collections)
+                    Timber.tag(TAG).d("Collections: ${response.collections.size}")
 
                     saveCollections(response.collections)
                 }
@@ -142,9 +145,10 @@ class HomeFetchRecipeUseCase constructor(
 
     private suspend fun fetchAuthors() {
         authorRepository.fetchAuthors().collect { response ->
-            when(response) {
+            when (response) {
                 is AuthorResponse -> {
                     _authors.postValue(response.authors.map { it.toAuthorDto() })
+                    Timber.tag(TAG).d("Authors: ${response.authors.size}")
                 }
 
                 else -> {
@@ -160,9 +164,10 @@ class HomeFetchRecipeUseCase constructor(
             return
         }
         recipeRepository.fetchRandomRecipes(token).collect { response ->
-            when(response) {
+            when (response) {
                 is RecipeResponse -> {
-                    _randomRecipes.postValue(response.recipes.map {it.toRecipeDto()})
+                    _randomRecipes.postValue(response.recipes.map { it.toRecipeDto() })
+                    Timber.tag(TAG).d("RandomRecipes: ${response.recipes.size}")
                 }
 
                 else -> {
@@ -174,13 +179,10 @@ class HomeFetchRecipeUseCase constructor(
 
     private suspend fun fetchIngredients() {
         ingredientRepository.fetchIngredients().collect { response ->
-            when(response) {
+            when (response) {
                 is IngredientResponse -> {
-                    val top10Collections = response.ingredients
-                        .getRandomSubset(ITEM_SIZE)
-                        .map { it.toIngredientDto() }
-
-                    _ingredients.postValue(top10Collections)
+                    _ingredients.postValue(response.ingredients.map { it.toIngredientDto() })
+                    Timber.tag(TAG).d("Ingredients: ${response.ingredients.size}")
                 }
 
                 else -> {
@@ -192,5 +194,6 @@ class HomeFetchRecipeUseCase constructor(
 
     companion object {
         private const val ITEM_SIZE = 10
+        private const val TAG = "HOME_TAG"
     }
 }

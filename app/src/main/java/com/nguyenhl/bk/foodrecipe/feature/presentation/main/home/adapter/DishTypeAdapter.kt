@@ -1,8 +1,9 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.items
+package com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.databinding.ItemDishTypeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 
@@ -14,7 +15,8 @@ class DishTypeAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(dishType: DishPreferredDto) {
             binding.apply {
-
+                ivDishType.loadImage(dishType.imageUrl)
+                tvDishType.text = dishType.name
             }
         }
     }
