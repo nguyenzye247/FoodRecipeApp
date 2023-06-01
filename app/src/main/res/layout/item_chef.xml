@@ -24,6 +24,7 @@
                 android:layout_width="@dimen/dimen_0dp"
                 android:layout_height="@dimen/dimen_0dp"
                 android:contentDescription="@null"
+                android:foreground="@color/rcp_black_transparent_2"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="3:4"
