@@ -23,14 +23,11 @@ import com.nguyenhl.bk.foodrecipe.feature.data.repository.HealthStatusRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserRepository
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
-import com.nguyenhl.bk.foodrecipe.feature.util.DispatchGroup
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -42,7 +39,6 @@ class SplashViewModel constructor(
     private val userRepository: UserRepository,
     private val userInfoRepository: UserInfoRepository
 ) : BaseViewModel(input) {
-    private val dispatchGroup = DispatchGroup(Dispatchers.IO)
     private var timeFinish: Long = 3000
     val isFinish = MutableStateFlow(false)
 
@@ -57,10 +53,13 @@ class SplashViewModel constructor(
 
     private suspend fun fetchInitData() {
         viewModelScope.launch {
-            val healthStatusDeferred = async { getAllHealthStatuses() }
-            val userInfoDeferred = async { checkForUserInfo() }
+            val deferredResults = listOf(
+                async { getAllHealthStatuses() },
+                async { checkForUserInfo() }
+            )
 
-            awaitAll(healthStatusDeferred, userInfoDeferred)
+            deferredResults.awaitAll()
+            closeDelaySplash()
         }
     }
 
@@ -72,7 +71,7 @@ class SplashViewModel constructor(
                 }
 
                 else -> {
-                    timeFinish = 4000
+                    timeFinish = 2500
                 }
             }
         }

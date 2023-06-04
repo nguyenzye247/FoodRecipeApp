@@ -11,10 +11,10 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemSuggestForYouBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
-class SuggestForYouAdapter(
+class RecipeAdapter(
     private val suggestRecipes: List<RecipeDto>,
     private val onFavorite: (recipe: RecipeDto) -> Unit
-) : RecyclerView.Adapter<SuggestForYouAdapter.SuggestForYouViewHolder>() {
+) : RecyclerView.Adapter<RecipeAdapter.SuggestForYouViewHolder>() {
 
 
     inner class SuggestForYouViewHolder(val binding: ItemSuggestForYouBinding) :
@@ -24,7 +24,10 @@ class SuggestForYouAdapter(
                 ivBackground.loadImage(recipe.imageUrl)
                 tvChefName.text = recipe.author
                 tvRecipeName.text = recipe.name
-                tvCookTime.text = recipe.totalTime.toString()
+                tvCookTime.apply{
+                    val timeCookInMinuteText = "${recipe.totalTime} min"
+                    text = timeCookInMinuteText
+                }
                 setFavourite(recipe.isLiked)
 
                 btnFavorite.onClick {
@@ -38,7 +41,7 @@ class SuggestForYouAdapter(
                 imageDrawable = if (isFavorite) {
                     drawable(R.drawable.ic_favorite_selected)
                 } else {
-                    drawable(R.drawable.ic_favorite_selected)
+                    drawable(R.drawable.ic_favorite)
                 }
             }
         }

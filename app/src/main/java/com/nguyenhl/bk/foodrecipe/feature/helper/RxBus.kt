@@ -16,5 +16,5 @@ class RxBus {
 }
 
 class RxEvent {
-
+    class EventUnauthorized()
 }

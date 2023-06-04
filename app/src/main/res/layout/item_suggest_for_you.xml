@@ -18,14 +18,15 @@
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="@dimen/dimen_0dp"
             android:contentDescription="@null"
-            android:scaleType="centerCrop"
             android:foreground="@drawable/bg_home_item"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="266:203"
+            app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="@dimen/dimen_200dp"
+            app:layout_constraintHeight_min="@dimen/dimen_200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_min="266dp"
             tools:background="@color/rcp_blue_200"
             tools:src="@drawable/img_splash_bg" />
 
@@ -59,7 +60,7 @@
         <TextView
             android:id="@+id/tv_recipe_name"
             style="@style/TextBoldStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:maxLines="1"
@@ -67,7 +68,7 @@
             android:textSize="@dimen/text_size_18sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@id/tv_chef_name"
-            app:layout_constraintEnd_toEndOf="@id/iv_background"
+            app:layout_constraintEnd_toEndOf="@id/tv_chef_name"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/tv_chef_name"
             tools:text="Fried Egg" />
@@ -75,13 +76,14 @@
         <TextView
             android:id="@+id/tv_chef_name"
             style="@style/TextMediumStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_12dp"
+            android:layout_marginHorizontal="@dimen/dimen_12dp"
             android:layout_marginBottom="@dimen/dimen_12dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
+            app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
             tools:text="Good Food Team" />
 

@@ -18,8 +18,9 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toUserI
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
-import com.nguyenhl.bk.foodrecipe.feature.util.DispatchGroup
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 
 class HomeFetchRecipeUseCase constructor(
@@ -30,7 +31,6 @@ class HomeFetchRecipeUseCase constructor(
     private val authorRepository: AuthorRepository,
     private val ingredientRepository: IngredientRepository,
 ) {
-    private val dispatchGroup = DispatchGroup(Dispatchers.IO)
 
     private val _userInfo: MutableLiveData<UserInfoDto?> = MutableLiveData()
     fun liveUserInfo(): LiveData<UserInfoDto?> = _userInfo
@@ -57,30 +57,20 @@ class HomeFetchRecipeUseCase constructor(
         val userInfo = userInfoRepository.getUserInfoByUserId(userId) ?: return
         _userInfo.postValue(userInfo.toUserInfoDto())
 
-//        dispatchGroup.apply {
-//            async {
-        fetchPreferredDishes(userInfo.user.userId)
-//            }
-//            async {
-        fetchSuggestRecipes(context, userInfo.healthStatusWithCategoryDetail.categoryDetails)
-//            }
-//            async {
-        fetchCollections()
-//            }
-//            async {
-        fetchAuthors()
-//            }
-//            async {
-        fetchRandomRecipes(context)
-//            }
-//            async {
-        fetchIngredients()
-//            }
-//
-//            awaitAll {
-//                onFetchFinished.invoke()
-//            }
-//        }
+        coroutineScope {
+            val deferredResults = listOf(
+                async { fetchPreferredDishes(userInfo.user.userId) },
+                async { fetchSuggestRecipes(context, userInfo.healthStatusWithCategoryDetail.categoryDetails) },
+                async { fetchCollections() },
+                async { fetchAuthors() },
+                async { fetchRandomRecipes(context) },
+                async { fetchIngredients() }
+            )
+
+            deferredResults.awaitAll()
+            Timber.tag(TAG).d("FINISH")
+            onFetchFinished()
+        }
     }
 
     private suspend fun fetchPreferredDishes(userId: String) {

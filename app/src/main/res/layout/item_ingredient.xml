@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginHorizontal="@dimen/dimen_6dp"
-    app:cardCornerRadius="@dimen/dimen_10dp"
+    app:cardCornerRadius="@dimen/dimen_20dp"
     app:cardElevation="@dimen/dimen_1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,10 +21,10 @@
             android:foreground="@drawable/bg_home_item"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="4:5"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="@dimen/dimen_240dp"
-            app:layout_constraintHeight_min="@dimen/dimen_240dp"
+            app:layout_constraintHeight_max="@dimen/dimen_160dp"
+            app:layout_constraintHeight_min="@dimen/dimen_160dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/rcp_blue_200"
@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/tv_collection_name"
-            style="@style/TextRegularStyle"
+            style="@style/TextMediumStyle"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_12dp"
