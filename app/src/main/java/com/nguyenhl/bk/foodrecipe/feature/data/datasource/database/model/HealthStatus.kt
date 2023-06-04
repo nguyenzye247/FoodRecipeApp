@@ -20,6 +20,9 @@ data class HealthStatus(
     @ColumnInfo(name = "name")
     val name: String,
 
+    @ColumnInfo(name = "user_id")
+    val userId: String,
+
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L
 ) : Parcelable

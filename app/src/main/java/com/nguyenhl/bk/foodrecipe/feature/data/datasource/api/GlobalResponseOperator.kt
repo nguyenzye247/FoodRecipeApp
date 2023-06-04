@@ -1,8 +1,10 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api
 
 import android.app.Application
+import com.nguyenhl.bk.foodrecipe.BuildConfig
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.RegisterResponseMapper
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
@@ -25,28 +27,42 @@ class GlobalResponseOperator<T> constructor(
                 Timber.d(message())
 
                 when(statusCode) {
-                    StatusCode.InternalServerError -> toast("InternalServerError")
-                    StatusCode.BadGateway -> toast("BadGateway")
+                    StatusCode.InternalServerError -> {
+                        toast("InternalServerError")
+                        Timber.w("InternalServerError")
+                    }
+                    StatusCode.BadGateway -> {
+                        toast("BadGateway")
+                        Timber.w("BadGateway")
+                    }
+                    StatusCode.Unauthorized -> {
+                        toast("Unauthorized")
+                        Timber.w("Unauthorized")
+                    }
                     else -> {}
                 }
 
                 map(RegisterResponseMapper) {
-                    Timber.d(message)
+                    Timber.w(message)
                 }
             }
         }
     }
 
-    override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) {
-        withContext(Dispatchers.Main) {
-            apiResponse.run {
-                Timber.d(message)
-                toast(message())
-            }
-        }
-    }
+//    override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) {
+//        withContext(Dispatchers.Main) {
+//            apiResponse.run {
+//                Timber.d(message)
+//                toast("Exception!")
+//            }
+//        }
+//    }
+
+    override suspend fun onException(apiResponse: ApiResponse.Failure.Exception<T>) = Unit
 
     private fun toast(message: String) {
-        application.longToast(message)
+        if (BuildConfig.DEBUG) {
+            application.toastError(message)
+        }
     }
 }

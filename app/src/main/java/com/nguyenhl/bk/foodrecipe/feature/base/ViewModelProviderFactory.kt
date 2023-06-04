@@ -13,6 +13,8 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -22,21 +24,33 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val registerRepository: RegisterRepository by inject()
     private val loginRepository: LoginRepository by inject()
     private val userInfoRepository: UserInfoRepository by inject()
+    private val userRepository: UserRepository by inject()
     private val healthStatusRepository: HealthStatusRepository by inject()
     private val dishPreferredRepository: DishPreferredRepository by inject()
     private val forgotPasswordRepository: ForgotPasswordRepository by inject()
+    private val categoryRepository: CategoryRepository by inject()
+
+    private val homeUseCase: HomeUseCase by inject()
+    private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> {
                 return SplashViewModel(
-                    input as BaseInput.NoInput,
-                    healthStatusRepository
+                    input as BaseInput.SplashInput,
+                    healthStatusRepository,
+                    dishPreferredRepository,
+                    userRepository,
+                    userInfoRepository
                 ) as T
             }
 
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                return MainViewModel(input as BaseInput.MainInput) as T
+                return MainViewModel(
+                    input as BaseInput.MainInput,
+                    homeUseCase,
+                    homeFetchRecipeUseCase
+                ) as T
             }
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {

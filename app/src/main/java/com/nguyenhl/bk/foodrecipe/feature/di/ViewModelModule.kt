@@ -7,6 +7,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoView
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -29,5 +30,9 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.DishPreferredInput) ->
         ViewModelProviderFactory(input).create(DishPreferredViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.MainInput) ->
+        ViewModelProviderFactory(input).create(MainViewModel::class.java)
     }
 }

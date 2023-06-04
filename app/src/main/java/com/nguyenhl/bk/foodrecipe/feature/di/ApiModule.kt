@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.di
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.interceptor.RequestInterceptor
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.*
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.HealthStatusCategoryDetailDao
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,7 +27,7 @@ val apiModule = module {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
             .baseUrl(
-                "https://recipe-app-api.herokuapp.com"
+                "https://recipe-app-api.herokuapp.com/"
             )
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -40,5 +41,9 @@ val apiModule = module {
     single { get<Retrofit>().create(HealthStatusService::class.java) }
     single { get<Retrofit>().create(CategoryService::class.java) }
     single { get<Retrofit>().create(DishPreferredService::class.java) }
+    single { get<Retrofit>().create(RecipeService::class.java) }
+    single { get<Retrofit>().create(CollectionService::class.java) }
+    single { get<Retrofit>().create(AuthorService::class.java) }
+    single { get<Retrofit>().create(IngredientService::class.java) }
     //TODO: add more services
 }

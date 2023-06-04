@@ -10,8 +10,13 @@ val repositoryModule = module {
     single { RegisterRepository(get()) }
     single { LoginRepository(get()) }
     single { ForgotPasswordRepository(get()) }
-    single { UserInfoRepository(get()) }
-    single { HealthStatusRepository(get(), get()) }
+    single { UserRepository(get()) }
+    single { UserInfoRepository(get(), get()) }
+    single { HealthStatusRepository(get(), get(), get()) }
     single { CategoryRepository(get(), get(), get()) }
-    single { DishPreferredRepository(get()) }
+    single { DishPreferredRepository(get(), get()) }
+    single { RecipeRepository(get()) }
+    single { CollectionRepository(get(), get()) }
+    single { AuthorRepository(get()) }
+    single { IngredientRepository(get()) }
 }

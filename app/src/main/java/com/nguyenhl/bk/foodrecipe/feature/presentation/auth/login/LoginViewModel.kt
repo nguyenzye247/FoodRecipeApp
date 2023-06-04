@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.core.extension.ifNotEmpty
+import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
@@ -54,13 +55,13 @@ class LoginViewModel constructor(
         }
     }
 
-    fun checkForUserInfo(onTokenEmptyCallback: () -> Unit) {
+    fun checkForUserInfo() {
         val token = SessionManager.fetchToken(input.application).ifEmpty {
-            onTokenEmptyCallback.invoke()
+            input.application.toast("Empty token")
             return
         }
         viewModelScope.launch {
-            userInfoRepository.getApiUserInfo(token)
+            userInfoRepository.fetchApiUserInfo(token)
                 .collectLatest {
                     when (it) {
                         is UserInfoGetResponse -> {

@@ -37,4 +37,23 @@
     <string name="your_health_status">Your health status</string>
     <string name="none">None</string>
     <string name="send_to_email">Send to email</string>
+    <string name="home">Home</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="calendar">Calendar</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="what_do_you_want_to_cook_today">What do you want to\ncook today?</string>
+    <string name="try_something_new">It\'s time to try something new...</string>
+    <string name="suggest_for_you">Suggest for you</string>
+    <string name="view_all">view all</string>
+    <string name="so_many_health_conscious_recipes">So many health-conscious recipes...</string>
+    <string name="collection">Collection</string>
+    <string name="find_the_perfect_recipe">Find the perfect recipe...</string>
+    <string name="top_chef">Top chef</string>
+    <string name="over_100_chefs">Over 100+ chefs...</string>
+    <string name="daily_inspirations">Daily Inspirations</string>
+    <string name="recipes_picked_by_our_editor">Recipes picked by our editor</string>
+    <string name="recently_viewed">Recently Viewed</string>
+    <string name="minute">min</string>
+    <string name="greeting">Hi,</string>
 </resources>

@@ -130,4 +130,6 @@ dependencies {
     implementation "com.github.skydoves:powerspinner:1.2.6"
     //Valid dation
     implementation "com.wajahatkarim:easyvalidation-core:1.0.4"
+    //Toast
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 }

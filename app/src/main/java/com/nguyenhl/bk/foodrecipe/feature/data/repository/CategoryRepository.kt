@@ -8,6 +8,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.toC
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.CategoryService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryDao
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryDetailDao
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Category
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
@@ -25,7 +26,6 @@ class CategoryRepository constructor(
     @WorkerThread
     fun getApiAllCategories() = flow {
         categoryService.getAllCategories()
-        categoryService.getAllCategories()
             .suspendOnSuccess {
                 emit(data)
             }
@@ -37,13 +37,11 @@ class CategoryRepository constructor(
             }
     }.flowOn(Dispatchers.IO)
 
-    private suspend fun saveAllCategory(apiCategories: List<ApiCategory>) {
-        val categoryForSave = apiCategories.map { it.toCategory() }
-        categoryDao.insertAll(categoryForSave)
+    suspend fun saveAllCategory(categories: List<Category>) {
+        categoryDao.insertAll(categories)
     }
 
-    private suspend fun saveAllCategoryDetail(apiCategories: List<ApiCategory>) {
-        val categoryDetails = mapAllCategoryDetailsFromApi(apiCategories)
+    suspend fun saveAllCategoryDetail(categoryDetails: List<CategoryDetail>) {
         categoryDetailDao.insertAll(categoryDetails)
     }
 

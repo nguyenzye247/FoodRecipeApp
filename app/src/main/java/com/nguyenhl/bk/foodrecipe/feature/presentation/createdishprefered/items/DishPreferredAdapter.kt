@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
-import com.nguyenhl.bk.foodrecipe.databinding.ItemDishPreferredBinding
+import com.nguyenhl.bk.foodrecipe.databinding.ItemCreateDishPreferredBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 
 class DishPreferredAdapter(
@@ -15,7 +15,7 @@ class DishPreferredAdapter(
     private val onDishSelected: (dish: DishPreferredDto) -> Unit
 ) : RecyclerView.Adapter<DishPreferredAdapter.PreferredDishViewHolder>() {
 
-    inner class PreferredDishViewHolder(val binding: ItemDishPreferredBinding) :
+    inner class PreferredDishViewHolder(val binding: ItemCreateDishPreferredBinding) :
         ViewHolder(binding.root) {
         fun bind(dish: DishPreferredDto) {
             binding.flSelected.setVisible(dish.isSelected)
@@ -33,7 +33,7 @@ class DishPreferredAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreferredDishViewHolder {
         return PreferredDishViewHolder(
-            ItemDishPreferredBinding.inflate(
+            ItemCreateDishPreferredBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

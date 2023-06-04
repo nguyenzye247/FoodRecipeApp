@@ -6,6 +6,10 @@ sealed class BaseInput {
 
     object NoInput : BaseInput()
 
+    data class SplashInput(
+        val application: Application
+    ) : BaseInput()
+
     data class MainInput(
         val application: Application
     ) : BaseInput()

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Category
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryWithCategoryDetail
 
@@ -20,5 +21,6 @@ interface CategoryDao {
     suspend fun getAllCategory(): List<Category>
 
     @Query("SELECT * FROM category")
+    @Transaction
     suspend fun getAllCategoryWithDetails(): List<CategoryWithCategoryDetail>
 }

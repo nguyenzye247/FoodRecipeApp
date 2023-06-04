@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category
 
 import com.google.gson.annotations.SerializedName
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
+import com.nguyenhl.bk.foodrecipe.feature.dto.CategoryDetailDto
 
 data class ApiCategoryDetail(
     @SerializedName("_id")
@@ -20,6 +21,14 @@ internal fun ApiCategoryDetail.toCategoryDetail(): CategoryDetail {
     return CategoryDetail(
         idApiCategory = this.idCategory,
         idApi = this.id,
+        idCategoryDetail = this.idCategoryDetail,
+        name = this.name,
+        imageUrl = this.imageUrl
+    )
+}
+
+internal fun ApiCategoryDetail.toCategoryDetailDto(): CategoryDetailDto {
+    return CategoryDetailDto(
         idCategoryDetail = this.idCategoryDetail,
         name = this.name,
         imageUrl = this.imageUrl

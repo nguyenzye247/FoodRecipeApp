@@ -33,7 +33,7 @@ class DishPreferredViewModel constructor(
 
     private fun getAllPreferredDishes() {
         viewModelScope.launch {
-            dishPreferredRepository.getAllPreferredDishes().collectLatest { response ->
+            dishPreferredRepository.fetchAllPreferredDishes().collectLatest { response ->
                 when (response) {
                     is DishPreferredResponse -> {
                         _preferredDishes.postValue(response.data.map { it.toDishPreferredDto() })

@@ -13,6 +13,8 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
 import kotlinx.coroutines.Dispatchers
 
@@ -22,7 +24,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     override fun getLazyBinding() = lazy { ActivitySplashBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModels<SplashViewModel> {
-        ViewModelProviderFactory(BaseInput.NoInput)
+        ViewModelProviderFactory(BaseInput.SplashInput(application))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +51,20 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
+        val isLoggedIn = viewModel.doOnUserLoggedIn {
+            observeDistinct(viewModel.liveIsValidUserInfo()) { isValid ->
+                isValid?.let {
+                    if (isValid) {
+                        goToMain()
+                    } else {
+                        goToDishPreferred()
+                    }
+                } ?: run {
+                    goToLogin()
+                }
+            }
+        }
+        if (isLoggedIn) return
         observeDistinct(viewModel.isFinish.asLiveData(Dispatchers.Main)) { isFinish ->
             isFinish ?: return@observeDistinct
             if (!isFinish) return@observeDistinct
@@ -58,6 +74,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     private fun goToLogin() {
         LoginActivity.startActivity(this) {
+            // put stuffs
+        }
+    }
+
+    private fun goToMain() {
+        MainActivity.startActivity(this) {
+            // put stuffs
+        }
+    }
+
+    private fun goToDishPreferred() {
+        DishPreferredActivity.startActivity(this) {
             // put stuffs
         }
     }

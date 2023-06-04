@@ -17,6 +17,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.txt
+import es.dmoral.toasty.Toasty
 import timber.log.Timber
 
 fun Context.createToast(text: CharSequence, duration: Int): Toast {
@@ -78,4 +79,36 @@ private class SafeToastCtx(ctx: Context) : ContextWrapper(ctx) {
             }
         }
     }
+}
+
+fun Context.createToastError(text: CharSequence, duration: Int): Toast {
+    return Toasty.error(this, text, duration, true)
+}
+
+fun Context.createToastError(@StringRes resId: Int, duration: Int): Toast {
+    return createToastError(txt(resId), duration)
+}
+
+fun Context.toastError(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    createToastError(text, duration).show()
+}
+
+fun Context.toastError(@StringRes resId: Int, duration: Int) {
+    createToastError(resId, duration).show()
+}
+
+fun Context.createToastSuccess(text: CharSequence, duration: Int): Toast {
+    return Toasty.success(this, text, duration, true)
+}
+
+fun Context.createToastSuccess(@StringRes resId: Int, duration: Int): Toast {
+    return createToastSuccess(txt(resId), duration)
+}
+
+fun Context.toastSuccess(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    createToastSuccess(text, duration).show()
+}
+
+fun Context.toastSuccess(@StringRes resId: Int, duration: Int) {
+    createToastSuccess(resId, duration).show()
 }
