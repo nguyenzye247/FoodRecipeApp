@@ -94,7 +94,7 @@ class HomeFetchRecipeUseCase constructor(
             null,
             null
         )
-        recipeRepository.searchRecipeByFilters(token, searchRecipeFilterBody).collect { response ->
+        recipeRepository.searchTop10RecipeByFilters(token, searchRecipeFilterBody).collect { response ->
             when (response) {
                 is RecipeResponse -> {
                     _suggestRecipes.postValue(response.recipes.map { it.toRecipeDto() })

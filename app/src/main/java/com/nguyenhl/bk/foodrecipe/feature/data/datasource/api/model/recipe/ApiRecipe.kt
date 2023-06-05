@@ -3,6 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe
 import com.google.gson.annotations.SerializedName
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.ApiCategoryDetail
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.toCategoryDetailDto
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.model.PagingDataItem
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
 data class ApiRecipe(

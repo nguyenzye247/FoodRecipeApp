@@ -1,14 +1,10 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource
 
-import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.model.PagingDataItem
 
-abstract class BasePagingSource(
-    private val context: Context
-) : PagingSource<Int, PagingDataItem>() {
-    override fun getRefreshKey(state: PagingState<Int, PagingDataItem>): Int? {
+abstract class BasePagingSource<D : Any, R : Any> : PagingSource<Int, D>() {
+    override fun getRefreshKey(state: PagingState<Int, D>): Int? {
         // We need to get the previous key (or next key if previous is null) of the page
         // that was closest to the most recently accessed index.
         // Anchor position is the most recently accessed index
@@ -18,9 +14,9 @@ abstract class BasePagingSource(
         } ?: kotlin.run { null }
     }
 
-    abstract fun toLoadResult(): LoadResult<Int, PagingDataItem>
+    abstract fun toLoadResult(response: R, position: Int): LoadResult<Int, D>
 
     companion object {
-        private const val DEFAULT_PAGE_INDEX = 1
+        const val DEFAULT_PAGE_INDEX = 1
     }
 }
