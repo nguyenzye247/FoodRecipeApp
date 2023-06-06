@@ -66,6 +66,10 @@
             android:name=".feature.presentation.main.MainActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.viewall.collection.ViewAllCollectionActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

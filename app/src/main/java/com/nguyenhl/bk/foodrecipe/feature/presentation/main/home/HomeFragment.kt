@@ -9,12 +9,14 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.txt
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.ViewAllCollectionActivity
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private lateinit var dishTypeAdapter: DishTypeAdapter
@@ -36,7 +38,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     }
 
     override fun initListener() {
-
+        binding.apply {
+            btnViewAllCollection.onClick {
+                goToViewAllCollection()
+            }
+        }
     }
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
@@ -116,7 +122,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindCollectionsViewData(collections: List<CollectionDto>?) {
         collections ?: return
 
-        collectionAdapter = CollectionAdapter(collections)
+        collectionAdapter = CollectionAdapter(collections) { collection ->
+
+        }
         binding.rvCollection.apply {
             adapter = collectionAdapter
             layoutManager = LinearLayoutManager(
@@ -168,6 +176,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
+        }
+    }
+
+    private fun goToViewAllCollection() {
+        ViewAllCollectionActivity.startActivity(context) {
+
         }
     }
 }

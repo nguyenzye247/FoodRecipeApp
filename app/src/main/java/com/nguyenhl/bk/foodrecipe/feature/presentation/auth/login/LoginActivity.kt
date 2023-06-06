@@ -15,6 +15,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityLoginBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.AuthStatus
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity
@@ -68,12 +69,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         }
         observeDistinct(viewModel.liveIsValidUserInfo()) { isValid ->
             isValid?.let {
-                if (isValid) {
-                    goToMain()
-                } else {
-                    goToDishPreferred()
+                when (isValid) {
+                    AuthStatus.VALID -> {
+                        goToMain()
+                        finish()
+                    }
+                    AuthStatus.INVALID -> {
+                        goToDishPreferred()
+                        finish()
+                    }
+                    else -> {}
                 }
-                finish()
             }
         }
         observe(viewModel.liveLoginStatus()) { loginStatus ->

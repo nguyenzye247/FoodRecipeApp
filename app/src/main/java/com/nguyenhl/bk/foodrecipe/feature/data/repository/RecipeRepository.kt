@@ -4,11 +4,15 @@ import androidx.annotation.WorkerThread
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.nguyenhl.bk.foodrecipe.core.common.INITIAL_LOAD_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.MAIN_RECIPE_PAGE
+import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
+import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRandomRecipeErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.ApiRecipe
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RandomRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.SuggestRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
 import com.skydoves.sandwich.suspendOnError
@@ -30,14 +34,34 @@ class RecipeRepository constructor(
     ): Flow<PagingData<ApiRecipe>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 10,
-                initialLoadSize = 10,
-                prefetchDistance = 7
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
             ),
             pagingSourceFactory = {
                 SuggestRecipePagingSource(
                     token,
                     searchRecipeFilterBody,
+                    recipeService
+                )
+            }
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
+    @WorkerThread
+    fun fetchRandomRecipes(
+        token: String
+    ): Flow<PagingData<ApiRecipe>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
+            ),
+            pagingSourceFactory = {
+                RandomRecipePagingSource(
+                    token,
                     recipeService
                 )
             }
@@ -61,7 +85,7 @@ class RecipeRepository constructor(
         }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun fetchRandomRecipes(token: String) = flow {
+    fun fetchTop10RandomRecipes(token: String) = flow {
         recipeService.getRandomRecipes(token)
             .suspendOnSuccess {
                 emit(data)

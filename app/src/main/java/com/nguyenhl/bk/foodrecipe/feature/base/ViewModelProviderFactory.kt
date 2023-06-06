@@ -16,6 +16,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.ViewAllCollectionViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -28,6 +29,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val healthStatusRepository: HealthStatusRepository by inject()
     private val dishPreferredRepository: DishPreferredRepository by inject()
     private val forgotPasswordRepository: ForgotPasswordRepository by inject()
+    private val collectionRepository: CollectionRepository by inject()
     private val categoryRepository: CategoryRepository by inject()
 
     private val homeUseCase: HomeUseCase by inject()
@@ -91,6 +93,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                     input as BaseInput.CreateInfoInput,
                     userInfoRepository,
                     healthStatusRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(ViewAllCollectionViewModel::class.java) -> {
+                return ViewAllCollectionViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllCollectionInput,
+                    collectionRepository
                 ) as T
             }
 

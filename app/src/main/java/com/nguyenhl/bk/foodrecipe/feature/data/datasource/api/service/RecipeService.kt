@@ -24,6 +24,7 @@ interface RecipeService {
 
     @GET(RECIPE_RANDOM_GET_EP)
     suspend fun getRandomRecipes(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
     ): ApiResponse<RecipeResponse>
 }

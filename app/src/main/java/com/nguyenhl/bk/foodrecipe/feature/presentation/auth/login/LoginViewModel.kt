@@ -7,6 +7,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.ifNotEmpty
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.AuthStatus
 import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.auth.LoginResponse
@@ -29,8 +30,10 @@ class LoginViewModel constructor(
     private val _loginStatus: MutableLiveData<ApiCommonResponse?> = MutableLiveData()
     fun liveLoginStatus(): LiveData<ApiCommonResponse?> = _loginStatus
 
-    private val _isValidUserInfo: MutableLiveData<Boolean> = MutableLiveData()
-    fun liveIsValidUserInfo(): LiveData<Boolean> = _isValidUserInfo
+//    private val _isValidUserInfo: MutableLiveData<Boolean> = MutableLiveData()
+//    fun liveIsValidUserInfo(): LiveData<Boolean> = _isValidUserInfo
+    private val _isValidUserInfo: MutableLiveData<AuthStatus> = MutableLiveData()
+    fun liveIsValidUserInfo(): LiveData<AuthStatus> = _isValidUserInfo
 
     fun loginToAccount(email: String, password: String) {
         viewModelScope.launch {
@@ -62,18 +65,22 @@ class LoginViewModel constructor(
         }
         viewModelScope.launch {
             userInfoRepository.fetchApiUserInfo(token)
-                .collectLatest {
-                    when (it) {
+                .collectLatest { response ->
+                    when (response) {
                         is UserInfoGetResponse -> {
-                            _isValidUserInfo.postValue(true)
+                            _isValidUserInfo.postValue(AuthStatus.VALID)
                         }
 
                         is ErrorResponse -> {
-                            _isValidUserInfo.postValue(false)
+                            if (response.message.contains("jwt")) {
+                                _isValidUserInfo.postValue(AuthStatus.EXPIRED)
+                            } else {
+                                _isValidUserInfo.postValue(AuthStatus.INVALID)
+                            }
                         }
 
                         else -> {
-                            _isValidUserInfo.postValue(false)
+                            _isValidUserInfo.postValue(AuthStatus.INVALID)
                         }
                     }
                 }

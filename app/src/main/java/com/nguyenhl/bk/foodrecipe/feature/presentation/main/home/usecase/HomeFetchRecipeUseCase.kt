@@ -134,7 +134,7 @@ class HomeFetchRecipeUseCase constructor(
     }
 
     private suspend fun fetchAuthors() {
-        authorRepository.fetchAuthors().collect { response ->
+        authorRepository.fetchTop10Authors().collect { response ->
             when (response) {
                 is AuthorResponse -> {
                     _authors.postValue(response.authors.map { it.toAuthorDto() })
@@ -153,7 +153,7 @@ class HomeFetchRecipeUseCase constructor(
             context.toast("Empty token")
             return
         }
-        recipeRepository.fetchRandomRecipes(token).collect { response ->
+        recipeRepository.fetchTop10RandomRecipes(token).collect { response ->
             when (response) {
                 is RecipeResponse -> {
                     _randomRecipes.postValue(response.recipes.map { it.toRecipeDto() })
@@ -168,7 +168,7 @@ class HomeFetchRecipeUseCase constructor(
     }
 
     private suspend fun fetchIngredients() {
-        ingredientRepository.fetchIngredients().collect { response ->
+        ingredientRepository.fetchTop10Ingredients().collect { response ->
             when (response) {
                 is IngredientResponse -> {
                     _ingredients.postValue(response.ingredients.map { it.toIngredientDto() })

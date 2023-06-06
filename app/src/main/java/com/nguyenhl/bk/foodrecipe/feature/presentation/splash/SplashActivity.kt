@@ -12,19 +12,23 @@ import com.nguyenhl.bk.foodrecipe.databinding.ActivitySplashBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.AuthStatus
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
 import kotlinx.coroutines.Dispatchers
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     override fun getLazyBinding() = lazy { ActivitySplashBinding.inflate(layoutInflater) }
 
-    override fun getLazyViewModel() = viewModels<SplashViewModel> {
-        ViewModelProviderFactory(BaseInput.SplashInput(application))
+    override fun getLazyViewModel() = viewModel<SplashViewModel> {
+        parametersOf(BaseInput.SplashInput(application))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,10 +58,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         val isLoggedIn = viewModel.doOnUserLoggedIn {
             observeDistinct(viewModel.liveIsValidUserInfo()) { isValid ->
                 isValid?.let {
-                    if (isValid) {
-                        goToMain()
-                    } else {
-                        goToDishPreferred()
+                    when (isValid) {
+                        AuthStatus.VALID -> {
+                            goToMain()
+                        }
+                        AuthStatus.INVALID -> {
+                            goToDishPreferred()
+                        }
+                        AuthStatus.EXPIRED -> {
+                            goToLogin()
+                        }
                     }
                 } ?: run {
                     goToLogin()
