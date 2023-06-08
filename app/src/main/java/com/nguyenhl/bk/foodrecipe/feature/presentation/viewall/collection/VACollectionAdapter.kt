@@ -9,12 +9,12 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemVaCollectionBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
 
-class ViewAllCollectionAdapter(
+class VACollectionAdapter(
     private val collections: List<CollectionDto>,
     private val onItemClick: (collection: CollectionDto) -> Unit
-) : RecyclerView.Adapter<ViewAllCollectionAdapter.ViewAllCollectionHolder>() {
+) : RecyclerView.Adapter<VACollectionAdapter.VACollectionHolder>() {
 
-    inner class ViewAllCollectionHolder(val binding: ItemVaCollectionBinding) :
+    inner class VACollectionHolder(val binding: ItemVaCollectionBinding) :
         ViewHolder(binding.root) {
         fun bind(collection: CollectionDto) {
             binding.apply {
@@ -29,12 +29,12 @@ class ViewAllCollectionAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: ViewAllCollectionHolder, position: Int) {
+    override fun onBindViewHolder(holder: VACollectionHolder, position: Int) {
         holder.bind(collections[position])
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllCollectionHolder {
-        return ViewAllCollectionHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VACollectionHolder {
+        return VACollectionHolder(
             ItemVaCollectionBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

@@ -9,7 +9,10 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPr
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.ViewAllCollectionViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -43,6 +46,18 @@ val viewModelModule = module {
     }
 
     viewModel { (input: BaseInput.BaseViewAllInput.ViewAllCollectionInput) ->
-        ViewModelProviderFactory(input).create(ViewAllCollectionViewModel::class.java)
+        ViewModelProviderFactory(input).create(VACollectionViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.BaseViewAllInput.ViewAllSuggestInput) ->
+        ViewModelProviderFactory(input).create(VASuggestViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.BaseViewAllInput.ViewAllRandomInput) ->
+        ViewModelProviderFactory(input).create(VARandomRecipeViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.BaseViewAllInput.ViewAllTopChefInput) ->
+        ViewModelProviderFactory(input).create(VAChefViewModel::class.java)
     }
 }

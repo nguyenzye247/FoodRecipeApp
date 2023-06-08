@@ -10,3 +10,6 @@ const val PREFETCH_DIST = 7
 const val MAIN_RECIPE_PAGE = 1
 
 const val DEFAULT_AVATAR = "https://robohash.org/rcp_me?set=set3"
+
+//Intent keys
+const val KEY_USER_INFO = "key_user_info"

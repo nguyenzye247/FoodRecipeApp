@@ -13,6 +13,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.Collectio
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.UserInfo
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toDishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toUserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
@@ -34,6 +35,7 @@ class HomeFetchRecipeUseCase constructor(
 
     private val _userInfo: MutableLiveData<UserInfoDto?> = MutableLiveData()
     fun liveUserInfo(): LiveData<UserInfoDto?> = _userInfo
+    fun getUserInfo(): UserInfoDto? = _userInfo.value
 
     private val _preferredDishes: MutableLiveData<List<DishPreferredDto>?> = MutableLiveData()
     fun livePreferredDishes(): LiveData<List<DishPreferredDto>?> = _preferredDishes

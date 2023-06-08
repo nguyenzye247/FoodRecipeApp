@@ -12,6 +12,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthor
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.ApiRecipe
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.AuthorPagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.AuthorService
+import com.nguyenhl.bk.foodrecipe.feature.dto.AuthorDto
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -24,7 +25,7 @@ class AuthorRepository(
     private val authorService: AuthorService
 ) : Repository {
     @WorkerThread
-    fun fetchAuthors(): Flow<PagingData<ApiAuthor>> {
+    fun fetchAuthors(): Flow<PagingData<AuthorDto>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,

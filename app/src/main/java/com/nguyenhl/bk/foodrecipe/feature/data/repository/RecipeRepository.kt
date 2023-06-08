@@ -15,6 +15,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.ApiRe
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RandomRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.SuggestRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -31,7 +32,7 @@ class RecipeRepository constructor(
     fun searchRecipeByFilters(
         token: String,
         searchRecipeFilterBody: SearchRecipeFilterBody
-    ): Flow<PagingData<ApiRecipe>> {
+    ): Flow<PagingData<RecipeDto>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
@@ -52,7 +53,7 @@ class RecipeRepository constructor(
     @WorkerThread
     fun fetchRandomRecipes(
         token: String
-    ): Flow<PagingData<ApiRecipe>> {
+    ): Flow<PagingData<RecipeDto>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,

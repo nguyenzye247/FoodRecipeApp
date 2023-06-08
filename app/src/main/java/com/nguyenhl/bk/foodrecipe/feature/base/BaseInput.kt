@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 
 import android.app.Application
 import com.nguyenhl.bk.foodrecipe.App
+import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 
 sealed class BaseInput {
 
@@ -51,11 +52,13 @@ sealed class BaseInput {
         ): BaseViewAllInput(application)
 
         data class ViewAllRandomInput(
-            val application: Application
+            val application: Application,
+            val userInfo: UserInfoDto?
         ): BaseViewAllInput(application)
 
         data class ViewAllSuggestInput(
-            val application: Application
+            val application: Application,
+            val userInfo: UserInfoDto?
         ): BaseViewAllInput(application)
         
         data class ViewAllTopChefInput(

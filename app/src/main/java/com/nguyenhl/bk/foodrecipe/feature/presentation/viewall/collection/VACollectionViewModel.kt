@@ -11,7 +11,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllViewModel
 import kotlinx.coroutines.launch
 
-class ViewAllCollectionViewModel constructor(
+class VACollectionViewModel constructor(
     val input: BaseInput.BaseViewAllInput.ViewAllCollectionInput,
     private val collectionRepository: CollectionRepository
 ) : BaseViewAllViewModel(input) {
