@@ -19,6 +19,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestActivity
 
@@ -56,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
                 goToChefs()
             }
             btnViewAllIngredients.onClick {
-
+                goToIngredients()
             }
             btnViewAllRecentlyViewed.onClick {
 
@@ -219,6 +220,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
 
     private fun goToChefs() {
         VAChefActivity.startActivity(context) {
+
+        }
+    }
+
+    private fun goToIngredients() {
+        VAIngredientActivity.startActivity(context) {
 
         }
     }
