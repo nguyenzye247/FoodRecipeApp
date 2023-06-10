@@ -1,9 +1,13 @@
 package com.nguyenhl.bk.foodrecipe.feature.dto
 
+import android.os.Parcelable
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo.UserInfoPostBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo.UserInfoPutBody
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserInfoDto(
+    var userId: String,
     var name: String,
     var dob: String,
     var gender: Int,
@@ -11,7 +15,7 @@ data class UserInfoDto(
     var weight: Float,
     var idHeathStatus: String,
     val idPreferredDishes: List<String> = listOf()
-)
+) : Parcelable
 
 internal fun UserInfoDto.toUserInfoPostBody(): UserInfoPostBody {
     return UserInfoPostBody(

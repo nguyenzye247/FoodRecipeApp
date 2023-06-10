@@ -16,6 +16,11 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -28,6 +33,10 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val healthStatusRepository: HealthStatusRepository by inject()
     private val dishPreferredRepository: DishPreferredRepository by inject()
     private val forgotPasswordRepository: ForgotPasswordRepository by inject()
+    private val collectionRepository: CollectionRepository by inject()
+    private val recipeRepository: RecipeRepository by inject()
+    private val authorRepository: AuthorRepository by inject()
+    private val ingredientRepository: IngredientRepository by inject()
     private val categoryRepository: CategoryRepository by inject()
 
     private val homeUseCase: HomeUseCase by inject()
@@ -91,6 +100,42 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                     input as BaseInput.CreateInfoInput,
                     userInfoRepository,
                     healthStatusRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(VACollectionViewModel::class.java) -> {
+                return VACollectionViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllCollectionInput,
+                    collectionRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(VASuggestViewModel::class.java) -> {
+                return VASuggestViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllSuggestInput,
+                    userInfoRepository,
+                    recipeRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(VARandomRecipeViewModel::class.java) -> {
+                return VARandomRecipeViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllRandomInput,
+                    recipeRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(VAChefViewModel::class.java) -> {
+                return VAChefViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllTopChefInput,
+                    authorRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(VAIngredientViewModel::class.java) -> {
+                return VAIngredientViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllIngredientInput,
+                    ingredientRepository
                 ) as T
             }
 

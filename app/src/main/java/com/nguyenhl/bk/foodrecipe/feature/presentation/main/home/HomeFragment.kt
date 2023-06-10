@@ -4,17 +4,24 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.common.DEFAULT_AVATAR
+import com.nguyenhl.bk.foodrecipe.core.common.KEY_USER_INFO
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.txt
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestActivity
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private lateinit var dishTypeAdapter: DishTypeAdapter
@@ -36,7 +43,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     }
 
     override fun initListener() {
+        binding.apply {
+            btnViewAllCollection.onClick {
+                goToViewAllCollection()
+            }
+            btnViewAllSuggest.onClick {
+                goToSuggestRecipe()
+            }
+            btnViewAllDailyInspiration.onClick {
+                goToRandomRecipe()
+            }
+            btnViewAllTopChef.onClick {
+                goToChefs()
+            }
+            btnViewAllIngredients.onClick {
+                goToIngredients()
+            }
+            btnViewAllRecentlyViewed.onClick {
 
+            }
+        }
     }
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
@@ -116,7 +142,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindCollectionsViewData(collections: List<CollectionDto>?) {
         collections ?: return
 
-        collectionAdapter = CollectionAdapter(collections)
+        collectionAdapter = CollectionAdapter(collections) { collection ->
+
+        }
         binding.rvCollection.apply {
             adapter = collectionAdapter
             layoutManager = LinearLayoutManager(
@@ -168,6 +196,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
+        }
+    }
+
+    private fun goToViewAllCollection() {
+        VACollectionActivity.startActivity(context) {
+
+        }
+    }
+
+    private fun goToSuggestRecipe() {
+        val userInfo = viewModel.getUserInfo()
+        VASuggestActivity.startActivity(context) {
+            putExtra(KEY_USER_INFO, userInfo)
+        }
+    }
+
+    private fun goToRandomRecipe() {
+        VARandomRecipeActivity.startActivity(context) {
+
+        }
+    }
+
+    private fun goToChefs() {
+        VAChefActivity.startActivity(context) {
+
+        }
+    }
+
+    private fun goToIngredients() {
+        VAIngredientActivity.startActivity(context) {
+
         }
     }
 }

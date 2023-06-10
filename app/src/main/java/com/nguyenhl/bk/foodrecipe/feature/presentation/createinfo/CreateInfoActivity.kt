@@ -205,6 +205,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 setAllInputValid()
                 onValid(
                     UserInfoDto(
+                        "",
                         nameInput,
                         dobInput,
                         genders[tipGenderInput.selectedIndex].value,

@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemCollectionBinding
 import com.nguyenhl.bk.foodrecipe.databinding.ItemDishTypeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
 
 class CollectionAdapter(
-    private val collections: List<CollectionDto>
+    private val collections: List<CollectionDto>,
+    private val onCollectionClick: (collection: CollectionDto) -> Unit
 ) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     inner class CollectionViewHolder(val binding: ItemCollectionBinding) :
@@ -18,6 +20,10 @@ class CollectionAdapter(
             binding.apply {
                 ivBackground.loadImage(collection.imageUrl)
                 tvCollectionName.text = collection.name
+
+                root.onClick {
+                    onCollectionClick.invoke(collection)
+                }
             }
         }
     }

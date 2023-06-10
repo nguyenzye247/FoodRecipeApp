@@ -1,4 +1,9 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.viewall
 
-class BaseViewAllViewModel {
-}
+import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
+
+abstract class BaseViewAllViewModel(private val baseInput: BaseInput.BaseViewAllInput) :
+    BaseViewModel(baseInput) {
+
+    }

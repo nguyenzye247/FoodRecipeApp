@@ -13,6 +13,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.Collectio
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.UserInfo
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toDishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toUserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
@@ -34,6 +35,7 @@ class HomeFetchRecipeUseCase constructor(
 
     private val _userInfo: MutableLiveData<UserInfoDto?> = MutableLiveData()
     fun liveUserInfo(): LiveData<UserInfoDto?> = _userInfo
+    fun getUserInfo(): UserInfoDto? = _userInfo.value
 
     private val _preferredDishes: MutableLiveData<List<DishPreferredDto>?> = MutableLiveData()
     fun livePreferredDishes(): LiveData<List<DishPreferredDto>?> = _preferredDishes
@@ -94,7 +96,7 @@ class HomeFetchRecipeUseCase constructor(
             null,
             null
         )
-        recipeRepository.searchRecipeByFilters(token, searchRecipeFilterBody).collect { response ->
+        recipeRepository.searchTop10RecipeByFilters(token, searchRecipeFilterBody).collect { response ->
             when (response) {
                 is RecipeResponse -> {
                     _suggestRecipes.postValue(response.recipes.map { it.toRecipeDto() })
@@ -134,7 +136,7 @@ class HomeFetchRecipeUseCase constructor(
     }
 
     private suspend fun fetchAuthors() {
-        authorRepository.fetchAuthors().collect { response ->
+        authorRepository.fetchTop10Authors().collect { response ->
             when (response) {
                 is AuthorResponse -> {
                     _authors.postValue(response.authors.map { it.toAuthorDto() })
@@ -153,7 +155,7 @@ class HomeFetchRecipeUseCase constructor(
             context.toast("Empty token")
             return
         }
-        recipeRepository.fetchRandomRecipes(token).collect { response ->
+        recipeRepository.fetchTop10RandomRecipes(token).collect { response ->
             when (response) {
                 is RecipeResponse -> {
                     _randomRecipes.postValue(response.recipes.map { it.toRecipeDto() })
@@ -168,7 +170,7 @@ class HomeFetchRecipeUseCase constructor(
     }
 
     private suspend fun fetchIngredients() {
-        ingredientRepository.fetchIngredients().collect { response ->
+        ingredientRepository.fetchTop10Ingredients().collect { response ->
             when (response) {
                 is IngredientResponse -> {
                     _ingredients.postValue(response.ingredients.map { it.toIngredientDto() })

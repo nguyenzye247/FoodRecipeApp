@@ -28,6 +28,7 @@ data class UserInfo(
 
 internal fun UserInfo.toUserInfoDto(): UserInfoDto {
     return UserInfoDto(
+        userId = this.user.userId,
         name = this.user.name,
         dob = this.user.dateOfBirth,
         gender = this.user.gender,

@@ -29,6 +29,8 @@ class MainViewModel(
         }
     }
 
+    fun getUserInfo(): UserInfoDto? = homeFetchRecipeUseCase.getUserInfo()
+
     fun liveUserInfo(): LiveData<UserInfoDto?> {
         return homeFetchRecipeUseCase.liveUserInfo()
     }

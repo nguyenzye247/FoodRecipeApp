@@ -8,6 +8,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.observeOnUiThread
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.AuthStatus
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiHealthStatus
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toHealthStatus
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toHealthStatusCategoryDetails
@@ -42,8 +43,10 @@ class SplashViewModel constructor(
     private var timeFinish: Long = 3000
     val isFinish = MutableStateFlow(false)
 
-    private val _isValidUserInfo: MutableLiveData<Boolean> = MutableLiveData()
-    fun liveIsValidUserInfo(): LiveData<Boolean> = _isValidUserInfo
+//    private val _isValidUserInfo: MutableLiveData<Boolean> = MutableLiveData()
+//    fun liveIsValidUserInfo(): LiveData<Boolean> = _isValidUserInfo
+    private val _isValidUserInfo: MutableLiveData<AuthStatus> = MutableLiveData()
+    fun liveIsValidUserInfo(): LiveData<AuthStatus> = _isValidUserInfo
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -87,20 +90,23 @@ class SplashViewModel constructor(
             .collect { response ->
                 when (response) {
                     is UserInfoGetResponse -> {
-                        val status = response.status
                         val infoData = response.info
-                        _isValidUserInfo.postValue(status)
+                        _isValidUserInfo.postValue(AuthStatus.VALID)
 
                         infoData?.let { info -> saveUserInfoData(info) }
                     }
 
                     is ErrorResponse -> {
-                        _isValidUserInfo.postValue(false)
+                        if (response.message.contains("jwt")) {
+                            _isValidUserInfo.postValue(AuthStatus.EXPIRED)
+                        } else {
+                            _isValidUserInfo.postValue(AuthStatus.INVALID)
+                        }
                     }
 
                     else -> {
                         //TODO: Modify this for redirect to Error screen
-                        _isValidUserInfo.postValue(false)
+                        _isValidUserInfo.postValue(AuthStatus.INVALID)
                     }
                 }
             }

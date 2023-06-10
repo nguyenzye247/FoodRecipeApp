@@ -66,6 +66,26 @@
             android:name=".feature.presentation.main.MainActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.viewall.collection.VACollectionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.viewall.suggest.VASuggestActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.viewall.random.VARandomRecipeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.viewall.chef.VAChefActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.viewall.ingredient.VAIngredientActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
