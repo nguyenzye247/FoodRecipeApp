@@ -11,6 +11,8 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -59,5 +61,9 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.BaseViewAllInput.ViewAllTopChefInput) ->
         ViewModelProviderFactory(input).create(VAChefViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.BaseViewAllInput.ViewAllIngredientInput) ->
+        ViewModelProviderFactory(input).create(VAIngredientViewModel::class.java)
     }
 }

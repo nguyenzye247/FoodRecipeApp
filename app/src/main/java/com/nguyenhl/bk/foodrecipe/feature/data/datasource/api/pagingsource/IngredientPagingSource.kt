@@ -1,8 +1,9 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource
 
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiIngredient
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toIngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.IngredientService
+import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.skydoves.sandwich.getOrThrow
 import retrofit2.HttpException
 import java.io.IOException
@@ -12,11 +13,11 @@ class IngredientPagingSource(
     private val ingredientService: IngredientService,
     private val searchString: String = "",
     private val alphabetKey: Char = 'a'
-): BasePagingSource<ApiIngredient, IngredientResponse>() {
+) : BasePagingSource<IngredientDto, IngredientResponse>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ApiIngredient> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, IngredientDto> {
         val page = params.key ?: DEFAULT_PAGE_INDEX
-        val response = when(ingredientEpType) {
+        val response = when (ingredientEpType) {
             IngredientEP.ALL -> {
                 ingredientService.getIngredients()
             }
@@ -45,7 +46,7 @@ class IngredientPagingSource(
     override fun toLoadResult(
         response: IngredientResponse,
         position: Int
-    ): LoadResult<Int, ApiIngredient> {
+    ): LoadResult<Int, IngredientDto> {
         val ingredients = response.ingredients
         val nextKey = if (ingredients.isEmpty() || position == response.pageCount) {
             null
@@ -54,14 +55,14 @@ class IngredientPagingSource(
         }
 
         return LoadResult.Page(
-            ingredients,
+            ingredients.map { it.toIngredientDto() },
             if (position == DEFAULT_PAGE_INDEX) null else position - 1,
             nextKey
         )
     }
 }
 
-enum class IngredientEP{
+enum class IngredientEP {
     ALL,
     SEARCH,
     ALPHABET

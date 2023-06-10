@@ -12,6 +12,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiIngredien
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientPagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.IngredientService
+import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -25,7 +26,7 @@ class IngredientRepository constructor(
 ) : Repository {
 
     @WorkerThread
-    fun fetchIngredients(): Flow<PagingData<ApiIngredient>> {
+    fun fetchIngredients(): Flow<PagingData<IngredientDto>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
@@ -40,7 +41,7 @@ class IngredientRepository constructor(
     }
 
     @WorkerThread
-    fun searchIngredients(searchString: String): Flow<PagingData<ApiIngredient>> {
+    fun searchIngredients(searchString: String): Flow<PagingData<IngredientDto>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
@@ -59,7 +60,7 @@ class IngredientRepository constructor(
     }
 
     @WorkerThread
-    fun fetchIngredientsByAlphabet(alphabetKey: Char): Flow<PagingData<ApiIngredient>> {
+    fun fetchIngredientsByAlphabet(alphabetKey: Char): Flow<PagingData<IngredientDto>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
@@ -68,7 +69,7 @@ class IngredientRepository constructor(
             ),
             pagingSourceFactory = {
                 IngredientPagingSource(
-                    IngredientEP.SEARCH,
+                    IngredientEP.ALPHABET,
                     ingredientService,
                     alphabetKey = alphabetKey
                 )

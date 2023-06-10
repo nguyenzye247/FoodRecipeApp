@@ -18,6 +18,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUse
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
 import org.koin.core.KoinComponent
@@ -35,6 +36,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val collectionRepository: CollectionRepository by inject()
     private val recipeRepository: RecipeRepository by inject()
     private val authorRepository: AuthorRepository by inject()
+    private val ingredientRepository: IngredientRepository by inject()
     private val categoryRepository: CategoryRepository by inject()
 
     private val homeUseCase: HomeUseCase by inject()
@@ -127,6 +129,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return VAChefViewModel(
                     input as BaseInput.BaseViewAllInput.ViewAllTopChefInput,
                     authorRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(VAIngredientViewModel::class.java) -> {
+                return VAIngredientViewModel(
+                    input as BaseInput.BaseViewAllInput.ViewAllIngredientInput,
+                    ingredientRepository
                 ) as T
             }
 

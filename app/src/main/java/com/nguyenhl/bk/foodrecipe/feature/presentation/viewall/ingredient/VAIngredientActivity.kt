@@ -2,24 +2,34 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient
 
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.resources.txtString
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runDelayOnMainThread
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class VAIngredientActivity : BaseViewAllActivity<VAIngredientViewModel>() {
     private lateinit var viewAllIngredientAdapter: VAIngredientAdapter
+    private lateinit var alphabetKeyAdapter: AlphabetKeyAdapter
 
     override fun getLazyViewModel() = viewModel<VAIngredientViewModel> {
         parametersOf(
@@ -52,12 +62,35 @@ class VAIngredientActivity : BaseViewAllActivity<VAIngredientViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        viewAllIngredientAdapter = VAIngredientAdapter {
+        alphabetKeyAdapter = AlphabetKeyAdapter { alphabetKey ->
+            viewModel.setAlphabetKey(alphabetKey)
+        }
+        binding.rvAlphabet.apply {
+            setVisible(true)
+            adapter = alphabetKeyAdapter
+            layoutManager = LinearLayoutManager(
+                this@VAIngredientActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+
+        viewAllIngredientAdapter = VAIngredientAdapter { ingredientDto ->
 
         }
         binding.rvContent.apply {
             adapter = viewAllIngredientAdapter
             layoutManager = getRecyclerviewLayoutManager()
+            itemAnimator = object : DefaultItemAnimator() {
+                override fun animateChange(
+                    oldHolder: RecyclerView.ViewHolder,
+                    newHolder: RecyclerView.ViewHolder,
+                    preInfo: ItemHolderInfo,
+                    postInfo: ItemHolderInfo
+                ): Boolean {
+                    return false
+                }
+            }
         }
     }
 
@@ -68,16 +101,30 @@ class VAIngredientActivity : BaseViewAllActivity<VAIngredientViewModel>() {
             }
         }
         viewAllIngredientAdapter.addLoadStateListener { combinedLoadStates ->
-            if (combinedLoadStates.refresh is LoadState.NotLoading) {
-                viewModel.setLoading(false)
-            }
+            viewModel.setLoading(combinedLoadStates.refresh is LoadState.Loading)
         }
     }
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
         viewModel.apply {
+            observe(liveAlphabetKey) { alphabetKey ->
+                alphabetKey?.let {
+                    loadIngredientByAlphabet(it)
+                }
+            }
 
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    getIngredientsPaging().collectLatest { ingredientsPaging ->
+                        if (::viewAllIngredientAdapter.isInitialized &&
+                            ingredientsPaging != null
+                        ) {
+                            viewAllIngredientAdapter.submitData(lifecycle, ingredientsPaging)
+                        }
+                    }
+                }
+            }
 
             observeDistinct(liveIsLoading()) { isLoading ->
                 showLoadingView(isLoading == true)

@@ -53,7 +53,6 @@ class VASuggestViewModel constructor(
         recipeRepository.searchRecipeByFilters(token, searchRecipeFilterBody)
             .cachedIn(viewModelScope)
             .collect {
-                setLoading(false)
                 _suggestRecipePaging.value = it
             }
     }

@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemVaIngredientBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 
@@ -16,7 +18,12 @@ class VAIngredientAdapter(
         ViewHolder(binding.root) {
         fun bind(ingredient: IngredientDto) {
             binding.apply {
+                ivBackground.loadImage(ingredient.imageUrl)
+                tvIngredientName.text = ingredient.name
 
+                root.onClick {
+                    onItemClick(ingredient)
+                }
             }
         }
     }
