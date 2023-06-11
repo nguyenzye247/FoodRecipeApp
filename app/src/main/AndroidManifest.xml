@@ -90,6 +90,10 @@
             android:name=".feature.presentation.detail.collection.CollectionDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.detail.chef.ChefDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

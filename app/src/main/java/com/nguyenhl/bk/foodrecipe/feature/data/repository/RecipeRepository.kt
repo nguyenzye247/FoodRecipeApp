@@ -120,7 +120,7 @@ class RecipeRepository constructor(
     @WorkerThread
     fun fetchRecipesByAuthor(
         token: String,
-        idAuthor: String
+        authorName: String
     ): Flow<PagingData<RecipeDto>> {
         return Pager(
             config = PagingConfig(
@@ -133,7 +133,7 @@ class RecipeRepository constructor(
                     RecipeEP.BY_CHEF,
                     token,
                     recipeService,
-                    idParent = idAuthor
+                    idParent = authorName
                 )
             }
         ).flow
