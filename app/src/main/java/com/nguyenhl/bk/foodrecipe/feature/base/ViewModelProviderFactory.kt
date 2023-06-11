@@ -12,6 +12,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswor
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
@@ -136,6 +137,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return VAIngredientViewModel(
                     input as BaseInput.BaseViewAllInput.ViewAllIngredientInput,
                     ingredientRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(CollectionDetailViewModel::class.java) -> {
+                return CollectionDetailViewModel(
+                    input as BaseInput.CollectionDetailInput,
+                    recipeRepository
                 ) as T
             }
 
