@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 
 import android.app.Application
 import com.nguyenhl.bk.foodrecipe.App
+import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 
 sealed class BaseInput {
@@ -65,4 +66,9 @@ sealed class BaseInput {
             val application: Application
         ): BaseViewAllInput(application)
     }
+
+    data class CollectionDetailInput(
+        val application: Application,
+        val collectionDto: CollectionDto?
+    ): BaseInput()
 }

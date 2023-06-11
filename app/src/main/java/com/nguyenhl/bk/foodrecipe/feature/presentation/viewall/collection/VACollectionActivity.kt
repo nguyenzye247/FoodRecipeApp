@@ -14,6 +14,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity.Companion.KEY_COLLECTION_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -49,7 +51,7 @@ class VACollectionActivity : BaseViewAllActivity<VACollectionViewModel>() {
 
     private fun bindRecyclerView(collections: List<CollectionDto>) {
         viewAllCollectionAdapter = VACollectionAdapter(collections) {
-
+            goToCollectionDetail(it)
         }
         binding.rvContent.apply {
             adapter = viewAllCollectionAdapter
@@ -94,6 +96,12 @@ class VACollectionActivity : BaseViewAllActivity<VACollectionViewModel>() {
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToCollectionDetail(collectionDto: CollectionDto) {
+        CollectionDetailActivity.startActivity(this) {
+            putExtra(KEY_COLLECTION_DTO, collectionDto)
         }
     }
 

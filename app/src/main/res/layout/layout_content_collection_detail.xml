@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_collection_detail"
+    >
+
+    <TextView
+        android:id="@+id/tv_collection_description"
+        style="@style/TextRegularStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:gravity="start"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_14sp"
+        tools:text="okeokeokeoke" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_collection_recipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp" />
+
+</LinearLayout>

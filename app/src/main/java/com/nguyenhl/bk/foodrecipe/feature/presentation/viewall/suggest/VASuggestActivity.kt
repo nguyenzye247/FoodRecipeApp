@@ -18,6 +18,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class VASuggestActivity : BaseViewAllActivity<VASuggestViewModel>() {
-    private lateinit var suggestRecipeAdapter: VARecipeAdapter
+    private lateinit var suggestRecipeAdapter: RecipeAdapter
 
     override fun getLazyViewModel() = viewModel<VASuggestViewModel> {
         parametersOf(
@@ -60,7 +61,7 @@ class VASuggestActivity : BaseViewAllActivity<VASuggestViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        suggestRecipeAdapter = VARecipeAdapter {
+        suggestRecipeAdapter = RecipeAdapter {
 
         }
         binding.rvContent.apply {

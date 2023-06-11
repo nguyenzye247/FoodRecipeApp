@@ -11,9 +11,9 @@ import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRandomRecipeErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.ApiRecipe
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RandomRecipePagingSource
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.SuggestRecipePagingSource
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipeEP
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipePagingSource
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.SearchRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.skydoves.sandwich.suspendOnError
@@ -40,7 +40,7 @@ class RecipeRepository constructor(
                 prefetchDistance = PREFETCH_DIST
             ),
             pagingSourceFactory = {
-                SuggestRecipePagingSource(
+                SearchRecipePagingSource(
                     token,
                     searchRecipeFilterBody,
                     recipeService
@@ -61,9 +61,79 @@ class RecipeRepository constructor(
                 prefetchDistance = PREFETCH_DIST
             ),
             pagingSourceFactory = {
-                RandomRecipePagingSource(
+                RecipePagingSource(
+                    RecipeEP.RANDOM,
                     token,
                     recipeService
+                )
+            }
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
+    @WorkerThread
+    fun fetchRecipesByCollection(
+        token: String,
+        idCollection: String
+    ): Flow<PagingData<RecipeDto>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
+            ),
+            pagingSourceFactory = {
+                RecipePagingSource(
+                    RecipeEP.BY_COLLECTION,
+                    token,
+                    recipeService,
+                    idParent = idCollection
+                )
+            }
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
+    @WorkerThread
+    fun fetchRecipesByIngredient(
+        token: String,
+        idIngredient: String
+    ): Flow<PagingData<RecipeDto>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
+            ),
+            pagingSourceFactory = {
+                RecipePagingSource(
+                    RecipeEP.BY_INGREDIENT,
+                    token,
+                    recipeService,
+                    idParent = idIngredient
+                )
+            }
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
+    @WorkerThread
+    fun fetchRecipesByAuthor(
+        token: String,
+        idAuthor: String
+    ): Flow<PagingData<RecipeDto>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
+            ),
+            pagingSourceFactory = {
+                RecipePagingSource(
+                    RecipeEP.BY_CHEF,
+                    token,
+                    recipeService,
+                    idParent = idAuthor
                 )
             }
         ).flow

@@ -15,6 +15,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity.Companion.KEY_COLLECTION_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefActivity
@@ -143,7 +145,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         collections ?: return
 
         collectionAdapter = CollectionAdapter(collections) { collection ->
-
+            goToCollectionDetail(collection)
         }
         binding.rvCollection.apply {
             adapter = collectionAdapter
@@ -227,6 +229,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun goToIngredients() {
         VAIngredientActivity.startActivity(context) {
 
+        }
+    }
+
+    private fun goToCollectionDetail(collection: CollectionDto) {
+        CollectionDetailActivity.startActivity(context) {
+            putExtra(KEY_COLLECTION_DTO, collection)
         }
     }
 }

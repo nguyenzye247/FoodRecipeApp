@@ -86,6 +86,10 @@
             android:name=".feature.presentation.viewall.ingredient.VAIngredientActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.detail.collection.CollectionDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

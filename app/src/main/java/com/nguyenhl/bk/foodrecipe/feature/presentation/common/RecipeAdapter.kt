@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest
+package com.nguyenhl.bk.foodrecipe.feature.presentation.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,9 +9,9 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.databinding.ItemVaRecipeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
-class VARecipeAdapter(
+class RecipeAdapter(
     private val onItemClick: (recipe: RecipeDto) -> Unit
-) : PagingDataAdapter<RecipeDto, VARecipeAdapter.VASuggestHolder>(COMPARATOR) {
+) : PagingDataAdapter<RecipeDto, RecipeAdapter.VASuggestHolder>(COMPARATOR) {
 
     inner class VASuggestHolder(val binding: ItemVaRecipeBinding) : ViewHolder(binding.root) {
         fun bind(recipe: RecipeDto) {

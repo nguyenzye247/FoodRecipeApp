@@ -20,14 +20,13 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
-import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VARecipeAdapter
-import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class VARandomRecipeActivity : BaseViewAllActivity<VARandomRecipeViewModel>() {
-    private lateinit var randomRecipeAdapter: VARecipeAdapter
+    private lateinit var randomRecipeAdapter: RecipeAdapter
 
     override fun getLazyViewModel() = viewModel<VARandomRecipeViewModel> {
         parametersOf(
@@ -62,7 +61,7 @@ class VARandomRecipeActivity : BaseViewAllActivity<VARandomRecipeViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        randomRecipeAdapter = VARecipeAdapter {
+        randomRecipeAdapter = RecipeAdapter {
 
         }
         binding.rvContent.apply {
