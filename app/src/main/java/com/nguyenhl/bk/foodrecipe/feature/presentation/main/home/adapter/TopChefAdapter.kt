@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemChefBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.AuthorDto
 
 class TopChefAdapter(
-    private val topChefs: List<AuthorDto>
+    private val topChefs: List<AuthorDto>,
+    private val onItemClick: (chef: AuthorDto) -> Unit
 ) : RecyclerView.Adapter<TopChefAdapter.TopChefViewHolder>() {
 
     inner class TopChefViewHolder(val binding: ItemChefBinding) :
@@ -17,6 +19,10 @@ class TopChefAdapter(
             binding.apply {
                 ivBackground.loadImage(chef.imageUrl)
                 tvChefName.text = chef.name
+
+                root.onClick {
+                    onItemClick(chef)
+                }
             }
         }
     }

@@ -15,6 +15,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity.Companion.KEY_CHEF_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity.Companion.KEY_COLLECTION_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
@@ -160,7 +162,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindTopChefsViewData(topChefs: List<AuthorDto>?) {
         topChefs ?: return
 
-        topChefAdapter = TopChefAdapter(topChefs)
+        topChefAdapter = TopChefAdapter(topChefs) { chef ->
+            goToChefDetail(chef)
+        }
         binding.rvTopChef.apply {
             adapter = topChefAdapter
             layoutManager = LinearLayoutManager(
@@ -235,6 +239,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun goToCollectionDetail(collection: CollectionDto) {
         CollectionDetailActivity.startActivity(context) {
             putExtra(KEY_COLLECTION_DTO, collection)
+        }
+    }
+
+    private fun goToChefDetail(chef: AuthorDto) {
+        ChefDetailActivity.startActivity(context) {
+            putExtra(KEY_CHEF_DTO, chef)
         }
     }
 }
