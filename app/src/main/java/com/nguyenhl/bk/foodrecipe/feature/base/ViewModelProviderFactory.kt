@@ -14,6 +14,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
@@ -152,6 +153,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return ChefDetailViewModel(
                     input as BaseInput.ChefDetailInput,
                     recipeRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(IngredientDetailViewModel::class.java) -> {
+                return IngredientDetailViewModel(
+                    input as BaseInput.IngredientDetailInput,
+                    ingredientRepository
                 ) as T
             }
 

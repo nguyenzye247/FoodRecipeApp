@@ -7,8 +7,8 @@ import androidx.paging.PagingData
 import com.nguyenhl.bk.foodrecipe.core.common.INITIAL_LOAD_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetIngredientDetailErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetIngredientErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiIngredient
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientPagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.IngredientService
@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 
 class IngredientRepository constructor(
     private val ingredientService: IngredientService
@@ -88,6 +89,21 @@ class IngredientRepository constructor(
                 emit(this)
             }
             .suspendOnException {
+                emit(null)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun fetchIngredientDetail(detailId: String) = flow {
+        ingredientService.getIngredientDetail(detailId)
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(GetIngredientDetailErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                Timber.tag("OKEOKE").w(this.message)
                 emit(null)
             }
     }.flowOn(Dispatchers.IO)

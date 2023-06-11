@@ -94,6 +94,10 @@
             android:name=".feature.presentation.detail.chef.ChefDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.detail.ingredient.IngredientDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

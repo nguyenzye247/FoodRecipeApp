@@ -51,3 +51,5 @@ object GetAuthorErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get author data")
 object GetIngredientErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get ingredient data")
+object GetIngredientDetailErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get ingredient detail data")
