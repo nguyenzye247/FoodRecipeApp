@@ -19,6 +19,8 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailAct
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity.Companion.KEY_CHEF_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity.Companion.KEY_COLLECTION_DTO
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailActivity.Companion.KEY_INGREDIENT_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefActivity
@@ -194,7 +196,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindIngredientsViewData(ingredients: List<IngredientDto>?) {
         ingredients ?: return
 
-        ingredientsAdapter = IngredientAdapter(ingredients)
+        ingredientsAdapter = IngredientAdapter(ingredients) { ingredient ->
+            goToIngredientDetail(ingredient)
+        }
         binding.rvIngredients.apply {
             adapter = ingredientsAdapter
             layoutManager = LinearLayoutManager(
@@ -245,6 +249,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun goToChefDetail(chef: AuthorDto) {
         ChefDetailActivity.startActivity(context) {
             putExtra(KEY_CHEF_DTO, chef)
+        }
+    }
+
+    private fun goToIngredientDetail(ingredient: IngredientDto) {
+        IngredientDetailActivity.startActivity(context) {
+            putExtra(KEY_INGREDIENT_DTO, ingredient)
         }
     }
 }

@@ -9,6 +9,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPr
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
@@ -75,5 +76,9 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.ChefDetailInput) ->
         ViewModelProviderFactory(input).create(ChefDetailViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.IngredientDetailInput) ->
+        ViewModelProviderFactory(input).create(IngredientDetailViewModel::class.java)
     }
 }

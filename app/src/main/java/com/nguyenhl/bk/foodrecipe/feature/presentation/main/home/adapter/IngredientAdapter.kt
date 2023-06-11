@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemIngredientBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 
 class IngredientAdapter(
-    private val ingredients: List<IngredientDto>
+    private val ingredients: List<IngredientDto>,
+    private val onItemClick: (ingredient: IngredientDto) -> Unit
 ) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 
     inner class IngredientViewHolder(val binding: ItemIngredientBinding) :
@@ -18,6 +20,10 @@ class IngredientAdapter(
                 ivBackground.loadImage(ingredient.imageUrl)
                 tvCollectionName.apply {
                     text = ingredient.name
+                }
+
+                root.onClick {
+                    onItemClick(ingredient)
                 }
             }
         }
