@@ -5,22 +5,30 @@ import android.content.Intent
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
+import com.nguyenhl.bk.foodrecipe.core.extension.parcelableExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRecipeDetailBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
+import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.NutrientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
-import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDetailViewModel>() {
     override fun getLazyBinding() = lazy { ActivityRecipeDetailBinding.inflate(layoutInflater) }
 
-    override fun getLazyViewModel(): Lazy<RecipeDetailViewModel> {
-        TODO("Not yet implemented")
+    override fun getLazyViewModel() = viewModel<RecipeDetailViewModel> {
+        parametersOf(
+            BaseInput.RecipeDetailInput(
+                application,
+                intent.parcelableExtra(KEY_RECIPE_DTO)
+            )
+        )
     }
 
     override fun initViews() {
