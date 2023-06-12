@@ -10,6 +10,7 @@ import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRandomRecipeErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRecipeDetailErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipeEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipePagingSource
@@ -162,6 +163,20 @@ class RecipeRepository constructor(
                 emit(data)
             }
             .suspendOnError(GetRandomRecipeErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(null)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun fetchRecipeDetail(detailId: String) = flow {
+        recipeService.getRecipeDetails(detailId)
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(GetRecipeDetailErrorResponseMapper) {
                 emit(this)
             }
             .suspendOnException {
