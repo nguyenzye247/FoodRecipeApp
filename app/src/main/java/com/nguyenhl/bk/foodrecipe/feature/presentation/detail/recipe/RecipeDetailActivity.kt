@@ -87,16 +87,14 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
             tvRecipeName.text = recipeDetail.name
             tvRecipeCookTime.apply {
                 recipeDetail.cookTime?.let {
-                    val cookTimeText = "$it mins"
-                    text = cookTimeText
+                    text = it
                 } ?: run {
                     setVisible(false)
                 }
             }
             tvRecipePrepTime.apply {
                 recipeDetail.prepTime?.let {
-                    val prepTimeText = "$it mins"
-                    text = prepTimeText
+                    text = it
                 } ?: run {
                     setVisible(false)
                 }

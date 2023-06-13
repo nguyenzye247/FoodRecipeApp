@@ -11,9 +11,9 @@ data class ApiRecipeDetail(
     @SerializedName("image_url")
     val imageUrl: String,
     @SerializedName("prep_time")
-    val prepTime: Int?,
-    @SerializedName("cooke_time")
-    val cookTime: Int?,
+    val prepTime: String?,
+    @SerializedName("cook_time")
+    val cookTime: String?,
     @SerializedName("serves")
     val serveCount: Int,
     @SerializedName("author")

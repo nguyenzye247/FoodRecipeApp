@@ -47,11 +47,12 @@ class RecipeDetailViewModel(
                     setLoading(false)
                     when (response) {
                         is RecipeDetailResponse -> {
-                            _recipeDetail.value = response.recipeDetail.toRecipeDetailDto()
-                            _recipeIngredientDetail.value =
-                                response.ingredients.map { it.toIngredientDto() }
-                            _recipeNutrientDetail.value =
-                                response.nutrients.map { it.toNutrientDto() }
+                            _recipeDetail
+                                .postValue(response.recipeDetail.toRecipeDetailDto())
+                            _recipeIngredientDetail
+                                .postValue(response.ingredients.map { it.toIngredientDto() })
+                            _recipeNutrientDetail
+                                .postValue(response.nutrients.map { it.toNutrientDto() })
                         }
 
                         else -> {
