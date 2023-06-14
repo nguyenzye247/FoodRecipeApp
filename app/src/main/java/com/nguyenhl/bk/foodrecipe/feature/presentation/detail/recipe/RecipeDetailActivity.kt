@@ -2,24 +2,37 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
+import android.util.TypedValue
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
-import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
-import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
-import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
+import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRecipeDetailBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.NutrientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeDirectionPagerAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeIngredientsAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeNutrientAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDetailViewModel>() {
+    private lateinit var recipeNutrientsAdapter: RecipeNutrientAdapter
+    private lateinit var recipeIngredientsAdapter: RecipeIngredientsAdapter
+    private lateinit var recipeDirectionPagerAdapter: RecipeDirectionPagerAdapter
+
     override fun getLazyBinding() = lazy { ActivityRecipeDetailBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModel<RecipeDetailViewModel> {
@@ -43,7 +56,7 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
             btnBookmark.onClick {
 
             }
-            btnHear.onClick {
+            btnHeart.onClick {
 
             }
         }
@@ -105,31 +118,66 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
     }
 
     private fun bindRecipeIngredientsDataView(recipeIngredient: List<IngredientDto>) {
-        binding.layoutContent.apply {
-            tabLayoutDirections
-            vp2Direction
+        recipeIngredientsAdapter = RecipeIngredientsAdapter(recipeIngredient)
+        binding.layoutContent.rvIngredients.apply {
+            adapter = recipeIngredientsAdapter
+            layoutManager = GridLayoutManager(
+                this@RecipeDetailActivity,
+                4
+            )
         }
+
+        recipeDirectionPagerAdapter = RecipeDirectionPagerAdapter(this@RecipeDetailActivity)
+        binding.layoutContent.apply {
+            val tabTitles =
+                arrayListOf(getString(R.string.ingredients), getString(R.string.methods))
+            vp2Direction.apply {
+                adapter = recipeDirectionPagerAdapter
+                recyclerView.enforceSingleScrollDirection()
+                TabLayoutMediator(tabLayoutDirections, this) { tab, position ->
+                    tab.text = tabTitles[position]
+                }.attach()
+            }
+        }
+        initTabLayout()
+        selectTabPosition(0)
     }
 
     private fun bindRecipeNutrientDataView(recipeNutrients: List<NutrientDto>) {
-        val calories = recipeNutrients[0]
-        val fibre = recipeNutrients[1]
-        val sugar = recipeNutrients[2]
-        val saturates = recipeNutrients[3]
-        val protein = recipeNutrients[4]
-        val carbs = recipeNutrients[5]
-        val fat = recipeNutrients[6]
-        val salt = recipeNutrients[7]
+        recipeNutrientsAdapter = RecipeNutrientAdapter(recipeNutrients)
 
         binding.layoutContent.layoutNutrients.apply {
-            ivCalories.loadImage(calories.nutrientDetail.imageUrl)
-            ivFibre.loadImage(fibre.nutrientDetail.imageUrl)
-            ivSugar.loadImage(sugar.nutrientDetail.imageUrl)
-            ivSaturates.loadImage(saturates.nutrientDetail.imageUrl)
-            ivProtein.loadImage(protein.nutrientDetail.imageUrl)
-            ivCarb.loadImage(carbs.nutrientDetail.imageUrl)
-            ivFat.loadImage(fat.nutrientDetail.imageUrl)
-            ivSalt.loadImage(salt.nutrientDetail.imageUrl)
+            rvNutrients.apply {
+                adapter = recipeNutrientsAdapter
+                layoutManager = GridLayoutManager(
+                    this@RecipeDetailActivity,
+                    4
+                )
+            }
+        }
+    }
+
+    private fun initTabLayout() {
+        binding.layoutContent.tabLayoutDirections.apply {
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    ResourcesCompat.getFont(tab.view.context, R.font.gordita_bold)?.let {
+                        setTabTypeface(tab, it)
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    ResourcesCompat.getFont(tab.view.context, R.font.gordita_medium)?.let {
+                        setTabTypeface(tab, it)
+                    }
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                    ResourcesCompat.getFont(tab.view.context, R.font.gordita_bold)?.let {
+                        setTabTypeface(tab, it)
+                    }
+                }
+            })
         }
     }
 
@@ -141,6 +189,26 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun setTabTypeface(tab: TabLayout.Tab, typeface: Typeface) {
+        for (i in 0 until tab.view.childCount) {
+            val tabViewChild = tab.view.getChildAt(i)
+            if (tabViewChild is TextView) {
+                tabViewChild.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                tabViewChild.typeface = typeface
+            }
+        }
+    }
+
+    private fun selectTabPosition(pos: Int = 0) {
+        val initSelectedTab = binding.layoutContent.tabLayoutDirections.getTabAt(pos)
+        initSelectedTab?.let { tab ->
+            tab.select()
+            ResourcesCompat.getFont(initSelectedTab.view.context, R.font.gordita_bold)?.let {
+                setTabTypeface(initSelectedTab, it)
+            }
         }
     }
 

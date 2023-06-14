@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/dimen_16dp"
     tools:showIn="@layout/activity_recipe_detail">
@@ -32,14 +32,16 @@
         style="@style/TextBoldStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
         android:text="@string/ingredients"
         android:textSize="@dimen/text_size_20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ingredients"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:overScrollMode="never" />
 
     <TextView
         android:id="@+id/tv_directions_title"
@@ -53,18 +55,25 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_directions"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/rcp_blue_400"
-        app:tabSelectedTextColor="@color/rcp_blue_400"
-        app:tabTextColor="@color/rcp_black_100"
-        app:tabTextAppearance="@style/RecipeDetailDirectionsTabTextStyle"
         app:tabMaxWidth="@dimen/dimen_0dp"
         app:tabMode="fixed"
-        android:layout_height="wrap_content"/>
+        app:tabSelectedTextColor="@color/rcp_blue_400"
+        app:tabTextAppearance="@style/RecipeDetailDirectionsTabTextStyle"
+        app:tabTextColor="@color/rcp_black_100" />
+
+<!--    <devlight.io.library.ntb.NavigationTabBar-->
+<!--        android:id="@+id/tab_layout_directions"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+
+<!--        />-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp2_direction"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

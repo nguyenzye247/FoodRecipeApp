@@ -53,9 +53,18 @@
         android:layout_height="@dimen/dimen_60dp"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="@dimen/dimen_30dp"
+        android:elevation="@dimen/dimen_10dp"
         android:text="@string/start_cooking"
         app:icon="@drawable/ic_right_carret"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
+
+    <View
+        android:id="@+id/view_fade"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_96dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_activity_recipe_detail_fade"
+        android:visibility="visible" />
 
     <include
         android:id="@+id/loading"

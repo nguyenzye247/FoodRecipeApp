@@ -2,13 +2,10 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login
 
 import android.content.Context
 import android.content.Intent
+import com.nguyenhl.bk.foodrecipe.core.extension.*
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
-import com.nguyenhl.bk.foodrecipe.core.extension.longToast
-import com.nguyenhl.bk.foodrecipe.core.extension.start
-import com.nguyenhl.bk.foodrecipe.core.extension.toast
-import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
@@ -78,7 +75,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                         goToDishPreferred()
                         finish()
                     }
-                    else -> {}
+                    else -> {
+
+                    }
                 }
             }
         }
@@ -93,7 +92,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 // Check user info if user is logged in
                 toastSuccess("Login success")
                 viewModel.checkForUserInfo()
-                return@observe
+            } else {
+                toastError(loginStatus.data.value)
             }
         }
     }
