@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginHorizontal="@dimen/dimen_4dp"
     android:layout_marginVertical="@dimen/dimen_8dp"
+    android:background="@drawable/bg_recipe_detail_ingredient"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_recipe_detail_ingredient"
@@ -19,12 +21,12 @@
 
     <TextView
         android:id="@+id/tv_recipe_detail_ingredient"
-        style="@style/TextMediumStyle"
+        style="@style/TextRegularStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_4dp"
         android:gravity="center"
-        android:textSize="@dimen/text_size_14sp"
+        android:textSize="@dimen/text_size_12sp"
         tools:text="Egg" />
 </LinearLayout>

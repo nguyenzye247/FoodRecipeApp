@@ -134,4 +134,6 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.5.2'
     //Navigation bar
     implementation 'devlight.io:navigationtabbar:1.2.5'
+    //Tab layout
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
 }

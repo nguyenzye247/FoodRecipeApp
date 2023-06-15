@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dimen_4dp">
 
     <TextView
         android:id="@+id/tv_serves"
         style="@style/TextMediumStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
         android:layout_marginEnd="@dimen/dimen_12dp"
         android:ellipsize="marquee"
         android:maxLines="1"

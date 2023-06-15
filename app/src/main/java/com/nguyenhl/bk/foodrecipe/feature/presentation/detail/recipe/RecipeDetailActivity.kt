@@ -61,7 +61,7 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
             }
         }
 
-        binding.layoutContent.apply {
+        binding.layoutRecipeContent.apply {
 
         }
     }
@@ -113,22 +113,22 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
                 }
             }
 
-            binding.layoutContent.tvRecipeDescription.text = recipeDetail.description
+            binding.layoutRecipeContent.tvRecipeDescription.text = recipeDetail.description
         }
     }
 
     private fun bindRecipeIngredientsDataView(recipeIngredient: List<IngredientDto>) {
         recipeIngredientsAdapter = RecipeIngredientsAdapter(recipeIngredient)
-        binding.layoutContent.rvIngredients.apply {
+        binding.layoutRecipeContent.rvIngredients.apply {
             adapter = recipeIngredientsAdapter
             layoutManager = GridLayoutManager(
                 this@RecipeDetailActivity,
-                4
+                3
             )
         }
 
         recipeDirectionPagerAdapter = RecipeDirectionPagerAdapter(this@RecipeDetailActivity)
-        binding.layoutContent.apply {
+        binding.layoutRecipeContent.apply {
             val tabTitles =
                 arrayListOf(getString(R.string.ingredients), getString(R.string.methods))
             vp2Direction.apply {
@@ -146,7 +146,7 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
     private fun bindRecipeNutrientDataView(recipeNutrients: List<NutrientDto>) {
         recipeNutrientsAdapter = RecipeNutrientAdapter(recipeNutrients)
 
-        binding.layoutContent.layoutNutrients.apply {
+        binding.layoutRecipeContent.layoutNutrients.apply {
             rvNutrients.apply {
                 adapter = recipeNutrientsAdapter
                 layoutManager = GridLayoutManager(
@@ -158,7 +158,21 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
     }
 
     private fun initTabLayout() {
-        binding.layoutContent.tabLayoutDirections.apply {
+//        binding.layoutContent.apply {
+//            tabLayoutSliding.apply {
+//                bindViewPager(
+//                    vp2Direction,
+//                    object : ViewPager2.OnPageChangeCallback() {
+//                        override fun onPageSelected(position: Int) {
+//                            super.onPageSelected(position)
+////                            tabLayoutSliding.currentTab = position
+//                        }
+//                    }
+//                )
+//            }
+//        }
+
+        binding.layoutRecipeContent.tabLayoutDirections.apply {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     ResourcesCompat.getFont(tab.view.context, R.font.gordita_bold)?.let {
@@ -203,7 +217,7 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
     }
 
     private fun selectTabPosition(pos: Int = 0) {
-        val initSelectedTab = binding.layoutContent.tabLayoutDirections.getTabAt(pos)
+        val initSelectedTab = binding.layoutRecipeContent.tabLayoutDirections.getTabAt(pos)
         initSelectedTab?.let { tab ->
             tab.select()
             ResourcesCompat.getFont(initSelectedTab.view.context, R.font.gordita_bold)?.let {

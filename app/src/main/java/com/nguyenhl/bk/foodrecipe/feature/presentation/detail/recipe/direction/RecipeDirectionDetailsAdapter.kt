@@ -15,8 +15,10 @@ class RecipeDirectionDetailsAdapter(
         ViewHolder(binding.root) {
         fun bind(direction: String) {
             binding.apply {
-                val numb = absoluteAdapterPosition + 1
-                tvIngredientDetailsNumb.text = numb.toString()
+                tvIngredientDetailsNumb.apply {
+                    val numb = "${absoluteAdapterPosition + 1}."
+                    text = numb
+                }
                 tvIngredientDetails.text = direction
             }
         }

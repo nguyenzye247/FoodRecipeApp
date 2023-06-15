@@ -16,6 +16,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_12dp"
         android:gravity="start"
+        android:lineSpacingExtra="@dimen/dimen_4dp"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_14sp"
         tools:text="okeokeokeoke" />
@@ -64,16 +65,10 @@
         app:tabTextAppearance="@style/RecipeDetailDirectionsTabTextStyle"
         app:tabTextColor="@color/rcp_black_100" />
 
-<!--    <devlight.io.library.ntb.NavigationTabBar-->
-<!--        android:id="@+id/tab_layout_directions"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-
-<!--        />-->
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp2_direction"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:overScrollMode="never" />
 
 </LinearLayout>

@@ -38,11 +38,26 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include
-            android:id="@+id/layout_content"
-            layout="@layout/layout_recipe_detail_content"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <include
+                android:id="@+id/layout_recipe_content"
+                layout="@layout/layout_recipe_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_12dp" />
+
+            <include
+                android:id="@+id/layout_direction_content"
+                layout="@layout/layout_recipe_direction_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_12dp"
+                android:visibility="gone" />
+        </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
 

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_marginVertical="@dimen/dimen_4dp"
     android:background="@drawable/bg_item_recipe_ingredients_details"
-    android:gravity="start|center_vertical"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/dimen_12dp"
     android:paddingVertical="@dimen/dimen_16dp">
@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/rcp_black_100"
+        android:layout_gravity="start"
         android:textSize="@dimen/text_size_14sp"
         tools:text="1." />
 
@@ -24,11 +25,11 @@
         style="@style/TextRegularStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_4dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="@dimen/dimen_6dp"
+        android:lineSpacingExtra="@dimen/dimen_4dp"
         android:textColor="@color/rcp_black_100"
         android:textSize="@dimen/text_size_14sp"
-        tools:text="OKEOKEOKEOKE" />
+        tools:text="OKEOKEOKEOKE fafh adnlfj abldkfjb alkjdb  abdfj balkjsdfb ajb fasdfblakjsfbd kajb dlf" />
 
 </LinearLayout>
