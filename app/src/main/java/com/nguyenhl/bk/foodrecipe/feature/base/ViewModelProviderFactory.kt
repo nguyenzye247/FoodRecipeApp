@@ -1,5 +1,6 @@
 package com.nguyenhl.bk.foodrecipe.feature.base
 
+import android.widget.SearchView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
@@ -20,6 +21,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetai
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
@@ -175,6 +177,12 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(CookingViewModel::class.java) -> {
                 return CookingViewModel(
                     input as BaseInput.CookingInput
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
+                return SearchViewModel(
+                    input as BaseInput.SearchInput
                 ) as T
             }
 

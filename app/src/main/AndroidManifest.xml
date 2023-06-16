@@ -106,6 +106,10 @@
             android:name=".feature.presentation.cooking.CookingActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.search.SearchActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

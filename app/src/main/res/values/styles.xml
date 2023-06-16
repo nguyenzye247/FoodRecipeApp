@@ -114,6 +114,12 @@
         <item name="passwordToggleTint">@color/black</item>
     </style>
 
+    <style name="TIPSearchStyle" parent="TIPInputStyle">
+        <item name="endIconDrawable">@drawable/ic_search</item>
+        <item name="endIconMode">custom</item>
+        <item name="endIconTint">@color/rcp_black_100</item>
+    </style>
+
     <style name="ETInputStyle">
         <item name="fontFamily">@font/gordita_regular</item>
         <item name="android:textColor">@color/black</item>
