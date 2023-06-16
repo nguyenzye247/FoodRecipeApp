@@ -24,10 +24,12 @@ class RecipeDetailViewModel(
 
     private val _recipeDetail: MutableLiveData<RecipeDetailDto?> =
         MutableLiveData(null)
+    fun getRecipeDetailValue(): RecipeDetailDto? = _recipeDetail.value
     fun liveRecipeDetail(): LiveData<RecipeDetailDto?> = _recipeDetail
 
     private val _recipeIngredientDetail: MutableLiveData<List<IngredientDto>?> =
         MutableLiveData(null)
+    fun getIngredientDetailValue(): List<IngredientDto>? = _recipeIngredientDetail.value
     fun liveRecipeIngredientDetail(): LiveData<List<IngredientDto>?> = _recipeIngredientDetail
 
     private val _recipeNutrientDetail: MutableLiveData<List<NutrientDto>?> =

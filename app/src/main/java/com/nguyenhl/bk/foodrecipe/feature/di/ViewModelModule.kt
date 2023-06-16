@@ -5,6 +5,7 @@ import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
@@ -85,5 +86,9 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.RecipeDetailInput) ->
         ViewModelProviderFactory(input).create(RecipeDetailViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.CookingInput) ->
+        ViewModelProviderFactory(input).create(CookingViewModel::class.java)
     }
 }

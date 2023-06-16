@@ -1,5 +1,9 @@
 package com.nguyenhl.bk.foodrecipe.feature.dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class RecipeDetailDto(
     val idApi: String,
     val name: String,
@@ -11,4 +15,4 @@ data class RecipeDetailDto(
     val description: String,
     val ingredientDetails: List<String>,
     val methods: List<String>
-)
+) : Parcelable

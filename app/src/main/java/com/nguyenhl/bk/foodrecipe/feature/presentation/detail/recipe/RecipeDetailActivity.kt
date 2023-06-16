@@ -15,6 +15,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityRecipeDetailBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
@@ -22,11 +23,15 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.NutrientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity.Companion.KEY_INGREDIENT_DTO
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity.Companion.KEY_RECIPE_DETAIL_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeDirectionPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeIngredientsAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeNutrientAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.util.ArrayList
 
 class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDetailViewModel>() {
     private lateinit var recipeNutrientsAdapter: RecipeNutrientAdapter
@@ -63,6 +68,10 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
 
         binding.layoutRecipeContent.apply {
 
+        }
+
+        binding.btnStartCooking.onClick {
+            goToCooking()
         }
     }
 
@@ -223,6 +232,20 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
             ResourcesCompat.getFont(initSelectedTab.view.context, R.font.gordita_bold)?.let {
                 setTabTypeface(initSelectedTab, it)
             }
+        }
+    }
+
+    private fun goToCooking() {
+        val recipeDetails = viewModel.getRecipeDetailValue()
+        val ingredients = viewModel.getIngredientDetailValue()
+        if (recipeDetails == null || ingredients == null) {
+            toastError(getString(R.string.error_try_again_later))
+            return
+        }
+
+        CookingActivity.startActivity(this) {
+            putExtra(KEY_RECIPE_DETAIL_DTO, recipeDetails)
+            putParcelableArrayListExtra(KEY_INGREDIENT_DTO, ArrayList(ingredients))
         }
     }
 
