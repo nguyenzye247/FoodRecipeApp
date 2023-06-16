@@ -11,10 +11,12 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoView
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
@@ -160,6 +162,19 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return IngredientDetailViewModel(
                     input as BaseInput.IngredientDetailInput,
                     ingredientRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(RecipeDetailViewModel::class.java) -> {
+                return RecipeDetailViewModel(
+                    input as BaseInput.RecipeDetailInput,
+                    recipeRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(CookingViewModel::class.java) -> {
+                return CookingViewModel(
+                    input as BaseInput.CookingInput
                 ) as T
             }
 

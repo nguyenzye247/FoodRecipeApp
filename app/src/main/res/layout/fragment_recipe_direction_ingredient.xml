@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dimen_4dp">
+
+    <TextView
+        android:id="@+id/tv_serves"
+        style="@style/TextMediumStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        android:ellipsize="marquee"
+        android:maxLines="1"
+        android:textSize="@dimen/text_size_16sp"
+        tools:text="Serves for 4 people" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_ingredient_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:overScrollMode="never" />
+</LinearLayout>

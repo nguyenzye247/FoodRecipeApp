@@ -2,12 +2,14 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.RecipeByAuthorBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeDetailResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RecipeService {
@@ -17,6 +19,8 @@ interface RecipeService {
         const val RECIPE_BY_COLLECTION_GET_EP = "recipe/collection"
         const val RECIPE_BY_INGREDIENT_GET_EP = "recipe/ingredient"
         const val RECIPE_BY_AUTHOR_POST_EP = "recipe/author"
+
+        const val RECIPE_DETAIL_GET_EP = "recipedetail"
     }
 
     @POST(RECIPE_SEARCH_POST_EP)
@@ -52,4 +56,9 @@ interface RecipeService {
         @Body recipeByAuthorBody: RecipeByAuthorBody,
         @Query("page") page: Int = 1
     ): ApiResponse<RecipeResponse>
+
+    @GET("$RECIPE_DETAIL_GET_EP/{detailId}")
+    suspend fun getRecipeDetails(
+        @Path("detailId") detailId: String
+    ): ApiResponse<RecipeDetailResponse>
 }

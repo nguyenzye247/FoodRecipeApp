@@ -39,6 +39,7 @@
     <string name="send_to_email">Send to email</string>
     <string name="home">Home</string>
     <string name="ingredients">Ingredients</string>
+    <string name="methods">Methods</string>
     <string name="calendar">Calendar</string>
     <string name="profile">Profile</string>
     <string name="search">Search</string>
@@ -59,4 +60,12 @@
     <string name="minute">min</string>
     <string name="greeting">Hi,</string>
     <string name="recipes">Recipes</string>
+    <string name="kcal">kcal</string>
+    <string name="directions">Directions</string>
+    <string name="start_cooking">Start Cooking</string>
+    <string name="gram">gram</string>
+    <string name="error_try_again_later">Error! Try again later</string>
+    <string name="prepare_ingredient">Please prepare the ingredients before cooking</string>
+    <string name="follow_to_cook">Follow these steps to cook this recipe</string>
+    <string name="finish">Finish</string>
 </resources>

@@ -20,6 +20,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runDelayOnMainThr
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import kotlinx.coroutines.flow.collectLatest
@@ -76,7 +78,7 @@ class VAIngredientActivity : BaseViewAllActivity<VAIngredientViewModel>() {
         }
 
         viewAllIngredientAdapter = VAIngredientAdapter { ingredientDto ->
-
+            goToIngredientDetail(ingredientDto)
         }
         binding.rvContent.apply {
             adapter = viewAllIngredientAdapter
@@ -141,6 +143,12 @@ class VAIngredientActivity : BaseViewAllActivity<VAIngredientViewModel>() {
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToIngredientDetail(ingredient: IngredientDto) {
+        IngredientDetailActivity.startActivity(this) {
+            putExtra(IngredientDetailActivity.KEY_INGREDIENT_DTO, ingredient)
         }
     }
 

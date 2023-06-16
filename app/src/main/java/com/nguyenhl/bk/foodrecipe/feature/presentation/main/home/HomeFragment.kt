@@ -21,6 +21,8 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.Collect
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailActivity.Companion.KEY_COLLECTION_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailActivity.Companion.KEY_INGREDIENT_DTO
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity.Companion.KEY_RECIPE_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefActivity
@@ -132,9 +134,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindSuggestRecipesViewData(suggestRecipes: List<RecipeDto>?) {
         suggestRecipes ?: return
 
-        recipeAdapter = RecipeAdapter(suggestRecipes) { recipe ->
-            // set favorite
-        }
+        recipeAdapter = RecipeAdapter(
+            suggestRecipes,
+            onItemClick = { recipe ->
+                goToRecipeDetail(recipe)
+            },
+            onFavorite = { recipe ->
+                // TODO: set favorite
+            }
+        )
         binding.rvSuggestForYou.apply {
             adapter = recipeAdapter
             layoutManager = LinearLayoutManager(
@@ -180,9 +188,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindDailyInspirationsViewData(randomRecipes: List<RecipeDto>?) {
         randomRecipes ?: return
 
-        dailyInspirationsAdapter = RecipeAdapter(randomRecipes) { favoriteRecipe ->
-
-        }
+        dailyInspirationsAdapter = RecipeAdapter(
+            randomRecipes,
+            onItemClick = { recipe ->
+                goToRecipeDetail(recipe)
+            },
+            onFavorite = { recipe ->
+                // TODO: set favorite
+            }
+        )
         binding.rvDailyInspiration.apply {
             adapter = dailyInspirationsAdapter
             layoutManager = LinearLayoutManager(
@@ -255,6 +269,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun goToIngredientDetail(ingredient: IngredientDto) {
         IngredientDetailActivity.startActivity(context) {
             putExtra(KEY_INGREDIENT_DTO, ingredient)
+        }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(context) {
+            putExtra(KEY_RECIPE_DTO, recipe)
         }
     }
 }

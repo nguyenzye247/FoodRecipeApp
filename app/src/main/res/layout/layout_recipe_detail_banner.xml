@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_recipe_detail">
+
+    <ImageView
+        android:id="@+id/iv_recipe_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_280dp"
+        android:contentDescription="@null"
+        android:foreground="@drawable/bg_collection_thumbnail"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_36dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@null"
+        android:elevation="@dimen/dimen_2dp"
+        android:src="@drawable/ic_back_btn"
+        app:layout_constraintStart_toStartOf="@id/iv_recipe_thumbnail"
+        app:layout_constraintTop_toTopOf="@id/iv_recipe_thumbnail" />
+
+    <ImageButton
+        android:id="@+id/btn_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@null"
+        android:padding="@dimen/dimen_3dp"
+        android:src="@drawable/select_recipe_detail_bookmark"
+        app:layout_constraintEnd_toEndOf="@id/iv_recipe_thumbnail"
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
+
+    <ImageButton
+        android:id="@+id/btn_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@null"
+        android:padding="@dimen/dimen_3dp"
+        android:src="@drawable/select_recipe_detail_heart"
+        app:layout_constraintEnd_toStartOf="@id/btn_bookmark"
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
+
+    <TextView
+        android:id="@+id/tv_recipe_author"
+        style="@style/TextRegularStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_16dp"
+        android:gravity="start"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_recipe_thumbnail"
+        app:layout_constraintStart_toStartOf="@id/btn_back"
+        tools:text="Le Nguyen" />
+
+    <TextView
+        android:id="@+id/tv_recipe_name"
+        style="@style/TextMediumStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_22sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_recipe_author"
+        app:layout_constraintStart_toStartOf="@id/tv_recipe_author"
+        tools:text="TEST" />
+
+    <TextView
+        android:id="@+id/tv_recipe_prep_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:gravity="center"
+        android:textColor="@color/rcp_cream_100"
+        android:textSize="@dimen/text_size_12sp"
+        app:drawableStartCompat="@drawable/ic_clock"
+        app:drawableTint="@color/rcp_cream_100"
+        app:layout_constraintBottom_toTopOf="@id/tv_recipe_name"
+        app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
+        tools:text="12 min" />
+
+    <TextView
+        android:id="@+id/tv_recipe_cook_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:gravity="center"
+        android:textColor="@color/rcp_cream_100"
+        android:textSize="@dimen/text_size_12sp"
+        app:drawableStartCompat="@drawable/ic_clock_fill"
+        app:drawableTint="@color/rcp_cream_100"
+        app:layout_constraintBottom_toBottomOf="@id/tv_recipe_prep_time"
+        app:layout_constraintStart_toEndOf="@id/tv_recipe_prep_time"
+        app:layout_constraintTop_toTopOf="@id/tv_recipe_prep_time"
+        tools:text="12 min" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

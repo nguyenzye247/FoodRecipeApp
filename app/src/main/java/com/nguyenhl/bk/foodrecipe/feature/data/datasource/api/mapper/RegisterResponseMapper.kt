@@ -16,7 +16,8 @@ abstract class BaseApiErrorModelMapper(
         } catch (ex: Exception) {
             ErrorResponse(
                 uniqueMessage,
-                apiErrorResponse.statusCode == StatusCode.OK
+                apiErrorResponse.statusCode == StatusCode.OK,
+                apiErrorResponse.statusCode.code
             )
         }
     }
@@ -53,3 +54,5 @@ object GetIngredientErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get ingredient data")
 object GetIngredientDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get ingredient detail data")
+object GetRecipeDetailErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get recipe detail data")

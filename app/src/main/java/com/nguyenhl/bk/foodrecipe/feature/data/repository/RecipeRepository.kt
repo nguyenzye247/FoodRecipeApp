@@ -8,14 +8,17 @@ import com.nguyenhl.bk.foodrecipe.core.common.INITIAL_LOAD_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.MAIN_RECIPE_PAGE
 import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRandomRecipeErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRecipeDetailErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipeEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.SearchRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -143,29 +146,49 @@ class RecipeRepository constructor(
     @WorkerThread
     fun searchTop10RecipeByFilters(token: String, searchRecipeFilterBody: SearchRecipeFilterBody) =
         flow {
-            recipeService.searchRecipeByFilters(token, searchRecipeFilterBody, MAIN_RECIPE_PAGE)
+            runAndRetry(GlobalRetryPolicy()) { _, _ ->
+                recipeService.searchRecipeByFilters(token, searchRecipeFilterBody, MAIN_RECIPE_PAGE)
+                    .suspendOnSuccess {
+                        emit(data)
+                    }
+                    .suspendOnError(SearchRecipeByFiltersErrorResponseMapper) {
+                        emit(this)
+                    }
+                    .suspendOnException {
+                        emit(null)
+                    }
+            }
+        }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun fetchTop10RandomRecipes(token: String) = flow {
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            recipeService.getRandomRecipes(token)
                 .suspendOnSuccess {
                     emit(data)
                 }
-                .suspendOnError(SearchRecipeByFiltersErrorResponseMapper) {
+                .suspendOnError(GetRandomRecipeErrorResponseMapper) {
                     emit(this)
                 }
                 .suspendOnException {
                     emit(null)
                 }
-        }.flowOn(Dispatchers.IO)
+        }
+    }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun fetchTop10RandomRecipes(token: String) = flow {
-        recipeService.getRandomRecipes(token)
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(GetRandomRecipeErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                emit(null)
-            }
+    fun fetchRecipeDetail(detailId: String) = flow {
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            recipeService.getRecipeDetails(detailId)
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(GetRecipeDetailErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    emit(null)
+                }
+        }
     }.flowOn(Dispatchers.IO)
 }

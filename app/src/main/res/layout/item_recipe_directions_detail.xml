@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginVertical="@dimen/dimen_4dp"
+    android:background="@drawable/bg_item_recipe_ingredients_details"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/dimen_12dp"
+    android:paddingVertical="@dimen/dimen_16dp">
+
+    <TextView
+        android:id="@+id/tv_ingredient_details_numb"
+        style="@style/TextBoldStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/rcp_black_100"
+        android:layout_gravity="start"
+        android:textSize="@dimen/text_size_18sp"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_ingredient_details"
+        style="@style/TextRegularStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="@dimen/dimen_8dp"
+        android:lineSpacingExtra="@dimen/dimen_4dp"
+        android:textColor="@color/rcp_black_100"
+        android:textSize="@dimen/text_size_14sp"
+        tools:text="OKEOKEOKEOKE fafh adnlfj abldkfjb alkjdb  abdfj balkjsdfb ajb fasdfblakjsfbd kajb dlf" />
+
+</LinearLayout>

@@ -7,12 +7,14 @@ import androidx.paging.PagingData
 import com.nguyenhl.bk.foodrecipe.core.common.INITIAL_LOAD_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetIngredientDetailErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetIngredientErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientPagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.IngredientService
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
+import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -81,30 +83,34 @@ class IngredientRepository constructor(
 
     @WorkerThread
     fun fetchTop10Ingredients() = flow {
-        ingredientService.getIngredients()
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(GetIngredientErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                emit(null)
-            }
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            ingredientService.getIngredients()
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(GetIngredientErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    emit(null)
+                }
+        }
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
     fun fetchIngredientDetail(detailId: String) = flow {
-        ingredientService.getIngredientDetail(detailId)
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(GetIngredientDetailErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                Timber.tag("OKEOKE").w(this.message)
-                emit(null)
-            }
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            ingredientService.getIngredientDetail(detailId)
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(GetIngredientDetailErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    Timber.tag("OKEOKE").w(this.message)
+                    emit(null)
+                }
+        }
     }.flowOn(Dispatchers.IO)
 }

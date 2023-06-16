@@ -13,6 +13,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
 class RecipeAdapter(
     private val suggestRecipes: List<RecipeDto>,
+    private val onItemClick: (recipe: RecipeDto) -> Unit,
     private val onFavorite: (recipe: RecipeDto) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.SuggestForYouViewHolder>() {
 
@@ -30,6 +31,9 @@ class RecipeAdapter(
                 }
                 setFavourite(recipe.isLiked)
 
+                root.onClick {
+                    onItemClick.invoke(recipe)
+                }
                 btnFavorite.onClick {
                     onFavorite.invoke(recipe)
                 }

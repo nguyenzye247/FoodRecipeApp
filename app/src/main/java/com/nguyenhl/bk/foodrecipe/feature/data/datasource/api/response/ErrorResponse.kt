@@ -8,7 +8,8 @@ data class ErrorResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
-    val status: Boolean
+    val status: Boolean,
+    val code: Int
 ) {
     override fun toString(): String {
         return this.message

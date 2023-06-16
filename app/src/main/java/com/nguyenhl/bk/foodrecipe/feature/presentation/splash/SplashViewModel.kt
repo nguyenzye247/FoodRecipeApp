@@ -24,6 +24,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.repository.HealthStatusRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserRepository
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
+import com.skydoves.sandwich.StatusCode
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -97,7 +98,7 @@ class SplashViewModel constructor(
                     }
 
                     is ErrorResponse -> {
-                        if (response.message.contains("jwt")) {
+                        if (response.code == StatusCode.Unauthorized.code) {
                             _isValidUserInfo.postValue(AuthStatus.EXPIRED)
                         } else {
                             _isValidUserInfo.postValue(AuthStatus.INVALID)

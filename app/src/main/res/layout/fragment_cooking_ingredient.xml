@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_cooking_ingredient_title"
+        style="@style/TextBoldStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ingredients"
+        android:textSize="@dimen/text_size_20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_cooking_ingredient_description"
+        style="@style/TextRegularStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/prepare_ingredient"
+        android:textSize="@dimen/text_size_14sp"
+        app:layout_constraintStart_toStartOf="@id/tv_cooking_ingredient_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_cooking_ingredient_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_cooking_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_cooking_ingredient_description" />
+
+    <Button
+        android:id="@+id/btn_next_cooking"
+        style="@style/CaretButtonStyle"
+        android:layout_width="218dp"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:elevation="@dimen/dimen_10dp"
+        android:text="@string/next"
+        app:icon="@drawable/ic_right_carret"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_cooking_ingredient"
+        app:layout_constraintVertical_bias="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

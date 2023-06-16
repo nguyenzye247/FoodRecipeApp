@@ -7,12 +7,14 @@ import androidx.paging.PagingData
 import com.nguyenhl.bk.foodrecipe.core.common.INITIAL_LOAD_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetAuthorErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.ApiAuthor
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.ApiRecipe
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.AuthorPagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.AuthorService
 import com.nguyenhl.bk.foodrecipe.feature.dto.AuthorDto
+import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -41,15 +43,17 @@ class AuthorRepository(
 
     @WorkerThread
     fun fetchTop10Authors() = flow {
-        authorService.getAuthors(1)
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(GetAuthorErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                emit(null)
-            }
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            authorService.getAuthors(1)
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(GetAuthorErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    emit(null)
+                }
+        }
     }.flowOn(Dispatchers.IO)
 }
