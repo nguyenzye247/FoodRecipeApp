@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.repository
 
 import androidx.annotation.WorkerThread
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.CategoryErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.ApiCategory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.toCategory
@@ -10,6 +11,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryD
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryDetailDao
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Category
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
+import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -25,16 +27,18 @@ class CategoryRepository constructor(
 
     @WorkerThread
     fun getApiAllCategories() = flow {
-        categoryService.getAllCategories()
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(CategoryErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                emit(null)
-            }
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            categoryService.getAllCategories()
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(CategoryErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    emit(null)
+                }
+        }
     }.flowOn(Dispatchers.IO)
 
     suspend fun saveAllCategory(categories: List<Category>) {

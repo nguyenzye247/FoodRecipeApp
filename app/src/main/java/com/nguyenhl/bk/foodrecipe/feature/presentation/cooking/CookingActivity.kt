@@ -2,11 +2,14 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.cooking
 
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.lifecycleScope
+import com.nguyenhl.bk.foodrecipe.core.extension.launchRepeatOnStarted
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runDelayOnMainThread
 import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
@@ -15,6 +18,7 @@ import com.nguyenhl.bk.foodrecipe.databinding.ActivityCookingBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -39,6 +43,7 @@ class CookingActivity : BaseActivity<ActivityCookingBinding, CookingViewModel>()
             vp2Cooking.apply {
                 adapter = cookingPagerAdapter
                 recyclerView.enforceSingleScrollDirection()
+                isUserInputEnabled = false
             }
         }
     }
@@ -57,6 +62,14 @@ class CookingActivity : BaseActivity<ActivityCookingBinding, CookingViewModel>()
             observe(liveRecipeDetail()) { recipeDetail ->
                 recipeDetail?.let {
                     bindRecipeDetailDataView(recipeDetail)
+                }
+            }
+
+            lifecycleScope.launchRepeatOnStarted(this@CookingActivity) {
+                flowCookingButtonType().collectLatest { buttonType ->
+                    buttonType?.let {
+                        dispatchOnCookingButtonTypeClick(it)
+                    }
                 }
             }
         }
@@ -79,6 +92,30 @@ class CookingActivity : BaseActivity<ActivityCookingBinding, CookingViewModel>()
                     text = it
                 } ?: run {
                     setVisible(false)
+                }
+            }
+        }
+    }
+
+    private fun dispatchOnCookingButtonTypeClick(type: CookingButtonType) {
+        when (type) {
+            CookingButtonType.FINISH -> {
+                finish()
+            }
+            CookingButtonType.NEXT -> {
+                runDelayOnMainThread(100) {
+                    binding.vp2Cooking.setCurrentItem(
+                        CookingPagerAdapter.DIRECTION_PAGE_INDEX,
+                        true
+                    )
+                }
+            }
+            CookingButtonType.PREVIOUS -> {
+                runDelayOnMainThread(100) {
+                    binding.vp2Cooking.setCurrentItem(
+                        CookingPagerAdapter.INGREDIENT_PAGE_INDEX,
+                        true
+                    )
                 }
             }
         }

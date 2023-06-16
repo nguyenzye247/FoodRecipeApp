@@ -1,10 +1,12 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.repository
 
 import androidx.annotation.WorkerThread
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetDishPreferredErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.DishPreferredService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.PreferredDishDao
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.PreferredDish
+import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -19,16 +21,18 @@ class DishPreferredRepository constructor(
 
     @WorkerThread
     fun fetchAllPreferredDishes() = flow {
-        dishPreferredService.getAllPreferredDishes()
-            .suspendOnSuccess {
-                emit(data)
-            }
-            .suspendOnError(GetDishPreferredErrorResponseMapper) {
-                emit(this)
-            }
-            .suspendOnException {
-                emit(null)
-            }
+        runAndRetry(GlobalRetryPolicy()) { _, _ ->
+            dishPreferredService.getAllPreferredDishes()
+                .suspendOnSuccess {
+                    emit(data)
+                }
+                .suspendOnError(GetDishPreferredErrorResponseMapper) {
+                    emit(this)
+                }
+                .suspendOnException {
+                    emit(null)
+                }
+        }
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread

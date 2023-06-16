@@ -18,7 +18,9 @@ import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import kotlinx.coroutines.launch
@@ -61,8 +63,8 @@ class VASuggestActivity : BaseViewAllActivity<VASuggestViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        suggestRecipeAdapter = RecipeAdapter {
-
+        suggestRecipeAdapter = RecipeAdapter { recipe ->
+            goToRecipeDetail(recipe)
         }
         binding.rvContent.apply {
             adapter = suggestRecipeAdapter
@@ -112,6 +114,12 @@ class VASuggestActivity : BaseViewAllActivity<VASuggestViewModel>() {
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(this) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
         }
     }
 

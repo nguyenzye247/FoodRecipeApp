@@ -18,9 +18,11 @@ import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -61,8 +63,8 @@ class VARandomRecipeActivity : BaseViewAllActivity<VARandomRecipeViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        randomRecipeAdapter = RecipeAdapter {
-
+        randomRecipeAdapter = RecipeAdapter { recipe ->
+            goToRecipeDetail(recipe)
         }
         binding.rvContent.apply {
             adapter = randomRecipeAdapter
@@ -113,6 +115,12 @@ class VARandomRecipeActivity : BaseViewAllActivity<VARandomRecipeViewModel>() {
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(this) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
         }
     }
 

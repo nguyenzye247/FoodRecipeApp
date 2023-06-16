@@ -18,7 +18,9 @@ import com.nguyenhl.bk.foodrecipe.databinding.ActivityChefDetailBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.AuthorDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -42,7 +44,7 @@ class ChefDetailActivity : BaseActivity<ActivityChefDetailBinding, ChefDetailVie
     override fun initViews() {
         showLoadingView(true)
         recipeAdapter = RecipeAdapter { recipe ->
-
+            goToRecipeDetail(recipe)
         }
 
         binding.apply {
@@ -103,6 +105,12 @@ class ChefDetailActivity : BaseActivity<ActivityChefDetailBinding, ChefDetailVie
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(this) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
         }
     }
 

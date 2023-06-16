@@ -16,6 +16,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.dto.AuthorDto
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import kotlinx.coroutines.launch
@@ -52,8 +54,8 @@ class VAChefActivity : BaseViewAllActivity<VAChefViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        viewAllChefAdapter = VAChefAdapter {
-
+        viewAllChefAdapter = VAChefAdapter { chef ->
+            goToChefDetail(chef)
         }
         binding.rvContent.apply {
             adapter = viewAllChefAdapter
@@ -99,6 +101,12 @@ class VAChefActivity : BaseViewAllActivity<VAChefViewModel>() {
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToChefDetail(chef: AuthorDto) {
+        ChefDetailActivity.startActivity(this) {
+            putExtra(ChefDetailActivity.KEY_CHEF_DTO, chef)
         }
     }
 

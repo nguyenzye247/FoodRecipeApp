@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemVaRecipeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
@@ -21,6 +22,10 @@ class RecipeAdapter(
                 val cookTimeText = "${recipe.totalTime} min"
                 tvCookTime.text = cookTimeText
                 tvChefName.text = recipe.author
+
+                root.onClick {
+                    onItemClick(recipe)
+                }
             }
         }
     }

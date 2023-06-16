@@ -10,6 +10,7 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.view.DirectionItem
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingButtonType
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingItemAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingViewModel
@@ -29,10 +30,10 @@ class CookingDirectionFragment : BaseFragment<FragmentCookingDirectionBinding, C
     override fun initListener() {
         binding.apply {
             btnFinishCooking.onClick {
-
+                viewModel.setCookingButtonType(CookingButtonType.FINISH)
             }
             btnPreviousCooking.onClick {
-
+                viewModel.setCookingButtonType(CookingButtonType.PREVIOUS)
             }
         }
     }

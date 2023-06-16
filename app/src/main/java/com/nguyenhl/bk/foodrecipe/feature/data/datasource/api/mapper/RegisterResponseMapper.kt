@@ -16,7 +16,8 @@ abstract class BaseApiErrorModelMapper(
         } catch (ex: Exception) {
             ErrorResponse(
                 uniqueMessage,
-                apiErrorResponse.statusCode == StatusCode.OK
+                apiErrorResponse.statusCode == StatusCode.OK,
+                apiErrorResponse.statusCode.code
             )
         }
     }

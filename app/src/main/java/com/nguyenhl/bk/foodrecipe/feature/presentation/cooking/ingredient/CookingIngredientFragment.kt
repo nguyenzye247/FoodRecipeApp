@@ -4,11 +4,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentCookingIngredientBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.view.DirectionItem
+import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingButtonType
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingItemAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingViewModel
@@ -28,7 +30,9 @@ class CookingIngredientFragment :
 
     override fun initListener() {
         binding.apply {
-
+            btnNextCooking.onClick {
+                viewModel.setCookingButtonType(CookingButtonType.NEXT)
+            }
         }
     }
 

@@ -18,7 +18,9 @@ import com.nguyenhl.bk.foodrecipe.databinding.ActivityCollectionDetailBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.CollectionDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -43,7 +45,7 @@ class CollectionDetailActivity :
         adjustScreenSize(binding.btnBack)
         showLoadingView(true)
         recipeAdapter = RecipeAdapter { recipe ->
-
+            goToRecipeDetail(recipe)
         }
 
         binding.apply {
@@ -106,6 +108,12 @@ class CollectionDetailActivity :
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(this) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
         }
     }
 
