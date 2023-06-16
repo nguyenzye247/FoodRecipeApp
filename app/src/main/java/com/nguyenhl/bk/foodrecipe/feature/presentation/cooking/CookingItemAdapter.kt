@@ -23,7 +23,7 @@ class CookingItemAdapter(
                     direction.isSelected = isChecked
                 }
                 tvCookingDirection.onClick {
-                    cbSelectDirection.isSelected = !cbSelectDirection.isSelected
+                    cbSelectDirection.performClick()
                 }
             }
         }

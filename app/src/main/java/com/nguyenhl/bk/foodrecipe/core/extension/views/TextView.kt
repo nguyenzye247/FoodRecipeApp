@@ -26,7 +26,7 @@ var TextView.textAppearance: Int
 
 fun TextView.setTextIncludeDigit(line: String) {
     val spannableString = SpannableString(line)
-    val numberRegex = "\\b\\d+\\b".toRegex() // Regex to match numbers
+    val numberRegex = "\\b\\d+(g|oz|l|ml|kg|gal)?\\b".toRegex() // Regex to match numbers
 
     val matches = numberRegex.findAll(line)
     for (match in matches) {
