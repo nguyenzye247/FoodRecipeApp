@@ -8,6 +8,7 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.RecipeRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.search.SearchRepository
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 class VASuggestViewModel constructor(
     val input: BaseInput.BaseViewAllInput.ViewAllSuggestInput,
     private val userInfoRepository: UserInfoRepository,
-    private val recipeRepository: RecipeRepository
+    private val searchRepository: SearchRepository
 ) : BaseViewAllViewModel(input) {
     private val userInfoDto: UserInfoDto? = input.userInfo
 
@@ -50,7 +51,7 @@ class VASuggestViewModel constructor(
             null
         )
 
-        recipeRepository.searchRecipeByFilters(token, searchRecipeFilterBody)
+        searchRepository.searchRecipeByFilters(token, searchRecipeFilterBody)
             .cachedIn(viewModelScope)
             .collect {
                 _suggestRecipePaging.value = it

@@ -68,4 +68,16 @@
     <string name="prepare_ingredient">Please prepare the ingredients before cooking</string>
     <string name="follow_to_cook">Follow these steps to cook this recipe</string>
     <string name="finish">Finish</string>
+    <string name="search_by_image">Search by image</string>
+    <string name="filter_search">Filter Search</string>
+    <string name="meal_type">Meal Type</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="diet_type">Diets</string>
+    <string name="servings">Servings</string>
+    <string name="total_time">Total time</string>
+    <string name="authors">Authors</string>
+    <string name="calories">Calories</string>
+    <string name="network_not_connected">Network is not connected!</string>
+    <string name="cuisines">Cuisines</string>
+    <string name="apply_filter">Apply Filter</string>
 </resources>

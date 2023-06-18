@@ -9,13 +9,15 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class CookingViewModel(val input: BaseInput.CookingInput): BaseViewModel(input) {
+class CookingViewModel(val input: BaseInput.CookingInput) : BaseViewModel(input) {
     private val _recipeDetail: MutableLiveData<RecipeDetailDto?> =
         MutableLiveData(null)
+
     fun liveRecipeDetail(): LiveData<RecipeDetailDto?> = _recipeDetail
 
     private val _recipeIngredientDetail: MutableLiveData<List<IngredientDto>?> =
         MutableLiveData(null)
+
     fun liveRecipeIngredientDetail(): LiveData<List<IngredientDto>?> = _recipeIngredientDetail
 
     private val _cookingButtonType: MutableStateFlow<CookingButtonType?> = MutableStateFlow(null)
@@ -24,8 +26,12 @@ class CookingViewModel(val input: BaseInput.CookingInput): BaseViewModel(input) 
         _cookingButtonType.value = type
     }
 
-    init {
+    fun getRecipeCookingData() {
         _recipeDetail.value = input.recipeDetailDto
         _recipeIngredientDetail.value = input.ingredients
+    }
+
+    init {
+        getRecipeCookingData()
     }
 }

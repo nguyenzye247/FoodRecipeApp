@@ -30,6 +30,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cooking_direction"
         android:layout_width="match_parent"
+        android:nestedScrollingEnabled="true"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_16dp"
         android:overScrollMode="never"

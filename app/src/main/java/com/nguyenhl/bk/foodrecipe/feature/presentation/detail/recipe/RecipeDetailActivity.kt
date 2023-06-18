@@ -212,6 +212,7 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+            whiteBackgroundView.setVisible(isShow)
         }
     }
 

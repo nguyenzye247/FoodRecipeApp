@@ -56,3 +56,5 @@ object GetIngredientDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get ingredient detail data")
 object GetRecipeDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get recipe detail data")
+object GetSearchFilterErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get search filters data")

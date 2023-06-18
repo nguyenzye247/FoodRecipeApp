@@ -103,8 +103,12 @@ inline fun <T> List<T>.forEachReversedWithIndex(
 }
 
 fun <T> List<T>.getRandomSubset(subListSize: Int): List<T> {
-    require(size >= subListSize) { "List size must be at least $subListSize" }
+    val maxSublistSize = if (subListSize > this.size) {
+        this.size
+    } else {
+        subListSize
+    }
 
     val shuffledList = shuffled()
-    return shuffledList.subList(0, subListSize)
+    return shuffledList.subList(0, maxSublistSize - 1)
 }

@@ -13,6 +13,8 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.AuthStatus
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxBus
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
@@ -86,12 +88,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         LoginActivity.startActivity(this) {
             // put stuffs
         }
+        finish()
     }
 
     private fun goToMain() {
         MainActivity.startActivity(this) {
             // put stuffs
         }
+        finish()
     }
 
     private fun goToDishPreferred() {

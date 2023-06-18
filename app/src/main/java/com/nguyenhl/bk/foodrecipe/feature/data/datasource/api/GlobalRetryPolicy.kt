@@ -4,7 +4,7 @@ import com.skydoves.sandwich.retry.RetryPolicy
 
 class GlobalRetryPolicy: RetryPolicy {
     override fun retryTimeout(attempt: Int, message: String?): Int {
-        return 3000
+        return 7000
     }
 
     override fun shouldRetry(attempt: Int, message: String?): Boolean {

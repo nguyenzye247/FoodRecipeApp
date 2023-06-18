@@ -7,6 +7,8 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -16,9 +18,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
+import com.nguyenhl.bk.foodrecipe.R
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setPaddingBottom
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setPaddingTop
 import com.nguyenhl.bk.foodrecipe.feature.util.AppUtil
+import com.nguyenhl.bk.foodrecipe.feature.util.NetworkUtils
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
@@ -180,38 +185,39 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
         return currentOrientation == Configuration.ORIENTATION_PORTRAIT
     }
 
-//    protected fun listenNetworkChange(
-//        onAvailableCallback: () -> Unit,
-//        onLostCallback: () -> Unit,
-//    ) {
-//        val connectivityManager = getConnectivityManager()
-//        if (networkCallback == null) {
-//            networkCallback = getNetworkCallback(
-//                onAvailableCallback,
-//                onLostCallback
-//            )
-//        }
-//        if (isAndroid_N_AndAbove()) {
-//            networkCallback?.let {
-//                connectivityManager.registerDefaultNetworkCallback(it)
-//            }
-//        } else {
-//            networkCallback?.let {
-//                val request = NetworkRequest.Builder()
-//                    .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build()
-//                connectivityManager.registerNetworkCallback(request, it)
-//            }
-//        }
-//    }
+    protected fun listenNetworkChange(
+        onAvailableCallback: () -> Unit,
+        onLostCallback: () -> Unit,
+    ) {
+        val connectivityManager = getConnectivityManager()
+        if (networkCallback == null) {
+            networkCallback = getNetworkCallback(
+                onAvailableCallback,
+                onLostCallback
+            )
+        }
+        if (AppUtil.isAndroid_N_AndAbove()) {
+            networkCallback?.let {
+                connectivityManager.registerDefaultNetworkCallback(it)
+            }
+        } else {
+            networkCallback?.let {
+                val request = NetworkRequest.Builder()
+                    .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build()
+                connectivityManager.registerNetworkCallback(request, it)
+            }
+        }
+    }
 
-//    protected fun onInternetConnected(isConnected: Boolean, onConnected: () -> Unit) {
-//        if (!isConnected) {
-//            showToast(getString(R.string.network_not_connected_toast))
-//            return
-//        }
-//        onConnected.invoke()
-//    }
+    protected fun onInternetConnected(isConnected: Boolean, onConnected: () -> Unit) {
+        if (!isConnected) {
+            toastError(getString(R.string.network_not_connected))
+            return
+        }
+        onConnected.invoke()
+    }
 
-//    protected fun isNetworkAvailable() =
-//        NetworkUtils.isNetworkAvailable(getConnectivityManager())
+    protected fun isNetworkAvailable() = NetworkUtils.isNetworkAvailable(getConnectivityManager())
+
+    protected fun isWifiAvailable() = NetworkUtils.isWifiAvailable(getConnectivityManager())
 }

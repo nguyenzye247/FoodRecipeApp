@@ -64,6 +64,7 @@
 
         <activity
             android:name=".feature.presentation.main.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity

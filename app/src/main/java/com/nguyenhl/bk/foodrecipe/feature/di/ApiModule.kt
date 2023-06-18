@@ -2,7 +2,6 @@ package com.nguyenhl.bk.foodrecipe.feature.di
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.interceptor.RequestInterceptor
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.*
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.HealthStatusCategoryDetailDao
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,5 +44,7 @@ val apiModule = module {
     single { get<Retrofit>().create(CollectionService::class.java) }
     single { get<Retrofit>().create(AuthorService::class.java) }
     single { get<Retrofit>().create(IngredientService::class.java) }
+    single { get<Retrofit>().create(SearchFilterService::class.java) }
+    single { get<Retrofit>().create(SearchService::class.java) }
     //TODO: add more services
 }

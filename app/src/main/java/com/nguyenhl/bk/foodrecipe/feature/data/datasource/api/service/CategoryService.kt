@@ -1,6 +1,6 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.CategoryReponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.CategoryResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.GET
 
@@ -10,5 +10,5 @@ interface CategoryService {
     }
 
     @GET(CATEGORY_GET_EP)
-    suspend fun getAllCategories(): ApiResponse<CategoryReponse>
+    suspend fun getAllCategories(): ApiResponse<CategoryResponse>
 }

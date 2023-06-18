@@ -5,13 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.core.extension.getBaseConfig
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Collection
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import kotlinx.coroutines.launch
 
-class MainViewModel(
+class
+MainViewModel(
     val input: BaseInput.MainInput,
     private val homeUseCase: HomeUseCase,
     private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase
@@ -19,10 +19,14 @@ class MainViewModel(
     private val userId: String = input.application.getBaseConfig().userId
 
     init {
+        fetchRecipeHomeData()
+    }
+
+    fun fetchRecipeHomeData() {
         setLoading(true)
         viewModelScope.launch {
             homeUseCase.getAllCategories()
-            homeFetchRecipeUseCase.fetchRecipeData(input.application, userId) {
+            homeFetchRecipeUseCase.fetchRecipeHomeData(input.application, userId, this) {
                 // on Finish
                 setLoading(false)
             }

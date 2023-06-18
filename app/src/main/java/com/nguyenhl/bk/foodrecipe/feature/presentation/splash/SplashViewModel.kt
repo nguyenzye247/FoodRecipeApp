@@ -23,6 +23,8 @@ import com.nguyenhl.bk.foodrecipe.feature.data.repository.DishPreferredRepositor
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.HealthStatusRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserRepository
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxBus
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import com.skydoves.sandwich.StatusCode
 import io.reactivex.rxjava3.core.Observable
@@ -93,6 +95,7 @@ class SplashViewModel constructor(
                     is UserInfoGetResponse -> {
                         val infoData = response.info
                         _isValidUserInfo.postValue(AuthStatus.VALID)
+                        RxBus.publish(RxEvent.EventValidUserInfo())
 
                         infoData?.let { info -> saveUserInfoData(info) }
                     }

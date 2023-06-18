@@ -15,8 +15,8 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRecipeDe
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipeEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipePagingSource
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.SearchRecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.SearchService
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
@@ -28,30 +28,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class RecipeRepository constructor(
-    private val recipeService: RecipeService
+    private val recipeService: RecipeService,
+    private val searchService: SearchService
 ) : Repository {
-
-    @WorkerThread
-    fun searchRecipeByFilters(
-        token: String,
-        searchRecipeFilterBody: SearchRecipeFilterBody
-    ): Flow<PagingData<RecipeDto>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                initialLoadSize = INITIAL_LOAD_SIZE,
-                prefetchDistance = PREFETCH_DIST
-            ),
-            pagingSourceFactory = {
-                SearchRecipePagingSource(
-                    token,
-                    searchRecipeFilterBody,
-                    recipeService
-                )
-            }
-        ).flow
-            .flowOn(Dispatchers.IO)
-    }
 
     @WorkerThread
     fun fetchRandomRecipes(
@@ -147,7 +126,7 @@ class RecipeRepository constructor(
     fun searchTop10RecipeByFilters(token: String, searchRecipeFilterBody: SearchRecipeFilterBody) =
         flow {
             runAndRetry(GlobalRetryPolicy()) { _, _ ->
-                recipeService.searchRecipeByFilters(token, searchRecipeFilterBody, MAIN_RECIPE_PAGE)
+                searchService.searchRecipeByFilters(token, searchRecipeFilterBody, MAIN_RECIPE_PAGE)
                     .suspendOnSuccess {
                         emit(data)
                     }
