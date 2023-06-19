@@ -52,7 +52,7 @@ class SearchViewModel(
     fun liveCuisineFilters(): LiveData<List<SearchFilterItemDto>?> =
         searchFilterUseCase.liveCuisineFilters()
 
-    fun getRandomRecipePaging(): StateFlow<PagingData<RecipeDto>?> = searchUseCase.getRandomRecipesPaging()
+    fun getRandomRecipePaging(): StateFlow<PagingData<RecipeDto>?> = searchUseCase.getSearchRecipesPaging()
 
     private suspend fun fetchAllSearchFilters() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -101,7 +101,26 @@ class SearchViewModel(
         if (searchRecipePagingJob != null) {
             searchRecipePagingJob?.cancel()
             searchRecipePagingJob = null
-            searchUseCase.setRandomRecipePagingValue(null)
+            searchUseCase.setSearchRecipePagingValue(null)
         }
+    }
+
+    fun getSearchBodyFromFilters(searchText: String): SearchRecipeFilterBody {
+        val idCategoryDetail =
+            filterHashMap[FilterS.MEAL_TYPE]?.filter { it.isSelected }?.map { it.idDetail }
+        val totalTime =
+            filterHashMap[FilterS.TOTAL_TIME]?.firstOrNull { it.isSelected }?.value
+        val idIngredients =
+            filterHashMap[FilterS.INGREDIENTS]?.filter { it.isSelected }?.map { it.idDetail }
+        val authors =
+            filterHashMap[FilterS.AUTHORS]?.filter { it.isSelected }?.map { it.name }
+
+        return SearchRecipeFilterBody(
+            idCategoryDetail,
+            totalTime,
+            idIngredients,
+            searchText.ifEmpty { null },
+            authors,
+        )
     }
 }

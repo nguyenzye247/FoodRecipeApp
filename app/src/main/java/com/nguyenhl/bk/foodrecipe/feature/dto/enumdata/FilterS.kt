@@ -8,5 +8,6 @@ enum class FilterS {
     TOTAL_TIME,
     AUTHORS,
     CALORIES,
-    CUISINES
+    CUISINES,
+    INGREDIENTS
 }

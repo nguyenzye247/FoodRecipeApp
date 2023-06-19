@@ -15,6 +15,7 @@ data class ApiAuthorFilter(
 internal fun ApiAuthorFilter.toSearchFilterDto(): SearchFilterItemDto {
     return SearchFilterItemDto(
         idApi = this.id,
+        idDetail = "",
         name = this.name,
         value = 0
     )

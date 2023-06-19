@@ -15,6 +15,7 @@ data class ApiTimeFilter(
 internal fun ApiTimeFilter.toSearchFilterDto(): SearchFilterItemDto {
     return SearchFilterItemDto(
         idApi = this.id,
+        idDetail = "",
         name = this.key,
         value = this.value
     )

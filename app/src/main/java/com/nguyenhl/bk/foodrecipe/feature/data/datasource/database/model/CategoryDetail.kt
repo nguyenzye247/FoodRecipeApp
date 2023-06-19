@@ -64,6 +64,7 @@ internal fun CategoryDetail.toCategoryDetailDto(): CategoryDetailDto {
 internal fun CategoryDetail.toSearchFilterDto(): SearchFilterItemDto {
     return SearchFilterItemDto(
         idApi = this.idApi,
+        idDetail = this.idCategoryDetail,
         name = this.name,
         value = 0
     )

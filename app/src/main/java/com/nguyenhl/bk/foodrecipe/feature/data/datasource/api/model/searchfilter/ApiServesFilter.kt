@@ -15,6 +15,7 @@ data class ApiServesFilter(
 internal fun ApiServesFilter.toSearchFilterDto(): SearchFilterItemDto {
     return SearchFilterItemDto(
         idApi = this.id,
+        idDetail = "",
         name = this.key,
         value = this.value
     )

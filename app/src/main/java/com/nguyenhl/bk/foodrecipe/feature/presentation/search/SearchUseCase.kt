@@ -18,8 +18,8 @@ class SearchUseCase constructor(
     private val _searchRecipePaging: MutableStateFlow<PagingData<RecipeDto>?> =
         MutableStateFlow(null)
 
-    fun getRandomRecipesPaging(): StateFlow<PagingData<RecipeDto>?> = _searchRecipePaging
-    fun setRandomRecipePagingValue(value: PagingData<RecipeDto>?) {
+    fun getSearchRecipesPaging(): StateFlow<PagingData<RecipeDto>?> = _searchRecipePaging
+    fun setSearchRecipePagingValue(value: PagingData<RecipeDto>?) {
         _searchRecipePaging.value = value
     }
 
@@ -31,7 +31,7 @@ class SearchUseCase constructor(
         searchRepository.searchRecipeByFilters(token, searchRecipeFilterBody)
             .cachedIn(viewModelScope)
             .collect {
-                _searchRecipePaging.value = it
+                setSearchRecipePagingValue(it)
             }
     }
 
@@ -39,7 +39,7 @@ class SearchUseCase constructor(
         recipeRepository.fetchRandomRecipes(token)
             .cachedIn(viewModelScope)
             .collect {
-                _searchRecipePaging.value = it
+                setSearchRecipePagingValue(it)
             }
     }
 }

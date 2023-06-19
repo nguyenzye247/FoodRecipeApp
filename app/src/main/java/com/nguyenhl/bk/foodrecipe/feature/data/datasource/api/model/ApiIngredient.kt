@@ -30,6 +30,7 @@ internal fun ApiIngredient.toIngredientDto(): IngredientDto {
 internal fun ApiIngredient.toSearchFilterDto(): SearchFilterItemDto {
     return SearchFilterItemDto(
         idApi = this.id,
+        idDetail = idIngredientDetail,
         name = this.name,
         value = 0
     )
