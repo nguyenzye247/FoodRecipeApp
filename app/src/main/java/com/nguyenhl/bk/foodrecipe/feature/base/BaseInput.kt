@@ -91,4 +91,8 @@ sealed class BaseInput {
         val recipeDetailDto: RecipeDetailDto?,
         val ingredients: ArrayList<IngredientDto>?
     ): BaseInput()
+
+    data class SearchInput(
+        val application: Application,
+    ): BaseInput()
 }

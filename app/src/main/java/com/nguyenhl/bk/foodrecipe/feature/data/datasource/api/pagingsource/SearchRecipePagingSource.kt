@@ -4,6 +4,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.Search
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.recipe.toRecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.SearchService
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.skydoves.sandwich.getOrThrow
 import retrofit2.HttpException
@@ -12,12 +13,12 @@ import java.io.IOException
 class SearchRecipePagingSource(
     private val token: String,
     private val recipeFilterBody: SearchRecipeFilterBody,
-    private val recipeService: RecipeService
+    private val searchService: SearchService
 ) : BasePagingSource<RecipeDto, RecipeResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RecipeDto> {
         val page = params.key ?: DEFAULT_PAGE_INDEX
-        val response = recipeService.searchRecipeByFilters(token, recipeFilterBody, page)
+        val response = searchService.searchRecipeByFilters(token, recipeFilterBody, page)
         return try {
             toLoadResult(
                 response.getOrThrow(),

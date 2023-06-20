@@ -66,6 +66,7 @@
     <dimen name="text_size_30sp">30sp</dimen>
     <dimen name="text_size_32sp">32sp</dimen>
     <dimen name="text_size_40sp">40sp</dimen>
+    <dimen name="dimen_120dp">120dp</dimen>
 
     <integer name="post_span_count">3</integer>
     <integer name="collection_max_count">6</integer>

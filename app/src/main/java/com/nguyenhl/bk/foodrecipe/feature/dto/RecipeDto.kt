@@ -13,5 +13,5 @@ data class RecipeDto(
     val totalTime: Int,
     val author: String,
     val categoryDetails: List<CategoryDetailDto>,
-    val isLiked: Boolean
+    var isLiked: Boolean
 ) : Parcelable

@@ -64,6 +64,7 @@
 
         <activity
             android:name=".feature.presentation.main.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -104,6 +105,10 @@
 
         <activity
             android:name=".feature.presentation.cooking.CookingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.search.SearchActivity"
             android:screenOrientation="portrait" />
 
     </application>

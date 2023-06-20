@@ -14,3 +14,21 @@ data class SearchRecipeFilterBody(
     @SerializedName("author")
     var authorNames: List<String>? = null
 )
+
+internal fun SearchRecipeFilterBody.addUserHealthCategoryDetailToSearchBody(
+    userCategoryDetails: List<String>
+): SearchRecipeFilterBody {
+    val newCategoryDetails = this.idCategoryDetails?.let {
+        it + userCategoryDetails
+    } ?: kotlin.run {
+        userCategoryDetails
+    }
+
+    return SearchRecipeFilterBody(
+        idCategoryDetails = newCategoryDetails,
+        totalTime = this.totalTime,
+        idIngredients = this.idIngredients,
+        queryString = this.queryString,
+        authorNames = this.authorNames
+    )
+}

@@ -8,7 +8,6 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFra
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.HomeFragment
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.ingredients.IngredientsFragment
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.profile.ProfileFragment
-import com.nguyenhl.bk.foodrecipe.feature.presentation.main.search.SearchFragment
 
 class MainBottomBarAdapter(
     fragmentManager: FragmentManager,
@@ -28,7 +27,6 @@ class MainBottomBarAdapter(
         return when (position) {
             HOME_POS -> HomeFragment()
             INGREDIENTS_POS -> IngredientsFragment()
-            SEARCH_POS -> SearchFragment()
             CALENDAR_POS -> CalendarFragment()
             PROFILE_POS -> ProfileFragment()
             else -> {

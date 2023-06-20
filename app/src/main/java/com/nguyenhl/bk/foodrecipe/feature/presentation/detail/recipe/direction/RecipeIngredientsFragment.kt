@@ -4,6 +4,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentRecipeDirectionIngredientBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
@@ -54,6 +55,7 @@ class RecipeIngredientsFragment
                     LinearLayoutManager.VERTICAL,
                     false
                 )
+                enforceSingleScrollDirection()
             }
         }
     }

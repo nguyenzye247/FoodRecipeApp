@@ -56,4 +56,16 @@ class CategoryRepository constructor(
             }
         }
     }
+
+    suspend fun getRandomCategoryDetails(amount: Int): List<CategoryDetail>? {
+        return categoryDetailDao.getRandomCategoryDetail(amount)
+    }
+
+    suspend fun getCategoryDetailsByCategoryId(idCategory: String, amount: Int): List<CategoryDetail>? {
+        return categoryDetailDao.getCategoryDetailsByCategoryId(idCategory, amount)
+    }
+
+    suspend fun getUserHealthCategoryDetails(): List<CategoryDetail>? {
+        return categoryDetailDao.getAllUserHealthCategoryDetails()
+    }
 }

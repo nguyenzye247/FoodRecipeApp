@@ -25,4 +25,21 @@ data class HealthStatus(
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L
-) : Parcelable
+) : Parcelable {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as HealthStatus
+
+        return this.idApi == other.idApi &&
+                this.idHealthStatus == other.idHealthStatus &&
+                this.name == other.name
+    }
+
+    override fun hashCode(): Int {
+        var result = idApi.hashCode()
+        result = 31 * result + idHealthStatus.hashCode()
+        result = 31 * result + name.hashCode()
+        return result
+    }
+}

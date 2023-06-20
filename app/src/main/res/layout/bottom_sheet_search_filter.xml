@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_sheet">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom_sheet"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/dimen_12dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_filter_title"
+                    style="@style/TextMediumStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_12dp"
+                    android:text="@string/filter_search"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_meal_type_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/meal_type" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_meal_type_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_difficulty_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/difficulty" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_difficulty_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_diets_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/diet_type" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_diets_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_servings_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/servings" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_servings_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_total_time_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/total_time" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_total_time_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_author_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/authors" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_author_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_calories_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/calories" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_calories_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:id="@+id/tv_cuisine_title"
+                style="@style/SearchFilterTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@string/cuisines" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cuisine_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:overScrollMode="never" />
+
+            <Button
+                android:id="@+id/btn_apply_filter"
+                style="@style/CaretButtonStyle"
+                android:layout_width="@dimen/dimen_240dp"
+                android:layout_height="@dimen/dimen_56dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginVertical="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                android:elevation="@dimen/dimen_4dp"
+                android:text="@string/apply_filter" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

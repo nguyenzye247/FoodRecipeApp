@@ -9,10 +9,10 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Preferr
 @Dao
 interface PreferredDishDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(preferredDish: PreferredDish)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(preferredDishes: List<PreferredDish>)
 
     @Query("SELECT * FROM preferreddish WHERE user_id = :userId")

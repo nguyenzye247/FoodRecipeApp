@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/progress_bar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:elevation="@dimen/dimen_12dp">
 
     <View
         android:id="@+id/background_view"
-        android:background="@color/rcp_black_transparent_2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/rcp_black_transparent_2" />
+
+    <View
+        android:id="@+id/white_background_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:scaleX="0.6"
         android:scaleY="0.6"
-        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

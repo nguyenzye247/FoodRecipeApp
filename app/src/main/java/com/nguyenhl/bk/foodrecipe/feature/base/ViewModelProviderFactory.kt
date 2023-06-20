@@ -6,6 +6,8 @@ import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.ForgotPasswordRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.LoginRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.RegisterRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.search.SearchFilterRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.search.SearchRepository
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.createaccount.CreateAccountViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
@@ -20,6 +22,9 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetai
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
@@ -42,10 +47,14 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val recipeRepository: RecipeRepository by inject()
     private val authorRepository: AuthorRepository by inject()
     private val ingredientRepository: IngredientRepository by inject()
+    private val searchRepository: SearchRepository by inject()
+    private val searchFilterRepository: SearchFilterRepository by inject()
     private val categoryRepository: CategoryRepository by inject()
 
     private val homeUseCase: HomeUseCase by inject()
     private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase by inject()
+    private val searchFilterUseCase: SearchFilterUseCase by inject()
+    private val searchUseCase: SearchUseCase by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -71,7 +80,10 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return LoginViewModel(
                     input as BaseInput.LoginInput,
                     loginRepository,
-                    userInfoRepository
+                    userInfoRepository,
+                    healthStatusRepository,
+                    dishPreferredRepository,
+                    userRepository
                 ) as T
             }
 
@@ -119,7 +131,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return VASuggestViewModel(
                     input as BaseInput.BaseViewAllInput.ViewAllSuggestInput,
                     userInfoRepository,
-                    recipeRepository
+                    searchRepository
                 ) as T
             }
 
@@ -175,6 +187,14 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(CookingViewModel::class.java) -> {
                 return CookingViewModel(
                     input as BaseInput.CookingInput
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
+                return SearchViewModel(
+                    input as BaseInput.SearchInput,
+                    searchUseCase,
+                    searchFilterUseCase
                 ) as T
             }
 

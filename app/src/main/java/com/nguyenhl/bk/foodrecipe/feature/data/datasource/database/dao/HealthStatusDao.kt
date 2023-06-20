@@ -5,10 +5,10 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthS
 
 @Dao
 interface HealthStatusDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(healthStatus: HealthStatus)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(healthStatuses: List<HealthStatus>)
 
     @Query("UPDATE healthstatus SET api_id = :apiId, name = :name, user_id = :userId WHERE id_health_status = :idHealthStatus")

@@ -12,12 +12,6 @@ import com.nguyenhl.bk.foodrecipe.feature.widget.SlidingAdapter
 
 class RecipeDirectionPagerAdapter(private val fragmentActivity: FragmentActivity) :
     SlidingAdapter(fragmentActivity) {
-    companion object {
-        const val ITEM_COUNT = 2
-        const val INGREDIENT_PAGE_INDEX = 0
-        const val METHOD_PAGE_INDEX = 1
-    }
-
     override fun getItemCount(): Int = ITEM_COUNT
 
     override fun createFragment(position: Int): Fragment {
@@ -46,5 +40,11 @@ class RecipeDirectionPagerAdapter(private val fragmentActivity: FragmentActivity
                 fragmentActivity.txtString(R.string.ingredients)
             }
         }
+    }
+
+    companion object {
+        const val ITEM_COUNT = 2
+        const val INGREDIENT_PAGE_INDEX = 0
+        const val METHOD_PAGE_INDEX = 1
     }
 }

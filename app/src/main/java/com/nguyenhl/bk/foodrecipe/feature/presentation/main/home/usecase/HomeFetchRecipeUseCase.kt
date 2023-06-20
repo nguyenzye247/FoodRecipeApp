@@ -13,15 +13,12 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.Collectio
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.UserInfo
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toDishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toUserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import timber.log.Timber
 
 class HomeFetchRecipeUseCase constructor(
@@ -55,11 +52,19 @@ class HomeFetchRecipeUseCase constructor(
     private val _ingredients: MutableLiveData<List<IngredientDto>?> = MutableLiveData()
     fun liveIngredients(): LiveData<List<IngredientDto>?> = _ingredients
 
-    suspend fun fetchRecipeData(context: Context, userId: String, onFetchFinished: () -> Unit) {
-        val userInfo = userInfoRepository.getUserInfoByUserId(userId) ?: return
+    suspend fun fetchRecipeHomeData(
+        context: Context,
+        userId: String,
+        viewModelScope: CoroutineScope,
+        onFetchFinished: () -> Unit
+    ) {
+        val userInfo = userInfoRepository.getUserInfoByUserId(userId) ?: kotlin.run {
+            onFetchFinished()
+            return
+        }
         _userInfo.postValue(userInfo.toUserInfoDto())
 
-        coroutineScope {
+        viewModelScope.launch(Dispatchers.IO) {
             val deferredResults = listOf(
                 async { fetchPreferredDishes(userInfo.user.userId) },
                 async { fetchSuggestRecipes(context, userInfo.healthStatusWithCategoryDetail.categoryDetails) },

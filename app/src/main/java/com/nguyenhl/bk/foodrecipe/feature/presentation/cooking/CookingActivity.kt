@@ -10,10 +10,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.parcelableExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runDelayOnMainThread
+import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
-import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
-import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
-import com.nguyenhl.bk.foodrecipe.core.extension.views.recyclerView
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCookingBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
@@ -61,7 +59,9 @@ class CookingActivity : BaseActivity<ActivityCookingBinding, CookingViewModel>()
         viewModel.apply {
             observe(liveRecipeDetail()) { recipeDetail ->
                 recipeDetail?.let {
-                    bindRecipeDetailDataView(recipeDetail)
+                    runDelayOnMainThread(300) {
+                        bindRecipeDetailDataView(recipeDetail)
+                    }
                 }
             }
 
@@ -83,15 +83,15 @@ class CookingActivity : BaseActivity<ActivityCookingBinding, CookingViewModel>()
             tvRecipeCookTime.apply {
                 recipeDetail.cookTime?.let {
                     text = it
-                } ?: run {
-                    setVisible(false)
+                } ?: kotlin.run {
+                    tvRecipeCookTime.setVisible(false)
                 }
             }
             tvRecipePrepTime.apply {
                 recipeDetail.prepTime?.let {
                     text = it
-                } ?: run {
-                    setVisible(false)
+                } ?: kotlin.run {
+                    tvRecipePrepTime.setVisible(false)
                 }
             }
         }
@@ -100,7 +100,9 @@ class CookingActivity : BaseActivity<ActivityCookingBinding, CookingViewModel>()
     private fun dispatchOnCookingButtonTypeClick(type: CookingButtonType) {
         when (type) {
             CookingButtonType.FINISH -> {
-                finish()
+                runDelayOnMainThread(100) {
+                    finish()
+                }
             }
             CookingButtonType.NEXT -> {
                 runDelayOnMainThread(100) {

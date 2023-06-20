@@ -17,6 +17,8 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.helper.GridLayoutManagerWithSmoothScroller
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
+import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.items.DishPreferredAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoActivity
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -80,6 +82,11 @@ class DishPreferredActivity : BaseActivity<ActivityDishPreferredBinding, DishPre
             }
             initPreferredDishesList(dishes)
         }
+        subscription.add(
+            listenRxEventOnUI<RxEvent.EventValidUserInfo> {
+                this.finish()
+            }
+        )
     }
 
     private fun initPreferredDishesList(dishes: List<DishPreferredDto>) {
