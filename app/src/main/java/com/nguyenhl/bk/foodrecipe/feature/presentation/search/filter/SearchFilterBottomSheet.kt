@@ -3,6 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter
 import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
+import android.media.metrics.Event
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.BottomSheetSearchFilterBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.FilterS
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxBus
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
 
 class SearchFilterBottomSheet : BottomSheetDialogFragment() {
@@ -79,7 +82,7 @@ class SearchFilterBottomSheet : BottomSheetDialogFragment() {
     private fun initListeners() {
         binding.apply {
             btnApplyFilter.onClick {
-
+                RxBus.publish(RxEvent.EventApplySearchFilter())
                 dismiss()
             }
         }

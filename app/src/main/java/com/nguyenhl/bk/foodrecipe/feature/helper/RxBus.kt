@@ -38,4 +38,5 @@ internal inline fun <reified T: Any>listenRxEventOnIO(crossinline action: (event
 class RxEvent {
     class EventUnauthorized()
     class EventValidUserInfo()
+    class EventApplySearchFilter()
 }

@@ -10,7 +10,6 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirect
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentSearchSuggestBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
-import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.direction.RecipeMethodsFragment
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchInteractionListener
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
@@ -33,6 +32,7 @@ class SearchSuggestFragment : BaseFragment<FragmentSearchSuggestBinding, SearchV
     }
 
     override fun initViews() {
+        showEmptyView(true)
         searchRecipePagingAdapter = SearchRecipePagingAdapter(
             onItemClick = { recipe ->
                 searchInteractionListener.onSelectRecipe(recipe)
@@ -56,15 +56,19 @@ class SearchSuggestFragment : BaseFragment<FragmentSearchSuggestBinding, SearchV
     }
 
     override fun initListener() {
-        searchRecipePagingAdapter.addLoadStateListener {
-            showLoadingView(it.refresh is LoadState.Loading)
+        searchRecipePagingAdapter.addLoadStateListener { loadState ->
+            showLoadingView(loadState.refresh is LoadState.Loading)
+            showEmptyView(
+                loadState.append.endOfPaginationReached &&
+                        searchRecipePagingAdapter.itemCount < 1
+            )
         }
     }
 
     override fun initObservers() {
         viewModel.apply {
             lifecycleScope.launchRepeatOnStarted(viewLifecycleOwner) {
-                getRandomRecipePaging().collectLatest { recipePaging ->
+                getSuggestRecipesPaging().collectLatest { recipePaging ->
                     recipePaging?.let {
                         searchRecipePagingAdapter.submitData(it)
                     }
@@ -77,9 +81,16 @@ class SearchSuggestFragment : BaseFragment<FragmentSearchSuggestBinding, SearchV
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+            showEmptyView(false)
         }
     }
 
+    private fun showEmptyView(isShowEmpty: Boolean) {
+        binding.apply {
+            empty.emptyView.setVisible(isShowEmpty)
+            rvSearchSuggest.setVisible(!isShowEmpty)
+        }
+    }
 
     companion object {
         fun newInstance(): SearchSuggestFragment = SearchSuggestFragment()

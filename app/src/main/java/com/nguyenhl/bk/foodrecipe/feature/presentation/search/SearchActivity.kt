@@ -24,6 +24,9 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.FilterS
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
+import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterBottomSheet
@@ -116,6 +119,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                 cuisineFilters ?: return@observe
                 filterHashMap[FilterS.CUISINES] = cuisineFilters
             }
+
+            listenRxEventOnUI<RxEvent.EventApplySearchFilter> {
+                searchRecipe()
+            }
         }
     }
 
@@ -191,18 +198,24 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         val initSelectedTab = binding.tlSearch.getTabAt(pos)
         initSelectedTab?.let { tab ->
             tab.select()
-            ResourcesCompat.getFont(initSelectedTab.view.context, R.font.gordita_bold)?.let {
-                setTabTypeface(initSelectedTab, it)
+            ResourcesCompat.getFont(tab.view.context, R.font.gordita_bold)?.let {
+                setTabTypeface(tab, it)
             }
         }
     }
 
     override fun onSelectRecipe(recipe: RecipeDto) {
-
+        goToRecipeDetail(recipe)
     }
 
     override fun onFavoriteRecipe(recipe: RecipeDto) {
 
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(this) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
+        }
     }
 
     companion object {

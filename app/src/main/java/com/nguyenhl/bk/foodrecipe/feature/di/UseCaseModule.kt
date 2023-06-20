@@ -10,5 +10,5 @@ val useCaseModule = module {
     single { HomeUseCase(get(), get()) }
     single { HomeFetchRecipeUseCase(get(), get(), get(), get(), get(), get()) }
     single { SearchFilterUseCase(get(), get()) }
-    single { SearchUseCase(get(), get()) }
+    single { SearchUseCase(get(), get(), get()) }
 }

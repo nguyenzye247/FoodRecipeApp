@@ -64,6 +64,16 @@
         <item name="android:textColor">@color/rcp_black_100</item>
     </style>
 
+    <style name="SearchRecipeTabTextStyle" parent="TextBoldStyle">
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textColor">@color/rcp_black_100</item>
+    </style>
+
+    <style name="SearchRecipeTabTextSelectedStyle" parent="TextBoldStyle">
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textColor">@color/rcp_blue_400</item>
+    </style>
+
     <style name="SearchFilterTitleTextStyle" parent="TextBoldStyle">
         <item name="android:textSize">@dimen/text_size_16sp</item>
         <item name="android:textColor">@color/rcp_black_100</item>

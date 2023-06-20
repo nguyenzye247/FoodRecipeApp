@@ -10,7 +10,6 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirect
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentSearchRecipeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
-import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.direction.RecipeMethodsFragment
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchInteractionListener
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
@@ -56,15 +55,19 @@ class SearchRecipeFragment : BaseFragment<FragmentSearchRecipeBinding, SearchVie
     }
 
     override fun initListener() {
-        searchRecipePagingAdapter.addLoadStateListener {
-            showLoadingView(it.refresh is LoadState.Loading)
+        searchRecipePagingAdapter.addLoadStateListener { loadState ->
+            showLoadingView(loadState.refresh is LoadState.Loading)
+            showEmptyView(
+                loadState.append.endOfPaginationReached &&
+                        searchRecipePagingAdapter.itemCount < 1
+            )
         }
     }
 
     override fun initObservers() {
         viewModel.apply {
             lifecycleScope.launchRepeatOnStarted(viewLifecycleOwner) {
-                getRandomRecipePaging().collectLatest { recipePaging ->
+                getSearchRecipePaging().collectLatest { recipePaging ->
                     recipePaging?.let {
                         searchRecipePagingAdapter.submitData(it)
                     }
@@ -77,6 +80,13 @@ class SearchRecipeFragment : BaseFragment<FragmentSearchRecipeBinding, SearchVie
         binding.loading.apply {
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun showEmptyView(isShowEmpty: Boolean) {
+        binding.apply {
+            empty.emptyView.setVisible(isShowEmpty)
+            rvSearchRecipe.setVisible(!isShowEmpty)
         }
     }
 

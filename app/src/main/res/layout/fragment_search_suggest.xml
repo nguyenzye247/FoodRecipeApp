@@ -12,6 +12,15 @@
         android:overScrollMode="never" />
 
     <include
+        android:id="@+id/empty"
+        layout="@layout/layout_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/dimen_10dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <include
         android:id="@+id/loading"
         layout="@layout/layout_loading"
         android:layout_width="wrap_content"

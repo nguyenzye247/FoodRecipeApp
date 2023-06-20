@@ -64,4 +64,8 @@ class CategoryRepository constructor(
     suspend fun getCategoryDetailsByCategoryId(idCategory: String, amount: Int): List<CategoryDetail>? {
         return categoryDetailDao.getCategoryDetailsByCategoryId(idCategory, amount)
     }
+
+    suspend fun getUserHealthCategoryDetails(): List<CategoryDetail>? {
+        return categoryDetailDao.getAllUserHealthCategoryDetails()
+    }
 }

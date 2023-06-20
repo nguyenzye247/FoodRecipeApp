@@ -23,4 +23,12 @@ interface CategoryDetailDao {
         idCategory: String,
         amount: Int
     ): List<CategoryDetail>?
+
+    @Query("Select categorydetail.* from healthstatus " +
+            "JOIN healthstatuscategorydetailcrossref " +
+            "ON healthstatus.id_health_status = healthstatuscategorydetailcrossref.id_health_status " +
+            "JOIN categorydetail " +
+            "ON categorydetail.id_category_detail = healthstatuscategorydetailcrossref.id_category_detail " +
+            "WHERE user_id != ''")
+    suspend fun getAllUserHealthCategoryDetails(): List<CategoryDetail>?
 }
