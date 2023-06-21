@@ -1,5 +1,6 @@
 package com.nguyenhl.bk.foodrecipe.feature.di
 
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchUseCase
@@ -11,4 +12,5 @@ val useCaseModule = module {
     single { HomeFetchRecipeUseCase(get(), get(), get(), get(), get(), get()) }
     single { SearchFilterUseCase(get(), get()) }
     single { SearchUseCase(get(), get(), get()) }
+    single { CalendarUseCase(get()) }
 }

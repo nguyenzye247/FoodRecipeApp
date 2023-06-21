@@ -4,6 +4,7 @@ import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.yearMonth
 import java.time.DayOfWeek
 import java.time.Month
+import java.time.Year
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
@@ -23,9 +24,25 @@ fun getWeekPageTitle(week: Week): String {
         }
     }
 }
+fun getYearPageTitle(week: Week): String {
+    val firstDate = week.days.first().date
+    val lastDate = week.days.last().date
+    return when (firstDate.year) {
+        lastDate.year -> {
+            firstDate.yearMonth.displayYearText()
+        }
+        else -> {
+            "${firstDate.yearMonth.displayYearText()} - ${lastDate.yearMonth.displayYearText()}"
+        }
+    }
+}
+
+fun YearMonth.displayYearText(): String {
+    return "${this.year}"
+}
 
 fun YearMonth.displayText(short: Boolean = false): String {
-    return "${this.month.displayText(short = short)} ${this.year}"
+    return this.month.displayText(short = short)
 }
 
 fun Month.displayText(short: Boolean = true): String {

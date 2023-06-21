@@ -1,5 +1,9 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar
 
-class CalendarUseCase {
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.RecipeRepository
+
+class CalendarUseCase constructor(
+    private val recipeRepository: RecipeRepository
+) {
 
 }

@@ -40,7 +40,8 @@
             android:layout_width="@dimen/dimen_4dp"
             android:layout_height="@dimen/dimen_4dp"
             android:layout_marginTop="@dimen/dimen_4dp"
-            android:background="@drawable/bg_round_date_indicatior" />
+            android:background="@drawable/bg_round_date_indicatior"
+            android:visibility="gone" />
 
     </LinearLayout>
 
