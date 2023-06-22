@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.search
+package com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase
 
 import androidx.paging.PagingData
 import androidx.paging.cachedIn

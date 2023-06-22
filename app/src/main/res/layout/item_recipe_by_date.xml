@@ -22,7 +22,7 @@
             android:foreground="@drawable/bg_home_item"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="5:2"
+            app:layout_constraintDimensionRatio="5:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_max="@dimen/dimen_210dp"
             app:layout_constraintHeight_min="@dimen/dimen_210dp"
@@ -40,22 +40,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@null"
             android:padding="@dimen/dimen_3dp"
-            android:visibility="visible"
             android:src="@drawable/ic_favorite"
-            app:layout_constraintEnd_toEndOf="@id/iv_background"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
-
-        <ImageButton
-            android:id="@+id/btn_add_to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@null"
-            android:padding="@dimen/dimen_3dp"
-            android:src="@drawable/ic_add_to"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintTop_toTopOf="@id/iv_background" />
 

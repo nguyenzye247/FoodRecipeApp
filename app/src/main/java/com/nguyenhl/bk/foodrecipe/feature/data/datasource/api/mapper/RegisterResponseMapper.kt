@@ -58,3 +58,11 @@ object GetRecipeDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get recipe detail data")
 object GetSearchFilterErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get search filters data")
+object AddRecipeToDateErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to add this recipe")
+object RemoveRecipeFromDateErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to remove this recipe")
+object GetRecipeByDateErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get recipe")
+object GetAllDateHaveRecipeErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get all date")

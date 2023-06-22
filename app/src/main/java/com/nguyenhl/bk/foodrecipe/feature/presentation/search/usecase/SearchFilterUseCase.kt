@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter
+package com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -64,7 +64,9 @@ class SearchFilterUseCase constructor(
             when (response) {
                 is IngredientFilterResponse -> {
                     _ingredientFilters.postValue(
-                        response.ingredients.map { it.toSearchFilterDto() }.getRandomSubset(FILTER_AMOUNT)
+                        response.ingredients.map { it.toSearchFilterDto() }.getRandomSubset(
+                            FILTER_AMOUNT
+                        )
                     )
                 }
 

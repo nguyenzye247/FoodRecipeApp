@@ -23,4 +23,5 @@ val repositoryModule = module {
     single { IngredientRepository(get()) }
     single { SearchFilterRepository(get()) }
     single { SearchRepository(get()) }
+    single { CalendarRepository(get()) }
 }

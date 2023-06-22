@@ -3,8 +3,8 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.recipe.SearchRecipeFragment
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.suggest.SearchSuggestFragment
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.fragment.SearchRecipeFragment
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.fragment.SearchSuggestFragment
 
 class SearchPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

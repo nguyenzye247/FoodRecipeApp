@@ -3,6 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.base
 import android.app.Application
 import com.nguyenhl.bk.foodrecipe.App
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
+import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 
 sealed class BaseInput {
 
@@ -94,5 +95,8 @@ sealed class BaseInput {
 
     data class SearchInput(
         val application: Application,
+        val isMealTypeSearch: Boolean,
+        val date: String,
+        var mealType: MealType?,
     ): BaseInput()
 }

@@ -5,4 +5,5 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 interface SearchInteractionListener {
     fun onSelectRecipe(recipe: RecipeDto)
     fun onFavoriteRecipe(recipe: RecipeDto)
+    fun onRecipeAddTo(recipe: RecipeDto)
 }
