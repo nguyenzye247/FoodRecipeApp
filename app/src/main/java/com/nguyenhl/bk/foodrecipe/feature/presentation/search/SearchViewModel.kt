@@ -8,20 +8,31 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.addUserHealthCategoryDetailToSearchBody
+import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.calendar.RecipeByDateDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.FilterS
+import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.dto.searchfilter.SearchFilterItemDto
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchFilterUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseCase
+import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
+import java.time.LocalDate
 import java.util.*
 
 class SearchViewModel(
     val input: BaseInput.SearchInput,
     private val searchUseCase: SearchUseCase,
-    private val searchFilterUseCase: SearchFilterUseCase
+    private val searchFilterUseCase: SearchFilterUseCase,
+    private val searchMealTypeUseCase: SearchMealUseCase
 ) : BaseViewModel(input) {
+    // flag to check if there is any recipe being added by the user
+    var haveAddedRecipe: Boolean = false
+    val isMealTypeSearch = input.isMealTypeSearch
 
     val filterHashMap = EnumMap<FilterS, List<SearchFilterItemDto>>(FilterS::class.java)
     private val userCategoryDetailIds: ArrayList<String> = arrayListOf()
@@ -39,6 +50,7 @@ class SearchViewModel(
                 userCategoryDetailIds.addAll(categoryDetails.map { it.idCategoryDetail })
             }
         }
+        searchMealTypeUseCase.setAddRecipeToDate(null)
     }
 
     fun liveIngredientFilters(): LiveData<List<SearchFilterItemDto>?> =
@@ -74,6 +86,8 @@ class SearchViewModel(
     fun getSuggestRecipesPaging(): StateFlow<PagingData<RecipeDto>?> =
         searchUseCase.getSuggestRecipesPaging()
 
+    fun liveAddRecipeToDate(): LiveData<ApiCommonResponse?> = searchMealTypeUseCase.liveAddRecipeToDate()
+
     private suspend fun fetchAllSearchFilters() {
         viewModelScope.launch(Dispatchers.IO) {
             val deferredResults = listOf(
@@ -86,6 +100,8 @@ class SearchViewModel(
                 async { searchFilterUseCase.getDietFilters() },
                 async { searchFilterUseCase.getDifficultyFilters() },
                 async { searchFilterUseCase.getCuisineFilters() },
+
+                async { searchMealTypeUseCase.fetchAllDateHaveRecipe(input.application) },
             )
 
             deferredResults.awaitAll()
@@ -157,5 +173,14 @@ class SearchViewModel(
             searchText.ifEmpty { null },
             authors,
         )
+    }
+
+    fun addRecipeToDate(idRecipe: String) {
+        val date = input.date
+        val mealType = input.mealType ?: return
+        haveAddedRecipe = true
+        viewModelScope.launch(Dispatchers.IO) {
+            searchMealTypeUseCase.addRecipeToDate(input.application, idRecipe, date, mealType)
+        }
     }
 }

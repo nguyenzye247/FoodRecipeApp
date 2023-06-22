@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
+import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ItemSearchRecipeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
 class SearchRecipePagingAdapter(
+    private val isMealTypeSearch: Boolean,
     private val onItemClick: (recipe: RecipeDto) -> Unit,
-    private val onFavoriteClick: (recipe: RecipeDto) -> Unit
+    private val onFavoriteClick: (recipe: RecipeDto) -> Unit,
+    private val onAddToClick: (recipe: RecipeDto) -> Unit,
 ) :
     PagingDataAdapter<RecipeDto, SearchRecipePagingAdapter.SearchRecipeItemHolder>(
         COMPARATOR
@@ -29,6 +32,7 @@ class SearchRecipePagingAdapter(
                     val cookTimeText = "${recipe.totalTime} min"
                     text = cookTimeText
                 }
+                bindIsMealTypeSearch()
 
                 root.onClick {
                     onItemClick(recipe)
@@ -41,6 +45,18 @@ class SearchRecipePagingAdapter(
                         onFavoriteClick(recipe)
                     }
                 }
+                btnAddTo.apply {
+                    onClick {
+                        onAddToClick(recipe)
+                    }
+                }
+            }
+        }
+
+        private fun bindIsMealTypeSearch() {
+            binding.apply {
+                btnFavorite.setVisible(!isMealTypeSearch)
+                btnAddTo.setVisible(isMealTypeSearch)
             }
         }
     }

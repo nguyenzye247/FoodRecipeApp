@@ -22,9 +22,10 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetai
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchFilterUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
@@ -55,6 +56,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase by inject()
     private val searchFilterUseCase: SearchFilterUseCase by inject()
     private val searchUseCase: SearchUseCase by inject()
+    private val searchMealUseCase: SearchMealUseCase by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -72,7 +74,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return MainViewModel(
                     input as BaseInput.MainInput,
                     homeUseCase,
-                    homeFetchRecipeUseCase
+                    homeFetchRecipeUseCase,
+                    searchMealUseCase
                 ) as T
             }
 
@@ -194,7 +197,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return SearchViewModel(
                     input as BaseInput.SearchInput,
                     searchUseCase,
-                    searchFilterUseCase
+                    searchFilterUseCase,
+                    searchMealUseCase
                 ) as T
             }
 

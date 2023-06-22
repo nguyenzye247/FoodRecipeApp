@@ -1,5 +1,6 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.search
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -11,22 +12,22 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.nguyenhl.bk.foodrecipe.R
-import com.nguyenhl.bk.foodrecipe.core.extension.launchRepeatOnStarted
+import com.nguyenhl.bk.foodrecipe.core.extension.*
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
-import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
+import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
-import com.nguyenhl.bk.foodrecipe.core.extension.views.hideKeyboard
-import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
-import com.nguyenhl.bk.foodrecipe.core.extension.views.recyclerView
 import com.nguyenhl.bk.foodrecipe.databinding.ActivitySearchBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.FilterS
+import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFragment.Companion.KEY_HAVE_RECIPE_ADDED
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterBottomSheet
@@ -38,14 +39,26 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     private lateinit var searchFilterBottomSheet: SearchFilterBottomSheet
     private lateinit var searchPagerAdapter: SearchPagerAdapter
 
+    private val isMealTypeSearch by lazy { intent.getBooleanExtra(KEY_IS_MEAL_TYPE_SEARCH, false) }
+
     override fun getLazyBinding() = lazy { ActivitySearchBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModel<SearchViewModel> {
         parametersOf(
             BaseInput.SearchInput(
-                application
+                application,
+                intent.getBooleanExtra(KEY_IS_MEAL_TYPE_SEARCH, false),
+                intent.getStringExtra(KEY_DATE) ?: "",
+                intent.serializable(KEY_MEAL_TYPE)
             )
         )
+    }
+
+    override fun onBackPressed() {
+        setResult(Activity.RESULT_OK, Intent().apply {
+            putExtra(KEY_HAVE_RECIPE_ADDED, viewModel.haveAddedRecipe)
+        })
+        super.onBackPressed()
     }
 
     override fun initViews() {
@@ -62,6 +75,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                     tab.text = tabTitles[position]
                 }.attach()
             }
+
+            fabAiSearch.setVisible(!isMealTypeSearch)
         }
         initTabLayout()
         selectTabPosition(0)
@@ -120,6 +135,16 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                 filterHashMap[FilterS.CUISINES] = cuisineFilters
             }
 
+            observe(liveAddRecipeToDate()) { response ->
+                response?.let {
+                    if (response.status) {
+                        toastSuccess(response.data.value)
+                    } else {
+                        toastError("Fail to add recipe")
+                    }
+                }
+            }
+
             listenRxEventOnUI<RxEvent.EventApplySearchFilter> {
                 searchRecipe()
             }
@@ -127,20 +152,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     }
 
     private fun initTabLayout() {
-//        binding.layoutContent.apply {
-//            tabLayoutSliding.apply {
-//                bindViewPager(
-//                    vp2Direction,
-//                    object : ViewPager2.OnPageChangeCallback() {
-//                        override fun onPageSelected(position: Int) {
-//                            super.onPageSelected(position)
-////                            tabLayoutSliding.currentTab = position
-//                        }
-//                    }
-//                )
-//            }
-//        }
-
         binding.tlSearch.apply {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
@@ -212,6 +223,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     }
 
+    override fun onRecipeAddTo(recipe: RecipeDto) {
+        viewModel.addRecipeToDate(recipe.idRecipe)
+    }
+
     private fun goToRecipeDetail(recipe: RecipeDto) {
         RecipeDetailActivity.startActivity(this) {
             putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
@@ -219,6 +234,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     }
 
     companion object {
+        const val KEY_MEAL_TYPE = "key_meal_type"
+        const val KEY_DATE = "key_date"
+        const val KEY_IS_MEAL_TYPE_SEARCH = "key_is_meal_type_search"
+
         fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
             context?.let {
                 it.start<SearchActivity> {

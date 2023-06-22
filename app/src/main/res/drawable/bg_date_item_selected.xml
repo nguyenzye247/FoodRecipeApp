@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-android:color="@color/rcp_cream_100">
+android:color="@color/rcp_grey_200">
 <item
     android:id="@android:id/mask"
     android:gravity="center">
     <shape android:shape="rectangle">
-        <corners android:radius="@dimen/dimen_12dp" />
+        <corners android:radius="@dimen/dimen_16dp" />
         <solid android:color="@color/white" />
-        <size
-            android:width="@dimen/dimen_100dp"
-            android:height="@dimen/dimen_100dp" />
     </shape>
 </item>
 <item
     android:id="@android:id/background"
     android:gravity="center">
     <shape android:shape="rectangle">
-        <corners android:radius="@dimen/dimen_12dp" />
-        <solid android:color="@color/rcp_blue_300"/>
-        <size
-            android:width="@dimen/dimen_100dp"
-            android:height="@dimen/dimen_100dp" />
+        <corners android:radius="@dimen/dimen_16dp" />
+        <solid android:color="@color/rcp_blue_400"/>
     </shape>
 </item>
 
 </ripple>
-

@@ -63,7 +63,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_search"
-        android:layout_width="@dimen/dimen_0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_marginEnd="@dimen/dimen_12dp"

@@ -26,6 +26,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity.Companion.KEY_INGREDIENT_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity.Companion.KEY_RECIPE_DETAIL_DTO
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeDirectionPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeIngredientsAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeNutrientAdapter
@@ -127,7 +128,9 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
     }
 
     private fun bindRecipeIngredientsDataView(recipeIngredient: List<IngredientDto>) {
-        recipeIngredientsAdapter = RecipeIngredientsAdapter(recipeIngredient)
+        recipeIngredientsAdapter = RecipeIngredientsAdapter(recipeIngredient) { ingredient ->
+            goToIngredientDetails(ingredient)
+        }
         binding.layoutRecipeContent.rvIngredients.apply {
             adapter = recipeIngredientsAdapter
             layoutManager = GridLayoutManager(
@@ -247,6 +250,12 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
         CookingActivity.startActivity(this) {
             putExtra(KEY_RECIPE_DETAIL_DTO, recipeDetails)
             putParcelableArrayListExtra(KEY_INGREDIENT_DTO, ArrayList(ingredients))
+        }
+    }
+
+    private fun goToIngredientDetails(ingredient: IngredientDto) {
+        IngredientDetailActivity.startActivity(this) {
+            putExtra(IngredientDetailActivity.KEY_INGREDIENT_DTO, ingredient)
         }
     }
 

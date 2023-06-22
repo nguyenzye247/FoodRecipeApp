@@ -10,6 +10,8 @@ object DateFormatUtil {
     private const val DATE_DEFAULT_PATTERN = "MM-dd-yyyy"
     private const val DATE_VALID_PATTERN = "dd/MM/yyyy"
 
+    private const val DATE_RECIPE_PATTERN = "yyyy-MM-dd"
+
     fun formatSimpleDate(date: Date, pattern: String = DATE_DEFAULT_PATTERN): String {
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         return sdf.format(date)
@@ -24,5 +26,9 @@ object DateFormatUtil {
         } catch (ex: Exception) {
             dateString
         }
+    }
+
+    fun formatDateForRecipeSearch(date: LocalDate): String {
+        return date.format(DateTimeFormatter.ofPattern(DATE_RECIPE_PATTERN))
     }
 }
