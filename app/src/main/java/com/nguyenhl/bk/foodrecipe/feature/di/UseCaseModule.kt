@@ -9,7 +9,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMeal
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single { HomeUseCase(get(), get()) }
+    single { HomeUseCase(get(), get(), get()) }
     single { HomeFetchRecipeUseCase(get(), get(), get(), get(), get(), get()) }
     single { SearchFilterUseCase(get(), get()) }
     single { SearchUseCase(get(), get(), get()) }

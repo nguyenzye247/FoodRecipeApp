@@ -41,7 +41,7 @@
             android:contentDescription="@null"
             android:padding="@dimen/dimen_3dp"
             android:visibility="visible"
-            android:src="@drawable/ic_favorite"
+            android:src="@drawable/select_recipe_heart"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintTop_toTopOf="@id/iv_background" />
 

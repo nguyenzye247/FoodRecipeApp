@@ -14,9 +14,8 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 class RecipeAdapter(
     private val suggestRecipes: List<RecipeDto>,
     private val onItemClick: (recipe: RecipeDto) -> Unit,
-    private val onFavorite: (recipe: RecipeDto) -> Unit
+    private val onFavoriteClick: (recipe: RecipeDto) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.SuggestForYouViewHolder>() {
-
 
     inner class SuggestForYouViewHolder(val binding: ItemSuggestForYouBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -29,23 +28,17 @@ class RecipeAdapter(
                     val timeCookInMinuteText = "${recipe.totalTime} min"
                     text = timeCookInMinuteText
                 }
-                setFavourite(recipe.isLiked)
 
                 root.onClick {
                     onItemClick.invoke(recipe)
                 }
-                btnFavorite.onClick {
-                    onFavorite.invoke(recipe)
-                }
-            }
-        }
-
-        private fun setFavourite(isFavorite: Boolean) {
-            binding.btnFavorite.apply {
-                imageDrawable = if (isFavorite) {
-                    drawable(R.drawable.ic_favorite_selected)
-                } else {
-                    drawable(R.drawable.ic_favorite)
+                btnFavorite.apply {
+                    isSelected = recipe.isLiked
+                    onClick {
+                        isSelected = !isSelected
+                        recipe.isLiked = isSelected
+                        onFavoriteClick(recipe)
+                    }
                 }
             }
         }

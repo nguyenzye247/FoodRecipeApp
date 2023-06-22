@@ -183,4 +183,14 @@ class SearchViewModel(
             searchMealTypeUseCase.addRecipeToDate(input.application, idRecipe, date, mealType)
         }
     }
+
+    fun likeRecipe(recipe: RecipeDto) {
+        val token = SessionManager.fetchToken(input.application).ifEmpty {
+            input.application.toast("Empty token")
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            searchUseCase.likeRecipe(token, recipe.idRecipe)
+        }
+    }
 }

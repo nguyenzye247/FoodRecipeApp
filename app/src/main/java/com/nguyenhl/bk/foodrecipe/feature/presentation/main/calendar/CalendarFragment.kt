@@ -19,6 +19,7 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.calendar.RecipeByDateDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.weekview.WeekDateBinder
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity
@@ -123,10 +124,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                 breakfastRecipeAdapter = RecipeByDateAdapter(
                     breakfastRecipes,
                     onItemClick = { recipe ->
-
+                        goToRecipeDetail(recipe)
                     },
                     onFavoriteClick = { recipe ->
-
+                        likeRecipe(recipe)
                     }
                 )
                 adapter = breakfastRecipeAdapter
@@ -140,10 +141,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                 lunchRecipeAdapter = RecipeByDateAdapter(
                     lunchRecipes,
                     onItemClick = { recipe ->
-
+                        goToRecipeDetail(recipe)
                     },
                     onFavoriteClick = { recipe ->
-
+                        likeRecipe(recipe)
                     }
                 )
                 adapter = lunchRecipeAdapter
@@ -157,10 +158,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                 dinnerRecipeAdapter = RecipeByDateAdapter(
                     dinnerRecipe,
                     onItemClick = { recipe ->
-
+                        goToRecipeDetail(recipe)
                     },
                     onFavoriteClick = { recipe ->
-
+                        likeRecipe(recipe)
                     }
                 )
                 adapter = dinnerRecipeAdapter
@@ -213,11 +214,16 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
             putExtra(KEY_IS_MEAL_TYPE_SEARCH, true)
             searchMealTypeRecipeLauncher.launch(this)
         }
-//        SearchActivity.startActivity(requireContext()) {
-//            putExtra(KEY_MEAL_TYPE, mealType)
-//            putExtra(KEY_DATE, DateFormatUtil.formatDateForRecipeSearch(viewModel.selectedDate))
-//            putExtra(KEY_IS_MEAL_TYPE_SEARCH, true)
-//        }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(requireContext()) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
+        }
+    }
+
+    private fun likeRecipe(recipe: RecipeDto) {
+        viewModel.likeRecipe(recipe)
     }
 
     companion object {

@@ -25,6 +25,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetai
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity.Companion.KEY_RECIPE_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.*
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientActivity
@@ -69,6 +70,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             }
             btnViewAllRecentlyViewed.onClick {
 
+            }
+            btnSearch.onClick {
+                goToSearch()
             }
         }
     }
@@ -139,8 +143,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             onItemClick = { recipe ->
                 goToRecipeDetail(recipe)
             },
-            onFavorite = { recipe ->
-                // TODO: set favorite
+            onFavoriteClick = { recipe ->
+                likeRecipe(recipe)
             }
         )
         binding.rvSuggestForYou.apply {
@@ -193,8 +197,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             onItemClick = { recipe ->
                 goToRecipeDetail(recipe)
             },
-            onFavorite = { recipe ->
-                // TODO: set favorite
+            onFavoriteClick = { recipe ->
+                likeRecipe(recipe)
             }
         )
         binding.rvDailyInspiration.apply {
@@ -221,6 +225,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
                 false
             )
         }
+    }
+
+    private fun likeRecipe(recipe: RecipeDto) {
+        viewModel.likeRecipe(recipe)
     }
 
     private fun goToViewAllCollection() {
@@ -275,6 +283,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun goToRecipeDetail(recipe: RecipeDto) {
         RecipeDetailActivity.startActivity(context) {
             putExtra(KEY_RECIPE_DTO, recipe)
+        }
+    }
+
+    private fun goToSearch() {
+        SearchActivity.startActivity(context) {
+
         }
     }
 }

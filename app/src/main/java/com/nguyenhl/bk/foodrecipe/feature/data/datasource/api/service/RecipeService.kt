@@ -1,16 +1,11 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.RecipeByAuthorBody
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.LikeRecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeDetailResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.skydoves.sandwich.ApiResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RecipeService {
     companion object {
@@ -20,6 +15,9 @@ interface RecipeService {
         const val RECIPE_BY_AUTHOR_POST_EP = "recipe/author"
 
         const val RECIPE_DETAIL_GET_EP = "recipedetail"
+
+        const val RECIPE_LIKE_POST_EP = "like"
+        const val RECIPE_LIKE_GET_EP = "like"
     }
 
     @GET(RECIPE_RANDOM_GET_EP)
@@ -53,4 +51,15 @@ interface RecipeService {
     suspend fun getRecipeDetails(
         @Path("detailId") detailId: String
     ): ApiResponse<RecipeDetailResponse>
+
+    @POST("$RECIPE_LIKE_POST_EP/{recipeId}")
+    suspend fun likeRecipe(
+        @Header("Authorization") token: String,
+        @Path("recipeId") recipeId: String
+    ): ApiResponse<LikeRecipeResponse>
+
+//    @GET("$RECIPE_LIKE_GET_EP/{recipeId}")
+//    suspend fun getAllLikedRecipe(
+//        @Path("recipeId") recipeId: String
+//    ): ApiResponse<>
 }

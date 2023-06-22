@@ -23,6 +23,7 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.NutrientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDetailDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity.Companion.KEY_INGREDIENT_DTO
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingActivity.Companion.KEY_RECIPE_DETAIL_DTO
@@ -32,7 +33,6 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.Rec
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.adapter.RecipeNutrientAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.util.ArrayList
 
 class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDetailViewModel>() {
     private lateinit var recipeNutrientsAdapter: RecipeNutrientAdapter
@@ -52,6 +52,13 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
 
     override fun initViews() {
         viewModel.setLoading(true)
+        binding.apply {
+            intent.parcelableExtra<RecipeDto>(KEY_RECIPE_DTO)?.let { recipe ->
+                layoutBanner.btnHeart.apply {
+                    isSelected = recipe.isLiked
+                }
+            }
+        }
     }
 
     override fun initListener() {
@@ -59,11 +66,11 @@ class RecipeDetailActivity : BaseActivity<ActivityRecipeDetailBinding, RecipeDet
             btnBack.onClick {
                 onBackPressed()
             }
-            btnBookmark.onClick {
-
-            }
             btnHeart.onClick {
-
+                intent.parcelableExtra<RecipeDto>(KEY_RECIPE_DTO)?.let { recipe ->
+                    viewModel.likeRecipe(recipe)
+                    btnHeart.isSelected = !btnHeart.isSelected
+                }
             }
         }
 

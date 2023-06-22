@@ -63,9 +63,14 @@ class VASuggestActivity : BaseViewAllActivity<VASuggestViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        suggestRecipeAdapter = RecipeAdapter { recipe ->
-            goToRecipeDetail(recipe)
-        }
+        suggestRecipeAdapter = RecipeAdapter(
+            onItemClick = { recipe ->
+                goToRecipeDetail(recipe)
+            },
+            onFavoriteClick = { recipe ->
+                viewModel.likeRecipe(recipe)
+            }
+        )
         binding.rvContent.apply {
             adapter = suggestRecipeAdapter
             layoutManager = getRecyclerviewLayoutManager()

@@ -2,20 +2,9 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CategoryDetailDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.CollectionDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.HealthStatusCategoryDetailDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.HealthStatusDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.PreferredDishDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.UserDao
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Category
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.*
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.*
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Collection
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatusCategoryDetailCrossRef
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.PreferredDish
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
 
 @Database(
     entities = [
@@ -25,7 +14,8 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
         PreferredDish::class,
         CategoryDetail::class,
         HealthStatusCategoryDetailCrossRef::class,
-        Collection::class],
+        Collection::class,
+        Recipe::class],
     version = 1,
     exportSchema = true
 )
@@ -37,4 +27,5 @@ abstract class RecipeDatabase : RoomDatabase() {
     abstract fun categoryDetailDao(): CategoryDetailDao
     abstract fun healthStatusCategoryDetailDao(): HealthStatusCategoryDetailDao
     abstract fun collectionDao(): CollectionDao
+    abstract fun recipeDao(): RecipeDao
 }

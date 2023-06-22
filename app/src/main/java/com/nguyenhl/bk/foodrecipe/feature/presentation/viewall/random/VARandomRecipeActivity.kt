@@ -19,10 +19,10 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
-import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
-import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.BaseViewAllActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ViewAllContentType
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -63,9 +63,14 @@ class VARandomRecipeActivity : BaseViewAllActivity<VARandomRecipeViewModel>() {
     }
 
     private fun bindRecyclerView() {
-        randomRecipeAdapter = RecipeAdapter { recipe ->
-            goToRecipeDetail(recipe)
-        }
+        randomRecipeAdapter = RecipeAdapter(
+            onItemClick = { recipe ->
+                goToRecipeDetail(recipe)
+            },
+            onFavoriteClick = { recipe ->
+                viewModel.likeRecipe(recipe)
+            }
+        )
         binding.rvContent.apply {
             adapter = randomRecipeAdapter
             layoutManager = getRecyclerviewLayoutManager()
