@@ -19,6 +19,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.Recip
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.SearchService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.RecipeDao
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Recipe
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
@@ -187,4 +188,20 @@ class RecipeRepository constructor(
                 emit(null)
             }
     }.flowOn(Dispatchers.IO)
+
+    suspend fun insertRecipe(recipe: Recipe) {
+        recipeDao.insert(recipe)
+    }
+
+    suspend fun insertRecipes(recipes: List<Recipe>) {
+        recipeDao.insertAll(recipes)
+    }
+
+    suspend fun updateRecipe(recipe: Recipe) {
+        recipeDao.update(recipe)
+    }
+
+    fun getRecentlyViewedRecipes(): Flow<List<Recipe>> {
+        return recipeDao.getAllCategory()
+    }
 }

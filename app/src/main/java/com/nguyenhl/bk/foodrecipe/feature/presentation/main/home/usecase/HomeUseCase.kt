@@ -8,6 +8,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.category.toC
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.CategoryResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.LikeRecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.toApiCommonResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Recipe
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.CategoryRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.HealthStatusRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.RecipeRepository
@@ -62,5 +63,9 @@ class HomeUseCase constructor(
         }
         categoryRepository.saveAllCategory(categories)
         categoryRepository.saveAllCategoryDetail(categoryDetails)
+    }
+
+    suspend fun updateRecipe(recipe: Recipe) {
+        recipeRepository.updateRecipe(recipe)
     }
 }

@@ -14,6 +14,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.Ingredien
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.CategoryDetail
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toDishPreferredDto
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toRecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.toUserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.*
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
@@ -52,6 +53,9 @@ class HomeFetchRecipeUseCase constructor(
     private val _ingredients: MutableLiveData<List<IngredientDto>?> = MutableLiveData()
     fun liveIngredients(): LiveData<List<IngredientDto>?> = _ingredients
 
+    private val _recentlyViewedRecipes: MutableLiveData<List<RecipeDto>?> = MutableLiveData()
+    fun liveRecentlyViewedRecipes(): LiveData<List<RecipeDto>?> = _recentlyViewedRecipes
+
     suspend fun fetchRecipeHomeData(
         context: Context,
         userId: String,
@@ -71,7 +75,7 @@ class HomeFetchRecipeUseCase constructor(
                 async { fetchCollections() },
                 async { fetchAuthors() },
                 async { fetchRandomRecipes(context) },
-                async { fetchIngredients() }
+                async { fetchIngredients() },
             )
 
             deferredResults.awaitAll()
@@ -187,6 +191,13 @@ class HomeFetchRecipeUseCase constructor(
                 }
             }
         }
+    }
+
+    suspend fun getRecentlyViewedRecipes() {
+        recipeRepository.getRecentlyViewedRecipes()
+            .collect { recipes ->
+                _recentlyViewedRecipes.postValue(recipes.map { it.toRecipeDto() })
+            }
     }
 
     companion object {

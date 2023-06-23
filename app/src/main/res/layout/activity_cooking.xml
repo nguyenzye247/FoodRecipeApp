@@ -130,9 +130,11 @@
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp2_cooking"
-                android:layout_width="@dimen/dimen_0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_24dp"
+                android:overScrollMode="never"
+                android:layout_marginHorizontal="@dimen/dimen_16dp"
+                android:fitsSystemWindows="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/cv_recipe_thumbnail"
                 app:layout_constraintStart_toStartOf="@id/cv_recipe_thumbnail"

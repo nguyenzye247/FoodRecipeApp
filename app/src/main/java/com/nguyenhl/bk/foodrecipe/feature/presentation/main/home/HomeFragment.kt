@@ -14,6 +14,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Recipe
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity.Companion.KEY_CHEF_DTO
@@ -39,6 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private lateinit var topChefAdapter: TopChefAdapter
     private lateinit var dailyInspirationsAdapter: RecipeAdapter
     private lateinit var ingredientsAdapter: IngredientAdapter
+    private lateinit var recentlyViewedrecipeAdapter: RecipeAdapter
 
     override fun getLazyBinding() = lazy { FragmentHomeBinding.inflate(layoutInflater) }
 
@@ -103,6 +105,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             }
             observe(liveIngredients()) { ingredients ->
                 bindIngredientsViewData(ingredients)
+            }
+            observe(liveRecentlyView()) { recipes ->
+                bindRecentlyViewedRecipesViewData(recipes)
             }
         }
     }
@@ -219,6 +224,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         }
         binding.rvIngredients.apply {
             adapter = ingredientsAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+    }
+
+    private fun bindRecentlyViewedRecipesViewData(recipes: List<RecipeDto>?) {
+        recipes ?: return
+
+        recentlyViewedrecipeAdapter = RecipeAdapter(
+            recipes,
+            onItemClick = { recipe ->
+                goToRecipeDetail(recipe)
+            },
+            onFavoriteClick = { recipe ->
+                likeRecipe(recipe)
+                viewModel.updateRecipe(recipe)
+            }
+        )
+        binding.rvRecentlyViewed.apply {
+            adapter = recentlyViewedrecipeAdapter
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,

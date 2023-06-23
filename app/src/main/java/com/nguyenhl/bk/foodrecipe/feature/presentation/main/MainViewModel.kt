@@ -40,6 +40,7 @@ class MainViewModel(
                 // on Finish
                 setLoading(false)
             }
+            homeFetchRecipeUseCase.getRecentlyViewedRecipes()
         }
     }
 
@@ -73,9 +74,9 @@ class MainViewModel(
         return homeFetchRecipeUseCase.liveRandomRecipes()
     }
 
-//    fun liveRecentlyView(): LiveData<List<RecipeDto>?> {
-//        return
-//    }
+    fun liveRecentlyView(): LiveData<List<RecipeDto>?> {
+        return homeFetchRecipeUseCase.liveRecentlyViewedRecipes()
+    }
 
     fun liveDatesHaveRecipe(): LiveData<List<String>?> =
         searchMealTypeUseCase.liveDatesHaveRecipe()
@@ -104,6 +105,12 @@ class MainViewModel(
         }
         viewModelScope.launch(Dispatchers.IO) {
             homeUseCase.likeRecipe(token, recipe.idRecipe)
+        }
+    }
+
+    fun updateRecipe(recipe: RecipeDto) {
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.updateRecipe(recipe.toRecipe())
         }
     }
 
