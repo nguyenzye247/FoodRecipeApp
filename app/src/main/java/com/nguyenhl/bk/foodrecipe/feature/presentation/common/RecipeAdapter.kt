@@ -11,7 +11,8 @@ import com.nguyenhl.bk.foodrecipe.databinding.ItemVaRecipeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
 class RecipeAdapter(
-    private val onItemClick: (recipe: RecipeDto) -> Unit
+    private val onItemClick: (recipe: RecipeDto) -> Unit,
+    private val onFavoriteClick: (recipe: RecipeDto) -> Unit
 ) : PagingDataAdapter<RecipeDto, RecipeAdapter.VASuggestHolder>(COMPARATOR) {
 
     inner class VASuggestHolder(val binding: ItemVaRecipeBinding) : ViewHolder(binding.root) {
@@ -25,6 +26,14 @@ class RecipeAdapter(
 
                 root.onClick {
                     onItemClick(recipe)
+                }
+                btnFavorite.apply {
+                    isSelected = recipe.isLiked
+                    onClick {
+                        isSelected = !isSelected
+                        recipe.isLiked = isSelected
+                        onFavoriteClick(recipe)
+                    }
                 }
             }
         }

@@ -134,7 +134,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return VASuggestViewModel(
                     input as BaseInput.BaseViewAllInput.ViewAllSuggestInput,
                     userInfoRepository,
-                    searchRepository
+                    searchRepository,
+                    recipeRepository
                 ) as T
             }
 

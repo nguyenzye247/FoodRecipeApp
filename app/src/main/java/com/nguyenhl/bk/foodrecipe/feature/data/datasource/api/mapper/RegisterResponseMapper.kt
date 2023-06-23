@@ -66,3 +66,5 @@ object GetRecipeByDateErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get recipe")
 object GetAllDateHaveRecipeErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get all date")
+object LikeRecipeErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to like this recipe")

@@ -12,11 +12,13 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRandomRecipeErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRecipeDetailErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.LikeRecipeErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipeEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.SearchService
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.RecipeDao
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
@@ -28,6 +30,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class RecipeRepository constructor(
+    private val recipeDao: RecipeDao,
     private val recipeService: RecipeService,
     private val searchService: SearchService
 ) : Repository {
@@ -169,5 +172,19 @@ class RecipeRepository constructor(
                     emit(null)
                 }
         }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun likeRecipe(token: String, recipeId: String) = flow {
+        recipeService.likeRecipe(token, recipeId)
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(LikeRecipeErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(null)
+            }
     }.flowOn(Dispatchers.IO)
 }

@@ -44,9 +44,14 @@ class CollectionDetailActivity :
     override fun initViews() {
         adjustScreenSize(binding.btnBack)
         showLoadingView(true)
-        recipeAdapter = RecipeAdapter { recipe ->
-            goToRecipeDetail(recipe)
-        }
+        recipeAdapter = RecipeAdapter(
+           onItemClick =  { recipe ->
+               goToRecipeDetail(recipe)
+           },
+           onFavoriteClick = { recipe ->
+                viewModel.likeRecipe(recipe)
+           }
+        )
 
         binding.apply {
             collectionInfo?.let { collection ->

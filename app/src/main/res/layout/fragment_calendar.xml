@@ -157,13 +157,13 @@
             android:id="@+id/loading"
             layout="@layout/layout_loading"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_0dp"
             android:elevation="@dimen/dimen_10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/week_calendar_view"
+            app:layout_constraintTop_toTopOf="@id/tv_breakfast_title"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

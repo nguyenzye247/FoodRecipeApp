@@ -3,11 +3,13 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.nguyenhl.bk.foodrecipe.core.extension.getBaseConfig
+import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.dto.calendar.RecipeByDateDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
+import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
@@ -92,6 +94,16 @@ class MainViewModel(
     fun removeRecipeFromDate(recipeByDateId: String, date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             searchMealTypeUseCase.removeRecipeFromDate(input.application, recipeByDateId)
+        }
+    }
+
+    fun likeRecipe(recipe: RecipeDto) {
+        val token = SessionManager.fetchToken(input.application).ifEmpty {
+            input.application.toast("Empty token")
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.likeRecipe(token, recipe.idRecipe)
         }
     }
 

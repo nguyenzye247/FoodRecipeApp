@@ -220,7 +220,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     }
 
     override fun onFavoriteRecipe(recipe: RecipeDto) {
-
+        likeRecipe(recipe)
     }
 
     override fun onRecipeAddTo(recipe: RecipeDto) {
@@ -231,6 +231,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         RecipeDetailActivity.startActivity(this) {
             putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
         }
+    }
+
+    private fun likeRecipe(recipe: RecipeDto) {
+        viewModel.likeRecipe(recipe)
     }
 
     companion object {

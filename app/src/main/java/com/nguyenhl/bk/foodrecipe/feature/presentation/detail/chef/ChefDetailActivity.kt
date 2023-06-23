@@ -43,9 +43,14 @@ class ChefDetailActivity : BaseActivity<ActivityChefDetailBinding, ChefDetailVie
 
     override fun initViews() {
         showLoadingView(true)
-        recipeAdapter = RecipeAdapter { recipe ->
-            goToRecipeDetail(recipe)
-        }
+        recipeAdapter = RecipeAdapter(
+            onItemClick = { recipe ->
+                goToRecipeDetail(recipe)
+            },
+            onFavoriteClick = { recipe ->
+                viewModel.likeRecipe(recipe)
+            }
+        )
 
         binding.apply {
             chefInfo?.let { chef ->
