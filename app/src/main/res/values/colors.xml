@@ -19,6 +19,7 @@
     <color name="rcp_blue_300">#D5EEEE</color>
     <color name="rcp_blue_400">#95DAD8</color>
     <color name="rcp_blue_450">#8095DAD8</color>
+    <color name="rcp_blue_500">#A9DDDC</color>
 
     <color name="rcp_grey_100">#747b7b</color>
     <color name="rcp_grey_200">#BFBFBF</color>
@@ -28,6 +29,8 @@
 
     <color name="rcp_brown_100">#73503D</color>
     <color name="rcp_brown_200">#462F4D</color>
+
+    <color name="rcp_orange_100">#FF9F1C</color>
 
     <color name="rcp_red_100">#FD3250</color>
     <color name="rcp_red_200">#FF9D9D</color>

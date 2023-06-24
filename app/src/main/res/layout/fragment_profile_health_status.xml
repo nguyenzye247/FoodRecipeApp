@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_profile_health_status"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dimen_12dp"
+        android:paddingVertical="@dimen/dimen_24dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_bmi_value"
+                style="@style/TextBoldStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:textColor="@color/rcp_orange_100"
+                android:textSize="@dimen/text_size_64sp"
+                app:layout_constraintEnd_toStartOf="@id/ll_bmi"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="21.9" />
+
+            <LinearLayout
+                android:id="@+id/ll_bmi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/tv_bmi_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_bmi_value"
+                app:layout_constraintTop_toTopOf="@id/tv_bmi_value">
+
+                <TextView
+                    android:id="@+id/tv_bmi_title"
+                    style="@style/TextBoldStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bmi"
+                    android:textColor="@color/rcp_grey_100"
+                    android:textSize="@dimen/text_size_24sp" />
+
+                <TextView
+                    android:id="@+id/tv_bmi_level"
+                    style="@style/TextMediumStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/normal"
+                    android:textColor="@color/rcp_orange_100"
+                    android:textSize="@dimen/text_size_16sp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/layout_bmi_bar"
+            layout="@layout/layout_bmi_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_bmi_value" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_daily_intake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:background="@drawable/bg_profile_health_status"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dimen_12dp"
+        android:paddingVertical="@dimen/dimen_24dp">
+
+        <TextView
+            android:id="@+id/tv_daily_intake_title"
+            style="@style/TextMediumStyle"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/daily_intake"
+            android:textColor="@color/rcp_grey_200"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_calorie_intake_value"
+            style="@style/TextBoldStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="4"
+            android:maxLines="1"
+            android:textColor="@color/rcp_orange_100"
+            android:textSize="@dimen/text_size_48sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_calories_unit"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_daily_intake_title"
+            tools:text="3000" />
+
+        <TextView
+            android:id="@+id/tv_calories_unit"
+            style="@style/TextMediumStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_4dp"
+            android:text="@string/calories"
+            android:textColor="@color/rcp_orange_100"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_calorie_intake_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_calorie_intake_value"
+            app:layout_constraintTop_toTopOf="@id/tv_calorie_intake_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

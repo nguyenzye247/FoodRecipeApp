@@ -189,6 +189,28 @@ class RecipeRepository constructor(
             }
     }.flowOn(Dispatchers.IO)
 
+    @WorkerThread
+    fun fetchLikedRecipes(
+        token: String
+    ): Flow<PagingData<RecipeDto>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
+            ),
+            pagingSourceFactory = {
+                RecipePagingSource(
+                    RecipeEP.LIKED,
+                    token,
+                    recipeService,
+                    idParent = ""
+                )
+            }
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
     suspend fun insertRecipe(recipe: Recipe) {
         recipeDao.insert(recipe)
     }

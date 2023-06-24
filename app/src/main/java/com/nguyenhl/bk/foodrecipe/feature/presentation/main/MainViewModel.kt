@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.nguyenhl.bk.foodrecipe.core.extension.getBaseConfig
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
@@ -14,6 +15,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFet
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.HashMap
@@ -85,6 +87,8 @@ class MainViewModel(
     fun liveRemoveRecipeFromDate(): LiveData<ApiCommonResponse?> =
         searchMealTypeUseCase.liveRemoveRecipeFromDate()
 
+    fun getLikedRecipesPaging(): StateFlow<PagingData<RecipeDto>?> = homeUseCase.geLikedRecipesPaging()
+
     fun fetchAllRecipeByDate(date: String) {
         setLoading(true)
         viewModelScope.launch(Dispatchers.IO) {
@@ -111,6 +115,16 @@ class MainViewModel(
     fun updateRecipe(recipe: RecipeDto) {
         viewModelScope.launch(Dispatchers.IO) {
             homeUseCase.updateRecipe(recipe.toRecipe())
+        }
+    }
+
+    fun fetchLikedRecipe() {
+        val token = SessionManager.fetchToken(input.application).ifEmpty {
+            input.application.toast("Empty token")
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.fetchLikedRecipes(token, this)
         }
     }
 

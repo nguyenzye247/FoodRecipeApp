@@ -58,8 +58,8 @@ interface RecipeService {
         @Path("recipeId") recipeId: String
     ): ApiResponse<LikeRecipeResponse>
 
-//    @GET("$RECIPE_LIKE_GET_EP/{recipeId}")
-//    suspend fun getAllLikedRecipe(
-//        @Path("recipeId") recipeId: String
-//    ): ApiResponse<>
+    @GET(RECIPE_LIKE_GET_EP)
+    suspend fun getAllLikedRecipe(
+        @Header("Authorization") token: String
+    ): ApiResponse<RecipeResponse>
 }

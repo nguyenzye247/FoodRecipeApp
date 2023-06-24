@@ -110,7 +110,7 @@ class SplashViewModel constructor(
 
                     else -> {
                         //TODO: Modify this for redirect to Error screen
-                        _isValidUserInfo.postValue(AuthStatus.INVALID)
+                        _isValidUserInfo.postValue(AuthStatus.OTHER)
                     }
                 }
             }

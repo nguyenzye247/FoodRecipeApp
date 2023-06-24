@@ -3,6 +3,8 @@ package com.nguyenhl.bk.foodrecipe.feature.util
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -30,5 +32,26 @@ object DateFormatUtil {
 
     fun formatDateForRecipeSearch(date: LocalDate): String {
         return date.format(DateTimeFormatter.ofPattern(DATE_RECIPE_PATTERN))
+    }
+
+    fun convertDateFormat(inputDate: String): String {
+        // Parse the input date string
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val date = LocalDateTime.parse(inputDate, inputFormatter)
+
+        // Format the date to the desired pattern
+        val outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        return date.format(outputFormatter)
+    }
+
+    fun getAgeFrom(dob: String): Int {
+        // Parse the input date string
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val date = LocalDateTime.parse(dob, inputFormatter).toLocalDate()
+
+        // Calculate the age based on the current date
+        val currentDate = LocalDate.now()
+
+        return Period.between(date, currentDate).years + 1
     }
 }
