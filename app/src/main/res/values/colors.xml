@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     
     <color name="rcp_black_100">#462F4D</color>
+    <color name="rcp_black_200">#1C1C1C</color>
     <color name="rcp_black_transparent">#80000000</color>
     <color name="rcp_black_transparent_2">#34000000</color>
     <color name="rcp_black_transparent_3">#A6000000</color>
@@ -23,6 +24,7 @@
 
     <color name="rcp_grey_100">#747b7b</color>
     <color name="rcp_grey_200">#BFBFBF</color>
+    <color name="rcp_grey_250">#80ECE9E9</color>
     <color name="rcp_grey_300">#656565</color>
 
     <color name="rcp_cream_100">#FFF3EB</color>

@@ -107,4 +107,8 @@ sealed class BaseInput {
     data class SettingsInput(
         val application: Application,
     ): BaseInput()
+
+    data class DetectionInput(
+        val application: Application,
+    ): BaseInput()
 }

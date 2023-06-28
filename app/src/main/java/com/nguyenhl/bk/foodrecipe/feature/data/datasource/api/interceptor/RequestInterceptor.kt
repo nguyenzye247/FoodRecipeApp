@@ -17,6 +17,7 @@ class RequestInterceptor : Interceptor {
                 requestBuilder.header("Authorization", "$BEARER_TOKEN $authorizationHeader")
             }
         }
+        requestBuilder.header("Content-Type", "application/json")
 
         val request = requestBuilder.build()
         Timber.d(request.toString())

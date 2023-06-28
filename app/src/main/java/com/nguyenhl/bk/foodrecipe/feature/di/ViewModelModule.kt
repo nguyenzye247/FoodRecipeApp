@@ -12,6 +12,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
@@ -104,5 +105,9 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.SettingsInput) ->
         ViewModelProviderFactory(input).create(SettingsViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.DetectionInput) ->
+        ViewModelProviderFactory(input).create(DetectionViewModel::class.java)
     }
 }

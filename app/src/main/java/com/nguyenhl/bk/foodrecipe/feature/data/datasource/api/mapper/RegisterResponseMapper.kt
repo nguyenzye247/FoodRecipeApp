@@ -68,3 +68,5 @@ object GetAllDateHaveRecipeErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get all date")
 object LikeRecipeErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to like this recipe")
+object DetectionErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to detect this image")

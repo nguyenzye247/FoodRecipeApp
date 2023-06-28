@@ -27,6 +27,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFragment.Companion.KEY_HAVE_RECIPE_ADDED
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
@@ -95,6 +96,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             }
             btnBack.onClick {
                 onBackPressed()
+            }
+            fabAiSearch.onClick {
+                DetectionActivity.startActivity(this@SearchActivity) {
+
+                }
             }
         }
     }

@@ -98,4 +98,5 @@
     <string name="daily_intake">Daily intake</string>
     <string name="overweight">Overweight</string>
     <string name="save">Save</string>
+    <string name="ingredient_detection">Ingredient detection</string>
 </resources>
