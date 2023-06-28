@@ -23,7 +23,7 @@ internal fun String.checkNumber(onInvalid: (message: String) -> Unit) {
         isValid = false
         message = "Field can not be empty"
     }
-    if (!isDigitsOnly()) {
+    if (!isNumeric(this)) {
         // error
         isValid = false
         message = "Field can only be number"
@@ -93,5 +93,24 @@ internal fun String.checkPassword(onInvalid: (str: String) -> Unit) {
     if (!isValid) {
         onInvalid(message)
         return
+    }
+}
+
+fun isNumeric(text: String): Boolean {
+    return try {
+        text.toInt()
+        true
+    } catch (e: NumberFormatException) {
+        try {
+            text.toFloat()
+            true
+        } catch (e: NumberFormatException) {
+            try {
+                text.toDouble()
+                true
+            } catch (e: NumberFormatException) {
+                false
+            }
+        }
     }
 }

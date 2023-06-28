@@ -12,5 +12,7 @@ data class UserInfoPutBody(
     @SerializedName("height")
     val height: Float,
     @SerializedName("weight")
-    val weight: Float
+    val weight: Float,
+    @SerializedName("id_health_care")
+    val idHealthStatus: String
 )

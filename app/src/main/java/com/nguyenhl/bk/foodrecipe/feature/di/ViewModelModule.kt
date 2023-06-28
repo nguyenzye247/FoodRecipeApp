@@ -1,6 +1,5 @@
 package com.nguyenhl.bk.foodrecipe.feature.di
 
-import android.widget.SearchView
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.ViewModelProviderFactory
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
@@ -13,12 +12,13 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.settings.SettingsViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
@@ -96,5 +96,13 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.SearchInput) ->
         ViewModelProviderFactory(input).create(SearchViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.EditProfileInput) ->
+        ViewModelProviderFactory(input).create(EditProfileViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.SettingsInput) ->
+        ViewModelProviderFactory(input).create(SettingsViewModel::class.java)
     }
 }

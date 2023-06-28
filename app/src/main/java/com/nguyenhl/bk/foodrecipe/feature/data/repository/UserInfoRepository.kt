@@ -9,6 +9,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetUserInfo
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.UpdateUserInfoErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.UserInfoService
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.UserDao
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.UserInfo
 import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
@@ -17,7 +18,6 @@ import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
 
 class UserInfoRepository constructor(
     private val userInfoService: UserInfoService,
@@ -59,7 +59,7 @@ class UserInfoRepository constructor(
     @WorkerThread
     fun updateApiUserInfo(token: String, userInfo: UserInfoPutBody) = flow {
         runAndRetry(GlobalRetryPolicy()) { _, _ ->
-            userInfoService.updateUserInfo(token,  userInfo)
+            userInfoService.updateUserInfo(token, userInfo)
                 .suspendOnSuccess {
                     emit(data)
                 }
@@ -74,5 +74,16 @@ class UserInfoRepository constructor(
 
     suspend fun getUserInfoByUserId(userId: String): UserInfo? {
         return userDao.getUserInfoBy(userId)
+    }
+
+    suspend fun updateUser(user: User) {
+        userDao.updateUserById(
+            user.userId,
+            user.name,
+            user.dateOfBirth,
+            user.gender,
+            user.height,
+            user.weight
+        )
     }
 }

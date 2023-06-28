@@ -4,11 +4,14 @@ import androidx.fragment.app.activityViewModels
 import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.recyclerView
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentProfileBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.view.TabEntity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.settings.SettingsActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
 import com.nguyenhl.bk.foodrecipe.feature.util.bindViewPager
 
@@ -24,7 +27,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
     }
 
     override fun initListener() {
-
+        binding.apply {
+            btnEditProfile.onClick {
+                goToEditProfile()
+            }
+            btnSettings.onClick {
+                goToSettings()
+            }
+        }
     }
 
     override fun initObservers() {
@@ -66,7 +76,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
     }
 
     private fun getDOBFrom(dob: String): String {
-        return DateFormatUtil.convertDateFormat(dob)
+        return DateFormatUtil.formatApiDate(dob)
+    }
+
+    private fun goToEditProfile() {
+        EditProfileActivity.startActivity(requireContext()) {
+
+        }
+    }
+
+    private fun goToSettings() {
+        SettingsActivity.startActivity(requireContext()){
+//            putExtra()
+        }
     }
 
     companion object {

@@ -3,6 +3,8 @@ package com.nguyenhl.bk.foodrecipe.feature.dto
 import android.os.Parcelable
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo.UserInfoPostBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.userinfo.UserInfoPutBody
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.User
+import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil.formatToApiDate
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -33,6 +35,19 @@ internal fun UserInfoDto.toUserInfoPutBody(): UserInfoPutBody {
     return UserInfoPutBody(
         name = this.name,
         dateOfBirth = this.dob,
+        gender = this.gender,
+        height = this.height,
+        weight = this.weight,
+        idHealthStatus = this.idHeathStatus
+    )
+}
+
+internal fun UserInfoDto.toUser(): User {
+    val apiDob = formatToApiDate(this.dob)
+    return User(
+        userId = this.userId,
+        name = this.name,
+        dateOfBirth = apiDob,
         gender = this.gender,
         height = this.height,
         weight = this.weight

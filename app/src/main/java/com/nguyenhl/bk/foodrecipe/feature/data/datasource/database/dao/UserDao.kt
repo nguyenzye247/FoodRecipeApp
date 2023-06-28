@@ -22,4 +22,16 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: User)
+
+    @Query("UPDATE user " +
+            "SET name=:name, date_of_birth=:dob, gender=:gender, height=:height, weight=:weight " +
+            "WHERE user_id = :userId")
+    suspend fun updateUserById(
+        userId: String,
+        name: String,
+        dob: String,
+        gender: Int,
+        height: Float,
+        weight: Float
+    )
 }

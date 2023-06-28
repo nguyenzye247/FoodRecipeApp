@@ -1,4 +1,4 @@
-package com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo
+package com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,22 +12,21 @@ import com.nguyenhl.bk.foodrecipe.R
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
-import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
-import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
+import com.nguyenhl.bk.foodrecipe.databinding.ActivityEditProfileBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.HealthStatus
-import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.HealthStatusDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.UserInfoDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.Gender
-import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredActivity.Companion.KEY_PREFERRED_DISHES
-import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainActivity
+import com.nguyenhl.bk.foodrecipe.feature.dto.toUserInfoPutBody
 import com.nguyenhl.bk.foodrecipe.feature.util.*
+import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil.DATE_DEFAULT_PATTERN
+import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil.formatApiDate
 import com.skydoves.powerspinner.IconSpinnerAdapter
 import com.skydoves.powerspinner.IconSpinnerItem
 import com.skydoves.powerspinner.OnSpinnerDismissListener
@@ -36,43 +35,44 @@ import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-
-class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoViewModel>() {
+class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfileViewModel>() {
     private var datePicker: TimePickerView? = null
     private var healthStatusPicker: OptionsPickerView<HealthStatusDto>? = null
-
     private val healthStatuses: ArrayList<HealthStatusDto> = arrayListOf()
     private val genders = enumValues<Gender>()
-    private val preferredDishes: ArrayList<DishPreferredDto> by lazy {
-        intent.parcelableArrayListExtra(KEY_PREFERRED_DISHES) ?: arrayListOf()
-    }
 
-    override fun getLazyBinding() = lazy { ActivityCreateInfoBinding.inflate(layoutInflater) }
+    override fun getLazyBinding() = lazy { ActivityEditProfileBinding.inflate(layoutInflater) }
 
-    override fun getLazyViewModel() = viewModel<CreateInfoViewModel> {
-        parametersOf(BaseInput.CreateInfoInput(application))
+    override fun getLazyViewModel() = viewModel<EditProfileViewModel> {
+        parametersOf(BaseInput.EditProfileInput(application))
     }
 
     override fun initViews() {
-        adjustScreenSize(binding.btnBack)
-        binding.layoutUserInfo.apply {
-            etHealthInput.setText(HealthStatusDto.noneHealthStatus.name)
-            tipGenderInput.apply {
-                setSpinnerAdapter(IconSpinnerAdapter(this))
-                setItems(genders.map { IconSpinnerItem(it.title) })
-                lifecycleOwner = this@CreateInfoActivity
+        binding.apply {
+            layoutUserInfo.apply {
+                btnContinue.setVisible(false)
+                btnSave.setVisible(true)
+
+                etHealthInput.setText(HealthStatusDto.noneHealthStatus.name)
+                tipGenderInput.apply {
+                    setSpinnerAdapter(IconSpinnerAdapter(this))
+                    setItems(genders.map { IconSpinnerItem(it.title) })
+                    lifecycleOwner = this@EditProfileActivity
+                }
             }
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun initListener() {
         binding.apply {
+            btnBack.onClick {
+                onBackPressed()
+            }
             layoutUserInfo.apply {
-                btnContinue.onClick {
+                btnSave.onClick {
                     validateInputs { userInfoDto ->
                         viewModel.setLoading(true)
-                        viewModel.createUserInfo(userInfoDto)
+                        viewModel.updateUserInfo(userInfoDto)
                     }
                 }
                 etDobInput.onClick {
@@ -90,9 +90,6 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                     showHealthStatusPicker()
                 }
             }
-            btnBack.onClick {
-                onBackPressed()
-            }
         }
     }
 
@@ -102,25 +99,49 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 val healthStatuses = viewModel.getAllDbHealthStatuses()
                 loadHealthStatusesToUI(healthStatuses)
+                viewModel.initUserInfo()
             }
         }
-        observeDistinct(viewModel.liveIsLoading()) {
-            binding.loading.progressBar.setVisible(it ?: false)
-        }
-        observe(viewModel.liveCreateInfoStatus()) { createUserInfoStatus ->
-            viewModel.setLoading(false)
-            if (createUserInfoStatus == null) {
-                return@observe
+        viewModel.apply {
+            observe(liveUserInfo()) { userInfo ->
+                userInfo?.let {
+                    bindUserInfoDataView(it)
+                }
             }
-            val status = createUserInfoStatus.status
-            val message = createUserInfoStatus.data.value
 
-            if (status) {
-                toastSuccess(message)
-                goToMain()
-                return@observe
+            observe(liveUpdateInfoStatus()) { updateStatus ->
+                viewModel.setLoading(false)
+                if (updateStatus == null) {
+                    return@observe
+                }
+                val status = updateStatus.status
+                if (status) {
+                    // Check user info if user is logged in
+                    toastSuccess(updateStatus.data.value)
+                } else {
+                    toastError(updateStatus.data.value)
+                }
             }
-            toastError(message)
+
+            observeDistinct(liveIsLoading()) { isLoading ->
+                showLoadingView(isLoading == true)
+            }
+        }
+    }
+
+    private fun bindUserInfoDataView(userInfo: UserInfoDto) {
+        binding.layoutUserInfo.apply {
+            etNameInput.setText(userInfo.name)
+            etDobInput.setText(formatApiDate(userInfo.dob, DATE_DEFAULT_PATTERN))
+            tipGenderInput.text = Gender.getGenderFrom(userInfo.gender)?.title ?: Gender.MALE.title
+            etHeightInput.setText(userInfo.height.toString())
+            etWeightInput.setText(userInfo.weight.toString())
+            etHealthInput.setText(healthStatuses
+                .first { it.idHealthStatus == userInfo.idHeathStatus }.name
+            )
+            viewModel.selectedHealthStatus = healthStatuses.first {
+                it.idHealthStatus == userInfo.idHeathStatus
+            }
         }
     }
 
@@ -135,45 +156,6 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         })
     }
 
-    private fun showDatePicker() {
-        //DatePicker
-        datePicker = DialogUtil.buildDatePicker(
-            this@CreateInfoActivity,
-            onApply = {
-                datePicker?.returnData()
-                datePicker?.dismiss()
-            },
-            onCancel = {
-                datePicker?.dismiss()
-            }
-        ) { date ->
-            val dateText = DateFormatUtil.formatSimpleDate(date)
-            binding.layoutUserInfo.etDobInput.setText(dateText)
-        }
-        datePicker?.show()
-    }
-
-    private fun showHealthStatusPicker() {
-        healthStatusPicker = DialogUtil.buildHealthStatusPicker(
-            this@CreateInfoActivity,
-            onApply = {
-                healthStatusPicker?.returnData()
-                healthStatusPicker?.dismiss()
-            },
-            onCancel = {
-                healthStatusPicker?.dismiss()
-            }
-        ) { index ->
-            if (healthStatuses.size > index) {
-                viewModel.selectedHealthStatus = healthStatuses[index]
-                setHeathStatusView(healthStatuses[index].name)
-            }
-        }
-        healthStatusPicker?.apply {
-            setPicker(healthStatuses)
-        }?.show()
-    }
-
     private fun validateInputs(
         onValid: (userInfo: UserInfoDto) -> Unit
     ) {
@@ -181,7 +163,11 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         binding.layoutUserInfo.apply {
             val nameInput = etNameInput.textString
             val dobInput = etDobInput.textString
-            val genderInput = genders[tipGenderInput.selectedIndex].title
+            val genderInput = if (tipGenderInput.selectedIndex > 0) {
+                tipGenderInput.text
+            } else {
+                Gender.MALE.title
+            }
             val heightInput = etHeightInput.textString
             val weightInput = etWeightInput.textString
             val healthStatusInput = viewModel.selectedHealthStatus.name
@@ -210,14 +196,18 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
                 setAllInputValid()
                 onValid(
                     UserInfoDto(
-                        "",
+                        viewModel.userId,
                         nameInput,
                         dobInput,
-                        genders[tipGenderInput.selectedIndex].value,
+                        if (tipGenderInput.selectedIndex > 0) {
+                            tipGenderInput.selectedIndex
+                        } else {
+                            Gender.MALE.value
+                        },
                         heightInput.toFloat(),
                         weightInput.toFloat(),
                         viewModel.selectedHealthStatus.idHealthStatus,
-                        preferredDishes.map { it.idDishPreferred }
+                        emptyList()
                     )
                 )
             }
@@ -233,6 +223,45 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         }
     }
 
+    private fun showDatePicker() {
+        //DatePicker
+        datePicker = DialogUtil.buildDatePicker(
+            this@EditProfileActivity,
+            onApply = {
+                datePicker?.returnData()
+                datePicker?.dismiss()
+            },
+            onCancel = {
+                datePicker?.dismiss()
+            }
+        ) { date ->
+            val dateText = DateFormatUtil.formatSimpleDate(date)
+            binding.layoutUserInfo.etDobInput.setText(dateText)
+        }
+        datePicker?.show()
+    }
+
+    private fun showHealthStatusPicker() {
+        healthStatusPicker = DialogUtil.buildHealthStatusPicker(
+            this@EditProfileActivity,
+            onApply = {
+                healthStatusPicker?.returnData()
+                healthStatusPicker?.dismiss()
+            },
+            onCancel = {
+                healthStatusPicker?.dismiss()
+            }
+        ) { index ->
+            if (healthStatuses.size > index) {
+                viewModel.selectedHealthStatus = healthStatuses[index]
+                setHeathStatusView(healthStatuses[index].name)
+            }
+        }
+        healthStatusPicker?.apply {
+            setPicker(healthStatuses)
+        }?.show()
+    }
+
     private fun setHeathStatusView(healthStatusName: String) {
         binding.layoutUserInfo.etHealthInput.setText(healthStatusName)
     }
@@ -242,16 +271,17 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         bg = getDrawable(R.drawable.bg_app_input)
     }
 
-    private fun goToMain() {
-        MainActivity.startActivity(this@CreateInfoActivity) {
-            // put stuffs
+    private fun showLoadingView(isShow: Boolean) {
+        binding.loading.apply {
+            backgroundView.setVisible(false)
+            progressBar.setVisible(isShow)
         }
     }
 
     companion object {
         fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
             context?.let {
-                it.start<CreateInfoActivity> {
+                it.start<EditProfileActivity> {
                     apply(configIntent)
                 }
             }

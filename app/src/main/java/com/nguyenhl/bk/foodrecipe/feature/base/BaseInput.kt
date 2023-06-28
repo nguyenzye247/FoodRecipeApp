@@ -99,4 +99,12 @@ sealed class BaseInput {
         val date: String,
         var mealType: MealType?,
     ): BaseInput()
+
+    data class EditProfileInput(
+        val application: Application
+    ): BaseInput()
+
+    data class SettingsInput(
+        val application: Application,
+    ): BaseInput()
 }

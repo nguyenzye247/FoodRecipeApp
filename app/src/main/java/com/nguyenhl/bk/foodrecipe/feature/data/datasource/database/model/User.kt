@@ -25,4 +25,28 @@ data class User (
     val weight: Float,
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L
-) : Parcelable
+) : Parcelable{
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as User
+        return this.userId == other.userId &&
+                this.name == other.name &&
+                this.dateOfBirth == other.dateOfBirth &&
+                this.gender == other.gender &&
+                this.height == other.height &&
+                this.weight == other.weight
+    }
+
+    override fun hashCode(): Int {
+        var result = userId.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + dateOfBirth.hashCode()
+        result = 31 * result + gender
+        result = 31 * result + height.hashCode()
+        result = 31 * result + weight.hashCode()
+        return result
+    }
+}

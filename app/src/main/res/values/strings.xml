@@ -97,4 +97,5 @@
     <string name="bmi_high_value">40.5</string>
     <string name="daily_intake">Daily intake</string>
     <string name="overweight">Overweight</string>
+    <string name="save">Save</string>
 </resources>
