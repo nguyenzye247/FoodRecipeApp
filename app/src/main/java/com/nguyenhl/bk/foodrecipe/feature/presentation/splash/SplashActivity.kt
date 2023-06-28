@@ -70,6 +70,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                         AuthStatus.EXPIRED -> {
                             goToLogin()
                         }
+                        else -> {
+
+                        }
                     }
                 } ?: run {
                     goToLogin()

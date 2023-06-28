@@ -48,6 +48,7 @@ class RecipeDetailViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             fetchRecipeDetails()
+            insertRecentlyViewedRecipe(input.recipeDto)
         }
     }
 
@@ -92,5 +93,10 @@ class RecipeDetailViewModel(
                 }
             }
         }
+    }
+
+    private suspend fun insertRecentlyViewedRecipe(recipe: RecipeDto?) {
+        recipe ?: return
+        recipeRepository.insertRecipe(recipe.toRecipe())
     }
 }

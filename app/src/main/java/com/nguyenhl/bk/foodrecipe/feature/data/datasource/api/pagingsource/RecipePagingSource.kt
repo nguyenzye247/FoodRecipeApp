@@ -30,6 +30,9 @@ class RecipePagingSource(
             RecipeEP.BY_INGREDIENT -> {
                 recipeService.getRecipesByIngredient(token, idParent, page)
             }
+            RecipeEP.LIKED -> {
+                recipeService.getAllLikedRecipe(token)
+            }
         }
 
         return try {
@@ -66,5 +69,6 @@ enum class RecipeEP {
     RANDOM,
     BY_COLLECTION,
     BY_INGREDIENT,
-    BY_CHEF
+    BY_CHEF,
+    LIKED
 }

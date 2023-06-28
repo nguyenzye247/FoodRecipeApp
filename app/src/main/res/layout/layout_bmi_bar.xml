@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimen_8dp">
+
+    <View
+        android:id="@+id/bmi_under_bar"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_6dp"
+        android:layout_marginStart="@dimen/dimen_8dp"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:background="@drawable/bg_bmi_under"
+        app:layout_constraintEnd_toStartOf="@id/bmi_normal_bar"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@id/tv_under_value"
+        app:layout_constraintTop_toBottomOf="@id/tv_bmi_under" />
+
+    <View
+        android:id="@+id/bmi_normal_bar"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_6dp"
+        android:background="@drawable/bg_bmi_normal"
+        app:layout_constraintBottom_toBottomOf="@id/bmi_under_bar"
+        app:layout_constraintEnd_toStartOf="@id/bmi_high_bar"
+        app:layout_constraintStart_toEndOf="@id/bmi_under_bar"
+        app:layout_constraintTop_toTopOf="@id/bmi_under_bar" />
+
+    <View
+        android:id="@+id/bmi_high_bar"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_6dp"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:background="@drawable/bg_bmi_high"
+        app:layout_constraintBottom_toBottomOf="@id/bmi_normal_bar"
+        app:layout_constraintEnd_toEndOf="@id/tv_high_value"
+        app:layout_constraintStart_toEndOf="@id/bmi_normal_bar"
+        app:layout_constraintTop_toTopOf="@id/bmi_normal_bar" />
+
+    <TextView
+        android:id="@+id/tv_bmi_under"
+        style="@style/TextMediumStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/underweight"
+        android:textColor="@color/rcp_blue_400"
+        app:layout_constraintBottom_toTopOf="@id/bmi_under_bar"
+        app:layout_constraintEnd_toEndOf="@id/bmi_under_bar"
+        app:layout_constraintStart_toStartOf="@id/bmi_under_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_bmi_normal"
+        style="@style/TextMediumStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/normal"
+        android:textColor="@color/rcp_blue_200"
+        app:layout_constraintBottom_toBottomOf="@id/tv_bmi_under"
+        app:layout_constraintEnd_toEndOf="@id/bmi_normal_bar"
+        app:layout_constraintStart_toStartOf="@id/bmi_normal_bar"
+        app:layout_constraintTop_toTopOf="@id/tv_bmi_under" />
+
+    <TextView
+        android:id="@+id/tv_bmi_high"
+        style="@style/TextMediumStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/overweight"
+        android:textColor="@color/rcp_red_100"
+        app:layout_constraintBottom_toBottomOf="@id/tv_bmi_normal"
+        app:layout_constraintEnd_toEndOf="@id/bmi_high_bar"
+        app:layout_constraintStart_toStartOf="@id/bmi_high_bar"
+        app:layout_constraintTop_toTopOf="@id/tv_bmi_normal" />
+
+    <TextView
+        android:id="@+id/tv_under_value"
+        style="@style/BMIValueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:text="@string/bmi_under_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bmi_under_bar" />
+
+    <TextView
+        android:id="@+id/tv_normal_start_value"
+        style="@style/BMIValueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:text="@string/bmi_normal_start_value"
+        app:layout_constraintEnd_toStartOf="@id/bmi_normal_bar"
+        app:layout_constraintStart_toEndOf="@id/bmi_under_bar"
+        app:layout_constraintTop_toBottomOf="@id/bmi_normal_bar" />
+
+    <TextView
+        android:id="@+id/tv_normal_end_value"
+        style="@style/BMIValueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:text="@string/bmi_normal_end_value"
+        app:layout_constraintEnd_toStartOf="@id/bmi_high_bar"
+        app:layout_constraintStart_toEndOf="@id/bmi_normal_bar"
+        app:layout_constraintTop_toBottomOf="@id/bmi_normal_bar" />
+
+    <TextView
+        android:id="@+id/tv_high_value"
+        style="@style/BMIValueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:text="@string/bmi_high_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bmi_high_bar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.nguyenhl.bk.foodrecipe.core.extension.getBaseConfig
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
@@ -14,6 +15,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFet
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.HashMap
@@ -40,6 +42,7 @@ class MainViewModel(
                 // on Finish
                 setLoading(false)
             }
+            homeFetchRecipeUseCase.getRecentlyViewedRecipes()
         }
     }
 
@@ -73,9 +76,9 @@ class MainViewModel(
         return homeFetchRecipeUseCase.liveRandomRecipes()
     }
 
-//    fun liveRecentlyView(): LiveData<List<RecipeDto>?> {
-//        return
-//    }
+    fun liveRecentlyView(): LiveData<List<RecipeDto>?> {
+        return homeFetchRecipeUseCase.liveRecentlyViewedRecipes()
+    }
 
     fun liveDatesHaveRecipe(): LiveData<List<String>?> =
         searchMealTypeUseCase.liveDatesHaveRecipe()
@@ -83,6 +86,8 @@ class MainViewModel(
         searchMealTypeUseCase.liveRecipesByDate()
     fun liveRemoveRecipeFromDate(): LiveData<ApiCommonResponse?> =
         searchMealTypeUseCase.liveRemoveRecipeFromDate()
+
+    fun getLikedRecipesPaging(): StateFlow<PagingData<RecipeDto>?> = homeUseCase.geLikedRecipesPaging()
 
     fun fetchAllRecipeByDate(date: String) {
         setLoading(true)
@@ -104,6 +109,22 @@ class MainViewModel(
         }
         viewModelScope.launch(Dispatchers.IO) {
             homeUseCase.likeRecipe(token, recipe.idRecipe)
+        }
+    }
+
+    fun updateRecipe(recipe: RecipeDto) {
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.updateRecipe(recipe.toRecipe())
+        }
+    }
+
+    fun fetchLikedRecipe() {
+        val token = SessionManager.fetchToken(input.application).ifEmpty {
+            input.application.toast("Empty token")
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.fetchLikedRecipes(token, this)
         }
     }
 

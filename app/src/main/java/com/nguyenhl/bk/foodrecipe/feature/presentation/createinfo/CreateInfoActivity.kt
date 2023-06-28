@@ -9,10 +9,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.bigkoo.pickerview.view.TimePickerView
 import com.nguyenhl.bk.foodrecipe.R
-import com.nguyenhl.bk.foodrecipe.core.extension.*
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
+import com.nguyenhl.bk.foodrecipe.core.extension.parcelableArrayListExtra
+import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
+import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityCreateInfoBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
@@ -52,7 +55,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
 
     override fun initViews() {
         adjustScreenSize(binding.btnBack)
-        binding.apply {
+        binding.layoutUserInfo.apply {
             etHealthInput.setText(HealthStatusDto.noneHealthStatus.name)
             tipGenderInput.apply {
                 setSpinnerAdapter(IconSpinnerAdapter(this))
@@ -65,25 +68,27 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun initListener() {
         binding.apply {
-            btnContinue.onClick {
-                validateInputs { userInfoDto ->
-                    viewModel.setLoading(true)
-                    viewModel.createUserInfo(userInfoDto)
+            layoutUserInfo.apply {
+                btnContinue.onClick {
+                    validateInputs { userInfoDto ->
+                        viewModel.setLoading(true)
+                        viewModel.createUserInfo(userInfoDto)
+                    }
                 }
-            }
-            etDobInput.onClick {
-                showDatePicker()
-            }
-            tipGenderInput.apply {
-                setOnSpinnerItemSelectedListener<IconSpinnerItem> { oldIndex, oldItem, newIndex, newText ->
-                    tipGenderInput.setInputBg()
+                etDobInput.onClick {
+                    showDatePicker()
                 }
-                onSpinnerDismissListener = OnSpinnerDismissListener {
-                    tipGenderInput.setInputBg()
+                tipGenderInput.apply {
+                    setOnSpinnerItemSelectedListener<IconSpinnerItem> { oldIndex, oldItem, newIndex, newText ->
+                        tipGenderInput.setInputBg()
+                    }
+                    onSpinnerDismissListener = OnSpinnerDismissListener {
+                        tipGenderInput.setInputBg()
+                    }
                 }
-            }
-            etHealthInput.onClick {
-                showHealthStatusPicker()
+                etHealthInput.onClick {
+                    showHealthStatusPicker()
+                }
             }
             btnBack.onClick {
                 onBackPressed()
@@ -143,7 +148,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
             }
         ) { date ->
             val dateText = DateFormatUtil.formatSimpleDate(date)
-            binding.etDobInput.setText(dateText)
+            binding.layoutUserInfo.etDobInput.setText(dateText)
         }
         datePicker?.show()
     }
@@ -173,7 +178,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
         onValid: (userInfo: UserInfoDto) -> Unit
     ) {
         var isValid = true
-        binding.apply {
+        binding.layoutUserInfo.apply {
             val nameInput = etNameInput.textString
             val dobInput = etDobInput.textString
             val genderInput = genders[tipGenderInput.selectedIndex].title
@@ -220,7 +225,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     }
 
     private fun setAllInputValid() {
-        binding.apply {
+        binding.layoutUserInfo.apply {
             tipNameInput.setError(false, null)
             tipDobInput.setError(false, null)
             tipHealthInput.setError(false, null)
@@ -229,7 +234,7 @@ class CreateInfoActivity : BaseActivity<ActivityCreateInfoBinding, CreateInfoVie
     }
 
     private fun setHeathStatusView(healthStatusName: String) {
-        binding.etHealthInput.setText(healthStatusName)
+        binding.layoutUserInfo.etHealthInput.setText(healthStatusName)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimen_24dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_name_title"
+        style="@style/TextInputTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24dp"
+        android:text="@string/name_title"
+        app:layout_constraintBottom_toTopOf="@id/tip_name_input"
+        app:layout_constraintStart_toStartOf="@id/tv_create_info_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_create_info_title" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tip_name_input"
+        style="@style/TIPInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_name_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name_input"
+            style="@style/ETInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/enter_your_name"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingBottom="@dimen/dimen_4dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cs_dob_and_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_dob_and_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/tv_dob_title"
+            style="@style/TextInputTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_of_birth"
+            app:layout_constraintEnd_toStartOf="@id/gl_dob_and_gender"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_dob_input"
+            style="@style/TIPInputStyle"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gl_dob_and_gender"
+            app:layout_constraintStart_toStartOf="@id/tv_dob_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_dob_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_dob_input"
+                style="@style/ETInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:cursorVisible="false"
+                android:digits="1234567890/-"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:hint="@string/your_date_of_birth"
+                android:inputType="date"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_4dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_gender_title"
+            style="@style/TextInputTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:text="@string/gender"
+            app:layout_constraintStart_toEndOf="@id/gl_dob_and_gender"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/tip_gender_input"
+            style="@style/ETInputStyle"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:background="@drawable/bg_app_input"
+            android:gravity="center_vertical"
+            android:hint="@string/your_gender"
+            android:padding="@dimen/dimen_16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl_dob_and_gender"
+            app:layout_constraintTop_toBottomOf="@id/tv_gender_title"
+            app:spinner_arrow_animate="true"
+            app:spinner_arrow_tint="@color/rcp_grey_100"
+            app:spinner_divider_color="@color/rcp_cream_100"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_popup_animation="bounce" />
+
+        <!--                <com.google.android.material.textfield.TextInputLayout-->
+        <!--                    android:id="@+id/tip_gender_input"-->
+        <!--                    style="@style/TIPInputStyle"-->
+        <!--                    android:layout_width="@dimen/dimen_0dp"-->
+        <!--                    android:layout_height="@dimen/dimen_60dp"-->
+        <!--                    android:layout_marginStart="@dimen/dimen_8dp"-->
+        <!--                    android:layout_marginTop="@dimen/dimen_6dp"-->
+        <!--                    app:endIconDrawable="@drawable/ic_down_carret"-->
+        <!--                    app:endIconMinSize="@dimen/dimen_40dp"-->
+        <!--                    app:endIconMode="custom"-->
+        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                    app:layout_constraintStart_toStartOf="@id/gl_dob_and_gender"-->
+        <!--                    app:layout_constraintTop_toBottomOf="@id/tv_gender_title">-->
+
+        <!--                    <com.google.android.material.textfield.TextInputEditText-->
+        <!--                        android:id="@+id/et_gender_input"-->
+        <!--                        style="@style/ETInputStyle"-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:background="@null"-->
+        <!--                        android:cursorVisible="false"-->
+        <!--                        android:focusable="false"-->
+        <!--                        android:gravity="center_vertical"-->
+        <!--                        android:hint="@string/your_gender"-->
+        <!--                        android:paddingTop="@dimen/dimen_4dp"-->
+        <!--                        android:paddingBottom="@dimen/dimen_4dp" />-->
+        <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_height_title"
+        style="@style/TextInputTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/height"
+        app:layout_constraintStart_toStartOf="@id/cs_dob_and_gender"
+        app:layout_constraintTop_toBottomOf="@id/cs_dob_and_gender" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tip_height_input"
+        style="@style/TIPInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_height_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_height_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_height_input"
+            style="@style/ETInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/your_current_height"
+            android:inputType="number"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingBottom="@dimen/dimen_4dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_weight_title"
+        style="@style/TextInputTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/weight"
+        app:layout_constraintStart_toStartOf="@id/tip_height_input"
+        app:layout_constraintTop_toBottomOf="@id/tip_height_input" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tip_weight_input"
+        style="@style/TIPInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_weight_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_weight_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_weight_input"
+            style="@style/ETInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/your_current_weight"
+            android:inputType="number"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingBottom="@dimen/dimen_4dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_health_title"
+        style="@style/TextInputTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/health_status"
+        app:layout_constraintStart_toStartOf="@id/tip_weight_input"
+        app:layout_constraintTop_toBottomOf="@id/tip_weight_input" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tip_health_input"
+        style="@style/TIPInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_health_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_health_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_health_input"
+            style="@style/ETInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingBottom="@dimen/dimen_4dp"
+            android:text="@string/none"
+            android:textSize="@dimen/text_size_14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_40dp">
+
+        <Button
+            android:id="@+id/btn_continue"
+            style="@style/CaretButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginBottom="@dimen/dimen_30dp"
+            android:text="@string/continue_txt"
+            app:icon="@drawable/ic_right_carret" />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/CaretButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginBottom="@dimen/dimen_30dp"
+            android:text="@string/save"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</LinearLayout>

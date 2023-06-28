@@ -19,6 +19,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
@@ -26,6 +27,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseC
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchFilterUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.settings.SettingsViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VACollectionViewModel
@@ -200,6 +202,20 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                     searchUseCase,
                     searchFilterUseCase,
                     searchMealUseCase
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                return EditProfileViewModel(
+                    input as BaseInput.EditProfileInput,
+                    userInfoRepository,
+                    healthStatusRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
+                return SettingsViewModel(
+                    input as BaseInput.SettingsInput
                 ) as T
             }
 

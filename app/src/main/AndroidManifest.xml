@@ -111,6 +111,14 @@
             android:name=".feature.presentation.search.SearchActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.editprofile.EditProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
