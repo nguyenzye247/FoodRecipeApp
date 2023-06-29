@@ -4,14 +4,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemDetectionResultBinding
 
-class DetectionResultAdapter(): RecyclerView.Adapter<DetectionResultAdapter.DetectionResultItemHolder>() {
+class DetectionResultAdapter(
+    private val ingredients: List<String>,
+    private val onItemClick: (ingredient: String) -> Unit
+) : RecyclerView.Adapter<DetectionResultAdapter.DetectionResultItemHolder>() {
 
-    inner class DetectionResultItemHolder(val binding: ItemDetectionResultBinding): ViewHolder(binding.root) {
+    inner class DetectionResultItemHolder(val binding: ItemDetectionResultBinding) :
+        ViewHolder(binding.root) {
 
-        fun bind() {
+        fun bind(ingredient: String) {
+            binding.apply {
+                tvIngredient.text = ingredient.replace("_", " ")
 
+                root.onClick {
+                    onItemClick(ingredient)
+                }
+            }
         }
     }
 
@@ -25,11 +36,9 @@ class DetectionResultAdapter(): RecyclerView.Adapter<DetectionResultAdapter.Dete
         )
     }
 
-    override fun getItemCount(): Int {
-        return 1
-    }
+    override fun getItemCount(): Int = ingredients.size
 
     override fun onBindViewHolder(holder: DetectionResultItemHolder, position: Int) {
-        holder.bind()
+        holder.bind(ingredients[position])
     }
 }

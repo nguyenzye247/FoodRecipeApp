@@ -58,10 +58,44 @@
             app:cameraHdr="on"
             app:cameraMode="picture"
             app:cameraPictureFormat="jpeg"
-            app:cameraPictureSizeMaxHeight="3200"
-            app:cameraPictureSizeMaxWidth="2400"
+            app:cameraPictureSizeMaxHeight="4000"
+            app:cameraPictureSizeMaxWidth="2800"
             app:cameraPictureSizeMinHeight="640"
             app:cameraPictureSizeMinWidth="640" />
+
+        <ImageView
+            android:id="@+id/iv_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:contentDescription="@null"
+            android:elevation="@dimen/dimen_4dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="@dimen/dimen_4dp"
+            android:layout_marginBottom="@dimen/dimen_4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:elevation="@dimen/dimen_5dp"
+            android:padding="@dimen/dimen_10dp"
+            android:src="@drawable/ic_retry"
+            android:visibility="gone"
+            app:tint="@color/rcp_blue_200" />
+
+        <include
+            android:id="@+id/loading"
+            layout="@layout/layout_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/dimen_10dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </androidx.cardview.widget.CardView>
 
@@ -107,18 +141,5 @@
         app:layout_constraintStart_toEndOf="@id/btn_take_picture"
         app:layout_constraintTop_toTopOf="@id/btn_take_picture"
         app:tint="@color/rcp_blue_200" />
-
-    <include
-        android:id="@+id/loading"
-        layout="@layout/layout_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/dimen_10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

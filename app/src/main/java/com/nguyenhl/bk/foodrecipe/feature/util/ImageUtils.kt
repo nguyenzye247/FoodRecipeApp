@@ -55,4 +55,6 @@ object ImageUtils {
 
         return inSampleSize
     }
+
+
 }

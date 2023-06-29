@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
+import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.databinding.BottomsheetDetectResultBinding
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 
@@ -59,17 +62,7 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
 
     private fun initViews(parentView: View) {
         initBaseView(parentView)
-        binding.apply {
-            rvDetectResult.apply {
-                detectionResultAdapter = DetectionResultAdapter()
-                adapter = detectionResultAdapter
-                layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-            }
-        }
+
     }
 
     private fun initBaseView(parentView: View) {
@@ -102,9 +95,33 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     private fun initObservers() {
         viewModel.apply {
+            observe(liveFoundIngredient()) { foundIngredients ->
+                foundIngredients?.let {
+                    bindFoundIngredientDataView(foundIngredients)
+                }
+            }
+        }
+    }
 
+    private fun bindFoundIngredientDataView(ingredients: List<String>) {
+        binding.apply {
+            rvDetectResult.apply {
+                detectionResultAdapter = DetectionResultAdapter(ingredients.distinct()) { ingredient ->
+                    requireContext().toast(ingredient)
+                    if(::onClickListener.isInitialized) {
+                        onClickListener.onResultItemClick(ingredient.replace("_", " "))
+                    }
+                }
+                adapter = detectionResultAdapter
+                layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            }
         }
     }
 
@@ -116,4 +133,6 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
     }
 }
 
-interface DetectResultBottomSheetListener
+interface DetectResultBottomSheetListener {
+    fun onResultItemClick(ingredient: String)
+}

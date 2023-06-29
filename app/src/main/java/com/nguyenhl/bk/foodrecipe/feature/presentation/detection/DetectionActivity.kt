@@ -1,12 +1,12 @@
 package com.nguyenhl.bk.foodrecipe.feature.presentation.detection
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
@@ -14,17 +14,20 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.longToast
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
+import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityDetectionBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.result.DetectResultBottomSheetListener
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.result.DetectionResultBottomSheet
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFragment
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterBottomSheet
 import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraOptions
-import com.otaliastudios.cameraview.CameraUtils
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Facing
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -33,11 +36,14 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
-class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewModel>() {
+class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewModel>(),
+    DetectResultBottomSheetListener {
     private lateinit var detectResultBottomSheet: DetectionResultBottomSheet
 
     private var detectImageRunnable: Runnable? = null
     private val detectImageHandler: Handler = Handler(Looper.getMainLooper())
+
+    private var selectedIngredientResult: String = ""
 
     private val getGalleryImageResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -83,8 +89,11 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
                 toggleCameraFacing()
             }
             btnGallery.onClick {
-//                openGallery()
-                showDetectesultBottomSheet()
+                openGallery()
+            }
+            btnRetry.onClick {
+                ivPreview.setVisible(false)
+                btnRetry.setVisible(false)
             }
         }
     }
@@ -94,9 +103,16 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         viewModel.apply {
             observe(liveDetectResult()) { detectResults ->
                 detectResults?.let {
+                    detectResults.results.ifEmpty {
+                        toast("No ingredient found")
+                        return@let
+                    }
                     val names = detectResults.results.map { it.classResultName }
+                    setFoundIngredient(names)
+
+                    showDetectResultBottomSheet()
+
                     val nameAsString = names.distinct().joinToString(", ")
-                    toast(nameAsString.ifEmpty { "No ingredient found" })
                     Timber.tag("PICTURE_1").d(nameAsString)
                 }
             }
@@ -134,10 +150,20 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
                 override fun onPictureTaken(result: PictureResult) {
                     super.onPictureTaken(result)
                     viewModel.setLoading(true)
-                    viewModel.detectFromImage(result.data)
+                    viewModel.detectFromImage(result.data, true)
+                    bindResultImageView(result.data)
                     Timber.tag("PICTURE_1").d(result.size.toString())
                 }
             })
+        }
+    }
+
+    private fun bindResultImageView(image: ByteArray) {
+        binding.apply {
+            ivPreview.loadImage(image)
+
+            ivPreview.setVisible(true)
+            btnRetry.setVisible(true)
         }
     }
 
@@ -149,19 +175,6 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
                 Facing.BACK
             }
         }
-    }
-
-    private fun showLoadingView(isShow: Boolean) {
-        binding.loading.apply {
-            backgroundView.setVisible(true)
-            progressBar.setVisible(isShow)
-        }
-    }
-
-    private fun showDetectesultBottomSheet() {
-        if (!::detectResultBottomSheet.isInitialized) return
-        if (detectResultBottomSheet.isAdded) return
-        detectResultBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
     }
 
     private fun openGallery() {
@@ -188,6 +201,7 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
                 val imageByteArray = byteArrayOutputStream.toByteArray()
                 viewModel.setLoading(true)
                 viewModel.detectFromImage(imageByteArray)
+                bindResultImageView(imageByteArray)
             }
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
@@ -195,7 +209,41 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         }
     }
 
+    private fun showLoadingView(isShow: Boolean) {
+        binding.loading.apply {
+            backgroundView.setVisible(true)
+            progressBar.setVisible(isShow)
+        }
+    }
+
+    private fun showDetectResultBottomSheet() {
+        if (!::detectResultBottomSheet.isInitialized) return
+        if (detectResultBottomSheet.isAdded) return
+        detectResultBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
+    }
+
+    private fun goToSearch(ingredient: String) {
+        SearchActivity.startActivity(this) {
+            putExtra(KEY_INGREDIENT_RESULT, ingredient)
+        }
+    }
+
+    override fun onResultItemClick(ingredient: String) {
+        selectedIngredientResult = ingredient
+        onBackPressed()
+    }
+
+    override fun onBackPressed() {
+        setResult(Activity.RESULT_OK, Intent().apply {
+            putExtra(KEY_INGREDIENT_SEARCH_RESULT, selectedIngredientResult)
+        })
+        super.onBackPressed()
+    }
+
     companion object {
+        const val KEY_INGREDIENT_RESULT = "key_ingredient_result"
+        const val KEY_INGREDIENT_SEARCH_RESULT = "key_ingredient_result"
+
         fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
             context?.let {
                 it.start<DetectionActivity> {
