@@ -3,6 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.di
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.ingredients.IngredientUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchFilterUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseCase
@@ -15,4 +16,5 @@ val useCaseModule = module {
     single { SearchUseCase(get(), get(), get()) }
     single { CalendarUseCase(get()) }
     single { SearchMealUseCase(get()) }
+    single { IngredientUseCase(get()) }
 }
