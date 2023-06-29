@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/rcp_blue_300">
+    <item
+        android:id="@android:id/mask"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/white" />
+            <size
+                android:width="@dimen/dimen_64dp"
+                android:height="@dimen/dimen_64dp" />
+        </shape>
+    </item>
+    <item
+        android:id="@android:id/background"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/rcp_grey_250"/>
+            <size
+                android:width="@dimen/dimen_40dp"
+                android:height="@dimen/dimen_40dp" />
+        </shape>
+    </item>
+
+</ripple>

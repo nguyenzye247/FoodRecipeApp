@@ -24,4 +24,5 @@ val repositoryModule = module {
     single { SearchFilterRepository(get()) }
     single { SearchRepository(get()) }
     single { CalendarRepository(get()) }
+    single { DetectionRepository() }
 }

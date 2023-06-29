@@ -4,6 +4,8 @@ import android.app.Application
 import android.view.Gravity
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalResponseOperator
 import com.nguyenhl.bk.foodrecipe.feature.di.*
+import com.otaliastudios.cameraview.CameraLogger
+import com.otaliastudios.cameraview.CameraLogger.Logger
 import com.skydoves.sandwich.SandwichInitializer
 import es.dmoral.toasty.Toasty
 import org.koin.android.ext.koin.androidContext
@@ -18,6 +20,7 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(apiModule)
+//            modules(detectionApiModule)
             modules(databaseModule)
             modules(repositoryModule)
             modules(viewModelModule)
@@ -39,5 +42,10 @@ class App : Application() {
             .apply() // required
 
         Timber.plant(Timber.DebugTree())
+
+        CameraLogger.setLogLevel(CameraLogger.LEVEL_VERBOSE)
+        CameraLogger.registerLogger { level, tag, message, throwable ->
+            //
+        }
     }
 }

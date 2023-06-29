@@ -5,10 +5,14 @@
 package com.nguyenhl.bk.foodrecipe.core.extension.views
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import java.io.ByteArrayInputStream
 
 /**
  * Sets a drawable resource as the content of this ImageView.
@@ -45,5 +49,17 @@ fun ImageView.loadImage(url: String?) {
 fun ImageView.loadImage(@DrawableRes resourceId: Int?) {
     Glide.with(this)
         .load(resourceId)
+        .into(this)
+}
+
+fun ImageView.loadImage(byteArray: ByteArray) {
+    val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    val requestOptions = RequestOptions()
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .skipMemoryCache(true)
+
+    Glide.with(this)
+        .load(bitmap)
+        .apply(requestOptions)
         .into(this)
 }

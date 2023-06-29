@@ -7,6 +7,7 @@ import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
@@ -27,6 +28,8 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionActivity.Companion.KEY_INGREDIENT_SEARCH_RESULT
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFragment.Companion.KEY_HAVE_RECIPE_ADDED
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchPagerAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
@@ -38,6 +41,17 @@ import org.koin.core.parameter.parametersOf
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchInteractionListener {
     private lateinit var searchFilterBottomSheet: SearchFilterBottomSheet
     private lateinit var searchPagerAdapter: SearchPagerAdapter
+
+    private val ingredientDetectionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val ingredient = data?.getStringExtra(KEY_INGREDIENT_SEARCH_RESULT)
+                ingredient?.let {
+                    searchRecipe(it)
+                }
+            }
+        }
 
     private val isMealTypeSearch by lazy { intent.getBooleanExtra(KEY_IS_MEAL_TYPE_SEARCH, false) }
 
@@ -95,6 +109,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             }
             btnBack.onClick {
                 onBackPressed()
+            }
+            fabAiSearch.onClick {
+                goToDetection()
             }
         }
     }
@@ -185,10 +202,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         searchFilterBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
     }
 
-    private fun searchRecipe() {
+    private fun searchRecipe(query: String? = null) {
         binding.etSearch.apply {
             hideKeyboard()
-            val searchText = text.toString()
+            val searchText = query ?: text.toString()
 
             val searchBody = viewModel.getSearchBodyFromFilters(searchText)
             viewModel.loadSearchRecipe(searchBody)
@@ -235,6 +252,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     private fun likeRecipe(recipe: RecipeDto) {
         viewModel.likeRecipe(recipe)
+    }
+
+    private fun goToDetection() {
+        Intent(this, DetectionActivity::class.java).apply {
+            ingredientDetectionLauncher.launch(this)
+        }
     }
 
     companion object {

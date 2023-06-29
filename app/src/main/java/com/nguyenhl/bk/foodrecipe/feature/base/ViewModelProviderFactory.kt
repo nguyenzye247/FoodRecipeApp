@@ -19,6 +19,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
@@ -51,6 +52,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val authorRepository: AuthorRepository by inject()
     private val ingredientRepository: IngredientRepository by inject()
     private val searchRepository: SearchRepository by inject()
+    private val detectionRepository: DetectionRepository by inject()
     private val searchFilterRepository: SearchFilterRepository by inject()
     private val categoryRepository: CategoryRepository by inject()
 
@@ -216,6 +218,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
                 return SettingsViewModel(
                     input as BaseInput.SettingsInput
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(DetectionViewModel::class.java) -> {
+                return DetectionViewModel(
+                    input as BaseInput.DetectionInput,
+                    detectionRepository
                 ) as T
             }
 

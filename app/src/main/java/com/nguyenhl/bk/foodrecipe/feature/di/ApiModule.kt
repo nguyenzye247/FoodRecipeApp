@@ -12,10 +12,24 @@ import java.util.concurrent.TimeUnit
 
 const val BEARER_TOKEN = "Bearer"
 
+//val detectionApiModule = module {
+//    single {
+//        Retrofit.Builder()
+//            .client(get<OkHttpClient>())
+//            .baseUrl("https://detect.roboflow.com/")
+////            .addConverterFactory(ScalarsConverterFactory.create())
+//            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//    }
+//
+//    single { get<Retrofit>().create(DetectionService::class.java) }
+//}
+
 val apiModule = module {
     single {
         OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
             .addInterceptor(RequestInterceptor())
             .callTimeout(7, TimeUnit.SECONDS)
 //            .addInterceptor(
