@@ -10,18 +10,14 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.Search
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.addUserHealthCategoryDetailToSearchBody
 import com.nguyenhl.bk.foodrecipe.feature.dto.ApiCommonResponse
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
-import com.nguyenhl.bk.foodrecipe.feature.dto.calendar.RecipeByDateDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.FilterS
-import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.dto.searchfilter.SearchFilterItemDto
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchFilterUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseCase
-import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
-import java.time.LocalDate
 import java.util.*
 
 class SearchViewModel(
@@ -86,7 +82,8 @@ class SearchViewModel(
     fun getSuggestRecipesPaging(): StateFlow<PagingData<RecipeDto>?> =
         searchUseCase.getSuggestRecipesPaging()
 
-    fun liveAddRecipeToDate(): LiveData<ApiCommonResponse?> = searchMealTypeUseCase.liveAddRecipeToDate()
+    fun liveAddRecipeToDate(): LiveData<ApiCommonResponse?> =
+        searchMealTypeUseCase.liveAddRecipeToDate()
 
     private suspend fun fetchAllSearchFilters() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -153,15 +150,15 @@ class SearchViewModel(
         }
     }
 
-    fun getSearchBodyFromFilters(searchText: String): SearchRecipeFilterBody {
+    fun getSearchBodyFromFilters(
+        searchText: String,
+        ingredientIDs: List<String>? = null
+    ): SearchRecipeFilterBody {
         val idCategoryDetail =
             filterHashMap[FilterS.MEAL_TYPE]
                 ?.filter { it.isSelected }?.map { it.idDetail }?.ifEmpty { null }
         val totalTime =
             filterHashMap[FilterS.TOTAL_TIME]?.firstOrNull { it.isSelected }?.value
-        val idIngredients =
-            filterHashMap[FilterS.INGREDIENTS]
-                ?.filter { it.isSelected }?.map { it.idDetail }?.ifEmpty { null }
         val authors =
             filterHashMap[FilterS.AUTHORS]
                 ?.filter { it.isSelected }?.map { it.name }?.ifEmpty { null }
@@ -169,7 +166,7 @@ class SearchViewModel(
         return SearchRecipeFilterBody(
             idCategoryDetail,
             totalTime,
-            idIngredients,
+            ingredientIDs,
             searchText.ifEmpty { null },
             authors,
         )

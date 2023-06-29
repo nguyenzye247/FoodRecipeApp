@@ -1,5 +1,6 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource
 
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.ingredient.IngredientListBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toIngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.IngredientService
@@ -12,7 +13,8 @@ class IngredientPagingSource(
     private val ingredientEpType: IngredientEP,
     private val ingredientService: IngredientService,
     private val searchString: String = "",
-    private val alphabetKey: Char = 'a'
+    private val alphabetKey: Char = 'a',
+    private val ingredientIDs: List<String> = listOf()
 ) : BasePagingSource<IngredientDto, IngredientResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, IngredientDto> {
@@ -26,6 +28,9 @@ class IngredientPagingSource(
             }
             IngredientEP.ALPHABET -> {
                 ingredientService.getIngredientsByAlphabet(alphabetKey)
+            }
+            IngredientEP.LIST -> {
+                ingredientService.getIngredientByIds(IngredientListBody(ingredientIDs))
             }
         }
 
@@ -65,5 +70,6 @@ class IngredientPagingSource(
 enum class IngredientEP {
     ALL,
     SEARCH,
-    ALPHABET
+    ALPHABET,
+    LIST
 }
