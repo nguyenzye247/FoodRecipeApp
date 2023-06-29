@@ -19,6 +19,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityDetectionBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.result.DetectionResultBottomSheet
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterBottomSheet
 import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraOptions
@@ -32,6 +34,8 @@ import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
 class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewModel>() {
+    private lateinit var detectResultBottomSheet: DetectionResultBottomSheet
+
     private var detectImageRunnable: Runnable? = null
     private val detectImageHandler: Handler = Handler(Looper.getMainLooper())
 
@@ -51,6 +55,7 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
 
     override fun initViews() {
         initCameraView()
+        detectResultBottomSheet = DetectionResultBottomSheet.newInstance()
         binding.apply {
 
         }
@@ -78,7 +83,8 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
                 toggleCameraFacing()
             }
             btnGallery.onClick {
-                openGallery()
+//                openGallery()
+                showDetectesultBottomSheet()
             }
         }
     }
@@ -150,6 +156,12 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
             backgroundView.setVisible(true)
             progressBar.setVisible(isShow)
         }
+    }
+
+    private fun showDetectesultBottomSheet() {
+        if (!::detectResultBottomSheet.isInitialized) return
+        if (detectResultBottomSheet.isAdded) return
+        detectResultBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
     }
 
     private fun openGallery() {

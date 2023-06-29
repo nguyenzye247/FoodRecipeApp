@@ -99,4 +99,5 @@
     <string name="overweight">Overweight</string>
     <string name="save">Save</string>
     <string name="ingredient_detection">Ingredient detection</string>
+    <string name="detect_result">Detect Result</string>
 </resources>
