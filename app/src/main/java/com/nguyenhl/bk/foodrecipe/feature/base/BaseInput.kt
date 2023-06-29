@@ -111,4 +111,8 @@ sealed class BaseInput {
     data class DetectionInput(
         val application: Application,
     ): BaseInput()
+
+    data class IngredientInput(
+        val application: Application,
+    ): BaseInput()
 }

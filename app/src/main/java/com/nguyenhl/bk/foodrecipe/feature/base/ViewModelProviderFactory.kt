@@ -9,25 +9,27 @@ import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.RegisterRepositor
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.search.SearchFilterRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.search.SearchRepository
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.createaccount.CreateAccountViewModel
-import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.forgot.ForgotPasswordViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.login.LoginViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.auth.register.RegisterViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.cooking.CookingViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPreferredViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.ingredient.IngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.ingredients.IngredientUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchFilterUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.settings.SettingsViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.splash.SplashViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.chef.VAChefViewModel
@@ -61,6 +63,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val searchFilterUseCase: SearchFilterUseCase by inject()
     private val searchUseCase: SearchUseCase by inject()
     private val searchMealUseCase: SearchMealUseCase by inject()
+    private val ingredientUseCase: IngredientUseCase by inject()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
@@ -79,7 +82,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                     input as BaseInput.MainInput,
                     homeUseCase,
                     homeFetchRecipeUseCase,
-                    searchMealUseCase
+                    searchMealUseCase,
+                    ingredientUseCase
                 ) as T
             }
 
@@ -225,6 +229,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return DetectionViewModel(
                     input as BaseInput.DetectionInput,
                     detectionRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(IngredientViewModel::class.java) -> {
+                return IngredientViewModel(
+                    input as BaseInput.IngredientInput,
+                    ingredientRepository
                 ) as T
             }
 

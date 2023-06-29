@@ -13,20 +13,22 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.ingredients.IngredientUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.usecase.SearchMealUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.HashMap
 
 class MainViewModel(
     val input: BaseInput.MainInput,
     private val homeUseCase: HomeUseCase,
     private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase,
-    private val searchMealTypeUseCase: SearchMealUseCase
+    private val searchMealTypeUseCase: SearchMealUseCase,
+    private val ingredientUseCase: IngredientUseCase
 ) : BaseViewModel(input) {
     private val userId: String = input.application.getBaseConfig().userId
+
     //Selected day in calendar fragment
     var selectedDate: LocalDate = LocalDate.now()
 
@@ -82,12 +84,15 @@ class MainViewModel(
 
     fun liveDatesHaveRecipe(): LiveData<List<String>?> =
         searchMealTypeUseCase.liveDatesHaveRecipe()
+
     fun liveRecipesByDate(): LiveData<HashMap<MealType?, List<RecipeByDateDto>>?> =
         searchMealTypeUseCase.liveRecipesByDate()
+
     fun liveRemoveRecipeFromDate(): LiveData<ApiCommonResponse?> =
         searchMealTypeUseCase.liveRemoveRecipeFromDate()
 
-    fun getLikedRecipesPaging(): StateFlow<PagingData<RecipeDto>?> = homeUseCase.geLikedRecipesPaging()
+    fun getLikedRecipesPaging(): StateFlow<PagingData<RecipeDto>?> =
+        homeUseCase.geLikedRecipesPaging()
 
     fun fetchAllRecipeByDate(date: String) {
         setLoading(true)
@@ -127,6 +132,17 @@ class MainViewModel(
             homeUseCase.fetchLikedRecipes(token, this)
         }
     }
+
+    fun liveAlphabetKey(): LiveData<Char> = ingredientUseCase.liveAlphabetKey
+    fun setAlphabetKey(key: Char) {
+        ingredientUseCase.setAlphabetKey(key)
+    }
+
+    fun loadIngredientByAlphabet(key: Char) {
+        ingredientUseCase.loadIngredientByAlphabet(key, viewModelScope)
+    }
+
+    fun getIngredientsPaging() = ingredientUseCase.getIngredientsPaging()
 
     fun init() {
 
