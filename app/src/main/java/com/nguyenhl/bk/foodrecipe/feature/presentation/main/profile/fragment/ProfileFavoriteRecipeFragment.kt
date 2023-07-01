@@ -10,6 +10,8 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentProfileFavoriteRecipeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
+import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
 import com.nguyenhl.bk.foodrecipe.feature.presentation.common.RecipeAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
@@ -64,6 +66,9 @@ class ProfileFavoriteRecipeFragment: BaseFragment<FragmentProfileFavoriteRecipeB
                         recipeAdapter.submitData(pagingRecipes)
                     }
                 }
+            }
+            listenRxEventOnUI<RxEvent.EventLikedRecipe> {
+                fetchLikedRecipe()
             }
         }
     }

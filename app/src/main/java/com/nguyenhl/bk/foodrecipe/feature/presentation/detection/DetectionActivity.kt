@@ -48,6 +48,8 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         ActivityResultContracts.StartActivityForResult()
     ) { getResultFrom(it) }
 
+    private var isBackWithNoDetectAction: Boolean = true
+
     override fun getLazyBinding() = lazy { ActivityDetectionBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModel<DetectionViewModel> {
@@ -70,6 +72,7 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         initCameraListener()
         binding.apply {
             btnBack.onClick {
+                isBackWithNoDetectAction = true
                 onBackPressed()
             }
             btnTakePicture.onClick {
@@ -241,9 +244,11 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
     }
 
     override fun onBackPressed() {
-        setResult(Activity.RESULT_OK, Intent().apply {
-            putStringArrayListExtra(KEY_INGREDIENT_SEARCH_RESULT, selectedIngredientResult)
-        })
+        if (!isBackWithNoDetectAction) {
+            setResult(Activity.RESULT_OK, Intent().apply {
+                putStringArrayListExtra(KEY_INGREDIENT_SEARCH_RESULT, selectedIngredientResult)
+            })
+        }
         super.onBackPressed()
     }
 

@@ -103,6 +103,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
             dayBinder = WeekDateBinder(viewModel.selectedDate) { oldDate, weekDay ->
                 viewModel.selectedDate = weekDay.date
                 binding.weekCalendarView.apply {
+                    notifyDateChanged(oldDate)
                     notifyWeekChanged(weekDay)
                 }
                 fetchRecipeByDate(weekDay.date)

@@ -14,7 +14,6 @@ import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.core.extension.views.setVisible
 import com.nguyenhl.bk.foodrecipe.databinding.FragmentHomeBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Recipe
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailActivity.Companion.KEY_CHEF_DTO
@@ -40,7 +39,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private lateinit var topChefAdapter: TopChefAdapter
     private lateinit var dailyInspirationsAdapter: RecipeAdapter
     private lateinit var ingredientsAdapter: IngredientAdapter
-    private lateinit var recentlyViewedrecipeAdapter: RecipeAdapter
+    private lateinit var recentlyViewedRecipeAdapter: RecipeAdapter
 
     override fun getLazyBinding() = lazy { FragmentHomeBinding.inflate(layoutInflater) }
 
@@ -235,7 +234,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindRecentlyViewedRecipesViewData(recipes: List<RecipeDto>?) {
         recipes ?: return
 
-        recentlyViewedrecipeAdapter = RecipeAdapter(
+        recentlyViewedRecipeAdapter = RecipeAdapter(
             recipes,
             onItemClick = { recipe ->
                 goToRecipeDetail(recipe)
@@ -246,7 +245,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             }
         )
         binding.rvRecentlyViewed.apply {
-            adapter = recentlyViewedrecipeAdapter
+            adapter = recentlyViewedRecipeAdapter
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL,

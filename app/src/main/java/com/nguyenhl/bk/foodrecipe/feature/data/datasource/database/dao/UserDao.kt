@@ -2,6 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
@@ -10,7 +11,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.UserInf
 
 @Dao
 interface UserDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
 
     @Query("SELECT * FROM user WHERE user_id = :userId")

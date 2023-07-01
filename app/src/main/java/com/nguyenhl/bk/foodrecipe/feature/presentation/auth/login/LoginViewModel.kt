@@ -25,6 +25,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.repository.auth.LoginRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserInfoRepository
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.UserRepository
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
+import com.skydoves.sandwich.StatusCode
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -82,11 +83,13 @@ class LoginViewModel constructor(
                             _isValidUserInfo.postValue(AuthStatus.VALID)
                             response.info?.let {
                                 saveUserInfoData(it)
+                            } ?: kotlin.run {
+                                _isValidUserInfo.postValue(AuthStatus.INVALID)
                             }
                         }
 
                         is ErrorResponse -> {
-                            if (response.message.contains("jwt")) {
+                            if (response.code == StatusCode.Unauthorized.code) {
                                 _isValidUserInfo.postValue(AuthStatus.EXPIRED)
                             } else {
                                 _isValidUserInfo.postValue(AuthStatus.INVALID)
@@ -94,7 +97,7 @@ class LoginViewModel constructor(
                         }
 
                         else -> {
-                            _isValidUserInfo.postValue(AuthStatus.INVALID)
+                            _isValidUserInfo.postValue(AuthStatus.OTHER)
                         }
                     }
                 }

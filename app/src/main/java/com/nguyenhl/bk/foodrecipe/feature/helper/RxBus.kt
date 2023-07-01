@@ -39,4 +39,5 @@ class RxEvent {
     class EventUnauthorized()
     class EventValidUserInfo()
     class EventApplySearchFilter()
+    class EventLikedRecipe()
 }

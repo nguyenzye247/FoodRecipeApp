@@ -36,7 +36,7 @@ class MainViewModel(
         fetchRecipeHomeData()
     }
 
-    fun fetchRecipeHomeData() {
+    private fun fetchRecipeHomeData() {
         setLoading(true)
         viewModelScope.launch {
             homeUseCase.getAllCategories()
