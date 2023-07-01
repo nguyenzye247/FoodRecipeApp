@@ -5,15 +5,17 @@ import android.util.Base64
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runOnMainThread
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseViewModel
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.detection.toDetectResultDto
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.toIngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.ErrorResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.detection.DetectionResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.detection.toDetectImageResultDto
 import com.nguyenhl.bk.foodrecipe.feature.data.repository.DetectionRepository
+import com.nguyenhl.bk.foodrecipe.feature.data.repository.IngredientRepository
+import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.detect.DetectImageResultDto
 import com.nguyenhl.bk.foodrecipe.feature.util.ImageUtils
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +27,16 @@ import java.nio.charset.StandardCharsets
 
 class DetectionViewModel(
     val input: BaseInput.DetectionInput,
-    private val detectionRepository: DetectionRepository
+    private val detectionRepository: DetectionRepository,
+    private val ingredientRepository: IngredientRepository
 ) : BaseViewModel(input) {
 
     private val _detectResults: MutableLiveData<DetectImageResultDto?> = MutableLiveData()
     fun liveDetectResult(): LiveData<DetectImageResultDto?> = _detectResults
 
-    private val _foundIngredients: MutableLiveData<List<String>?> = MutableLiveData()
-    fun liveFoundIngredient(): LiveData<List<String>?> = _foundIngredients
-    fun setFoundIngredient(ingredients: List<String>) { _foundIngredients.value = ingredients }
+    private val _ingredientFound: MutableLiveData<List<IngredientDto>?> =
+        MutableLiveData(null)
+    fun liveIngredientFound(): LiveData<List<IngredientDto>?> = _ingredientFound
 
     fun detectFromImage(imageBytes: ByteArray, isFromCamera: Boolean = false) {
         val scaleFactor = if (isFromCamera) {
@@ -69,6 +72,24 @@ class DetectionViewModel(
                             _detectResults.postValue(null)
                         }
                     }
+                }
+        }
+    }
+
+    fun fetchIngredients(ingredientIDs: List<String>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            ingredientRepository.fetchIngredientByIDs(ingredientIDs)
+                .collectLatest { response ->
+                    when (response) {
+                        is IngredientResponse -> {
+                            _ingredientFound.postValue(response.ingredients.map { it.toIngredientDto() })
+                        }
+
+                        else -> {
+                            _ingredientFound.postValue(null)
+                        }
+                    }
+
                 }
         }
     }

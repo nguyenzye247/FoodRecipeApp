@@ -52,9 +52,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             tvLogin.onClick {
                 goToLogin()
             }
-            tvForgotPassword.onClick {
-                goToForgotPassword()
-            }
+//            tvForgotPassword.onClick {
+//                goToForgotPassword()
+//            }
         }
     }
 

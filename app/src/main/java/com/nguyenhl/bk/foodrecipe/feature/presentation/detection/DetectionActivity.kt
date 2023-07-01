@@ -22,7 +22,6 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.result.DetectResultBottomSheetListener
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.result.DetectionResultBottomSheet
-import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFragment
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterBottomSheet
 import com.otaliastudios.cameraview.CameraException
@@ -43,11 +42,13 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
     private var detectImageRunnable: Runnable? = null
     private val detectImageHandler: Handler = Handler(Looper.getMainLooper())
 
-    private var selectedIngredientResult: String = ""
+    private var selectedIngredientResult: ArrayList<String> = arrayListOf()
 
     private val getGalleryImageResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { getResultFrom(it) }
+
+    private var isBackWithNoDetectAction: Boolean = true
 
     override fun getLazyBinding() = lazy { ActivityDetectionBinding.inflate(layoutInflater) }
 
@@ -71,6 +72,7 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         initCameraListener()
         binding.apply {
             btnBack.onClick {
+                isBackWithNoDetectAction = true
                 onBackPressed()
             }
             btnTakePicture.onClick {
@@ -107,9 +109,10 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
                         toast("No ingredient found")
                         return@let
                     }
-                    val names = detectResults.results.map { it.classResultName }
-                    setFoundIngredient(names)
-
+                    val names = detectResults.results.map { it.classResultName }.distinct()
+//                    setFoundIngredient(names)
+                    val ingredientIds = names.flatMap { addIngredientPrefixToItems(it) }
+                    fetchIngredients(ingredientIds)
                     showDetectResultBottomSheet()
 
                     val nameAsString = names.distinct().joinToString(", ")
@@ -222,21 +225,30 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         detectResultBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
     }
 
+    private fun addIngredientPrefixToItems(name: String): List<String> {
+        return name.split("_", " ").map {
+            "ingredient_${it.removeSuffix("s")}"
+        }
+    }
+
     private fun goToSearch(ingredient: String) {
         SearchActivity.startActivity(this) {
             putExtra(KEY_INGREDIENT_RESULT, ingredient)
         }
     }
 
-    override fun onResultItemClick(ingredient: String) {
-        selectedIngredientResult = ingredient
+    override fun onResultItemClick(ingredient: List<String>) {
+        selectedIngredientResult.clear()
+        selectedIngredientResult.addAll(ingredient)
         onBackPressed()
     }
 
     override fun onBackPressed() {
-        setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra(KEY_INGREDIENT_SEARCH_RESULT, selectedIngredientResult)
-        })
+        if (!isBackWithNoDetectAction) {
+            setResult(Activity.RESULT_OK, Intent().apply {
+                putStringArrayListExtra(KEY_INGREDIENT_SEARCH_RESULT, selectedIngredientResult)
+            })
+        }
         super.onBackPressed()
     }
 

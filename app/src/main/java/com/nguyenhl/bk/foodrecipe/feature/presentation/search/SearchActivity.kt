@@ -9,22 +9,21 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.nguyenhl.bk.foodrecipe.R
-import com.nguyenhl.bk.foodrecipe.core.extension.*
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
-import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
+import com.nguyenhl.bk.foodrecipe.core.extension.serializable
+import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.toastError
+import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
-import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
 import com.nguyenhl.bk.foodrecipe.databinding.ActivitySearchBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.FilterS
-import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.nguyenhl.bk.foodrecipe.feature.helper.listenRxEventOnUI
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
@@ -32,13 +31,12 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionActivi
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionActivity.Companion.KEY_INGREDIENT_SEARCH_RESULT
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.CalendarFragment.Companion.KEY_HAVE_RECIPE_ADDED
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchPagerAdapter
-import com.nguyenhl.bk.foodrecipe.feature.presentation.search.adapter.SearchRecipePagingAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.filter.SearchFilterBottomSheet
-import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchInteractionListener {
+class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
+    SearchInteractionListener {
     private lateinit var searchFilterBottomSheet: SearchFilterBottomSheet
     private lateinit var searchPagerAdapter: SearchPagerAdapter
 
@@ -46,8 +44,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
-                val ingredient = data?.getStringExtra(KEY_INGREDIENT_SEARCH_RESULT)
-                ingredient?.let {
+                val ingredientIDs = data?.getStringArrayListExtra(KEY_INGREDIENT_SEARCH_RESULT)
+                ingredientIDs?.let {
                     searchRecipe(it)
                 }
             }
@@ -202,12 +200,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         searchFilterBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
     }
 
-    private fun searchRecipe(query: String? = null) {
+    private fun searchRecipe(ingredientIDs: List<String>? = null) {
         binding.etSearch.apply {
             hideKeyboard()
-            val searchText = query ?: text.toString()
+            val searchText = text.toString()
 
-            val searchBody = viewModel.getSearchBodyFromFilters(searchText)
+            val searchBody = viewModel.getSearchBodyFromFilters(searchText, ingredientIDs)
             viewModel.loadSearchRecipe(searchBody)
         }
     }

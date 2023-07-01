@@ -10,14 +10,16 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.toast
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.BottomsheetDetectResultBinding
+import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 
 class DetectionResultBottomSheet : BottomSheetDialogFragment() {
@@ -27,6 +29,8 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
     private lateinit var detectionResultAdapter: DetectionResultAdapter
 
     private lateinit var onClickListener: DetectResultBottomSheetListener
+
+    private var ingredientResults: ArrayList<IngredientDto> = arrayListOf()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -91,14 +95,16 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
 
     private fun initListeners() {
         binding.apply {
-
+            btnFindAll.onClick {
+                onClickListener.onResultItemClick(ingredientResults.map { it.idIngredient })
+            }
         }
     }
 
     @OptIn(ObsoleteSplittiesLifecycleApi::class)
     private fun initObservers() {
         viewModel.apply {
-            observe(liveFoundIngredient()) { foundIngredients ->
+            observe(liveIngredientFound()) { foundIngredients ->
                 foundIngredients?.let {
                     bindFoundIngredientDataView(foundIngredients)
                 }
@@ -106,20 +112,21 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private fun bindFoundIngredientDataView(ingredients: List<String>) {
+    private fun bindFoundIngredientDataView(ingredients: List<IngredientDto>) {
+        ingredientResults.clear()
+        ingredientResults.addAll(ingredients)
         binding.apply {
             rvDetectResult.apply {
-                detectionResultAdapter = DetectionResultAdapter(ingredients.distinct()) { ingredient ->
-                    requireContext().toast(ingredient)
-                    if(::onClickListener.isInitialized) {
-                        onClickListener.onResultItemClick(ingredient.replace("_", " "))
+                detectionResultAdapter = DetectionResultAdapter(ingredients) { ingredient ->
+                    requireContext().toast(ingredient.name)
+                    if (::onClickListener.isInitialized) {
+                        onClickListener.onResultItemClick(listOf(ingredient.idIngredient))
                     }
                 }
                 adapter = detectionResultAdapter
-                layoutManager = LinearLayoutManager(
+                layoutManager = GridLayoutManager(
                     requireContext(),
-                    LinearLayoutManager.VERTICAL,
-                    false
+                    3
                 )
             }
         }
@@ -134,5 +141,5 @@ class DetectionResultBottomSheet : BottomSheetDialogFragment() {
 }
 
 interface DetectResultBottomSheetListener {
-    fun onResultItemClick(ingredient: String)
+    fun onResultItemClick(ingredient: List<String>)
 }

@@ -114,7 +114,7 @@
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_60dp"
         android:layout_marginTop="@dimen/dimen_16dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_forgot_password"
+        app:layout_constraintBottom_toTopOf="@id/tv_register_agreement"
         app:layout_constraintEnd_toEndOf="@id/tip_password"
         app:layout_constraintStart_toStartOf="@id/tip_password"
         app:layout_constraintTop_toBottomOf="@id/tip_password">
@@ -131,19 +131,6 @@
             android:paddingTop="@dimen/dimen_4dp"
             android:paddingBottom="@dimen/dimen_4dp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tv_forgot_password"
-        style="@style/ForgotPasswordTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="@dimen/dimen_2dp"
-        android:text="@string/forgot_password"
-        app:layout_constraintBottom_toTopOf="@id/tv_register_agreement"
-        app:layout_constraintEnd_toEndOf="@id/tip_confirm_password"
-        app:layout_constraintTop_toBottomOf="@id/tip_confirm_password" />
 
     <TextView
         android:id="@+id/tv_register_agreement"

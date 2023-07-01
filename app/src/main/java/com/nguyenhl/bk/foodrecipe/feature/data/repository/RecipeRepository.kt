@@ -21,6 +21,8 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.SearchServ
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.dao.RecipeDao
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.database.model.Recipe
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxBus
+import com.nguyenhl.bk.foodrecipe.feature.helper.RxEvent
 import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
@@ -179,6 +181,7 @@ class RecipeRepository constructor(
     fun likeRecipe(token: String, recipeId: String) = flow {
         recipeService.likeRecipe(token, recipeId)
             .suspendOnSuccess {
+                RxBus.publish(RxEvent.EventLikedRecipe())
                 emit(data)
             }
             .suspendOnError(LikeRecipeErrorResponseMapper) {

@@ -1,11 +1,10 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.ingredient.IngredientListBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientDetailResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.IngredientResponse
 import com.skydoves.sandwich.ApiResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface IngredientService {
     companion object {
@@ -13,6 +12,8 @@ interface IngredientService {
         const val INGREDIENT_SEARCH_GET_EP = "ingredient/search"
         const val INGREDIENT_ALPHA_GET_EP = "ingredient/alphabet"
         const val INGREDIENT_DETAIL_GET_EP = "ingredientdetail"
+
+        const val INGREDIENT_LIST_POST_EP = "ingredient/list"
     }
 
     @GET(INGREDIENT_GET_EP)
@@ -32,4 +33,9 @@ interface IngredientService {
     suspend fun getIngredientDetail(
         @Path("detailId") detailId: String
     ): ApiResponse<IngredientDetailResponse>
+
+    @POST(INGREDIENT_LIST_POST_EP)
+    suspend fun getIngredientByIds(
+        @Body ingredientListBody: IngredientListBody
+    ): ApiResponse<IngredientResponse>
 }

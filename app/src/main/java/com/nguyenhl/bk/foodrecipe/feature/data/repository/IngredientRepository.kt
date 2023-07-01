@@ -8,6 +8,7 @@ import com.nguyenhl.bk.foodrecipe.core.common.INITIAL_LOAD_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.ingredient.IngredientListBody
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetIngredientDetailErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetIngredientErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.IngredientEP
@@ -42,6 +43,39 @@ class IngredientRepository constructor(
         ).flow
             .flowOn(Dispatchers.IO)
     }
+
+    @WorkerThread
+    fun fetchIngredientByIDss(ingredientIDs: List<String>): Flow<PagingData<IngredientDto>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                prefetchDistance = PREFETCH_DIST
+            ),
+            pagingSourceFactory = {
+                IngredientPagingSource(
+                    IngredientEP.LIST,
+                    ingredientService,
+                    ingredientIDs = ingredientIDs
+                )
+            }
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
+    @WorkerThread
+    fun fetchIngredientByIDs(ingredientIDs: List<String>)= flow {
+        ingredientService.getIngredientByIds(IngredientListBody(ingredientIDs))
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(GetIngredientErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(null)
+            }
+    }.flowOn(Dispatchers.IO)
 
     @WorkerThread
     fun searchIngredients(searchString: String): Flow<PagingData<IngredientDto>> {

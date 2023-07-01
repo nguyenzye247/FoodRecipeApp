@@ -7,7 +7,7 @@ data class SearchRecipeFilterBody(
     var idCategoryDetails: List<String>? = null,
     @SerializedName("total_time")
     var totalTime: Int? = null,
-    @SerializedName("id_ingerdient")
+    @SerializedName("id_ingredient")
     var idIngredients: List<String>?,
     @SerializedName("searchString")
     var queryString: String? = null,

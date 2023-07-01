@@ -228,7 +228,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(DetectionViewModel::class.java) -> {
                 return DetectionViewModel(
                     input as BaseInput.DetectionInput,
-                    detectionRepository
+                    detectionRepository,
+                    ingredientRepository
                 ) as T
             }
 
