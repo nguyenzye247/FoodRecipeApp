@@ -88,7 +88,6 @@
                 app:layout_constraintStart_toStartOf="@id/tv_cook_today"
                 app:layout_constraintTop_toBottomOf="@id/tv_cook_today" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_dish_preferred"
                 android:layout_width="@dimen/dimen_0dp"

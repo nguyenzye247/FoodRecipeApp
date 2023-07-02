@@ -40,4 +40,5 @@ class RxEvent {
     class EventValidUserInfo()
     class EventApplySearchFilter()
     class EventLikedRecipe()
+    class EventSearchByIngredient(val ingredientId: String)
 }

@@ -132,6 +132,18 @@
             android:name=".feature.presentation.ingredient.IngredientActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.presentation.healthgoal.HealthGoalPlanActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.weeklyplan.WeeklyPlanActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.presentation.detail.weeklyplan.WeeklyPlanDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

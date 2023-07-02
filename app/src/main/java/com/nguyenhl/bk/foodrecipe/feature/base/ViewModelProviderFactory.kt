@@ -19,8 +19,10 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.weeklyplan.WeeklyPlanDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.healthgoal.HealthGoalPlanViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.ingredient.IngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
@@ -37,6 +39,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VAColl
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.weeklyplan.WeeklyPlanViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -57,6 +60,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val detectionRepository: DetectionRepository by inject()
     private val searchFilterRepository: SearchFilterRepository by inject()
     private val categoryRepository: CategoryRepository by inject()
+    private val weeklyPlanRepository: WeeklyPlanRepository by inject()
 
     private val homeUseCase: HomeUseCase by inject()
     private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase by inject()
@@ -185,7 +189,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(IngredientDetailViewModel::class.java) -> {
                 return IngredientDetailViewModel(
                     input as BaseInput.IngredientDetailInput,
-                    ingredientRepository
+                    ingredientRepository,
+                    recipeRepository
                 ) as T
             }
 
@@ -237,6 +242,26 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return IngredientViewModel(
                     input as BaseInput.IngredientInput,
                     ingredientRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(HealthGoalPlanViewModel::class.java) -> {
+                return HealthGoalPlanViewModel(
+                    input as BaseInput.HealthGoalPlanInput
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(WeeklyPlanViewModel::class.java) -> {
+                return WeeklyPlanViewModel(
+                    input as BaseInput.WeeklyPlanInput,
+                    weeklyPlanRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(WeeklyPlanDetailViewModel::class.java) -> {
+                return WeeklyPlanDetailViewModel(
+                    input as BaseInput.WeeklyPlanDetailInput,
+                    weeklyPlanRepository
                 ) as T
             }
 

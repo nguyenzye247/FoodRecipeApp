@@ -26,7 +26,9 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity.Companion.KEY_DATE
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity.Companion.KEY_IS_MEAL_TYPE_SEARCH
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity.Companion.KEY_MEAL_TYPE
+import com.nguyenhl.bk.foodrecipe.feature.presentation.weeklyplan.WeeklyPlanActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
+import com.nguyenhl.bk.foodrecipe.feature.widget.WrapContentLinearLayoutManager
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -70,6 +72,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                 }
             }
 
+            btnWeeklyPlan.onClick {
+                goToWeeklyPlan()
+            }
+
             btnAddBreakfast.onClick {
                 goToSearch(MealType.BREAKFAST)
             }
@@ -104,7 +110,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                 viewModel.selectedDate = weekDay.date
                 binding.weekCalendarView.apply {
                     notifyDateChanged(oldDate)
-                    notifyWeekChanged(weekDay)
+                    notifyDateChanged(weekDay.date)
+//                    notifyWeekChanged(weekDay)
                 }
                 fetchRecipeByDate(weekDay.date)
             }
@@ -132,7 +139,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                     }
                 )
                 adapter = breakfastRecipeAdapter
-                layoutManager = LinearLayoutManager(
+                layoutManager = WrapContentLinearLayoutManager(
                     requireContext(),
                     LinearLayoutManager.VERTICAL,
                     false
@@ -149,7 +156,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                     }
                 )
                 adapter = lunchRecipeAdapter
-                layoutManager = LinearLayoutManager(
+                layoutManager = WrapContentLinearLayoutManager(
                     requireContext(),
                     LinearLayoutManager.VERTICAL,
                     false
@@ -166,7 +173,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
                     }
                 )
                 adapter = dinnerRecipeAdapter
-                layoutManager = LinearLayoutManager(
+                layoutManager = WrapContentLinearLayoutManager(
                     requireContext(),
                     LinearLayoutManager.VERTICAL,
                     false
@@ -220,6 +227,12 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
     private fun goToRecipeDetail(recipe: RecipeDto) {
         RecipeDetailActivity.startActivity(requireContext()) {
             putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
+        }
+    }
+
+    private fun goToWeeklyPlan() {
+        WeeklyPlanActivity.startActivity(requireContext()) {
+
         }
     }
 

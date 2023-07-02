@@ -2,9 +2,7 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient
 
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observeDistinct
@@ -18,13 +16,18 @@ import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDetailDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.IngredientDto
-import com.wajahatkarim3.easyvalidation.core.collection_ktx.textEqualToList
-import kotlinx.coroutines.launch
+import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter.RecipeAdapter
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchActivity.Companion.KEY_SEARCH_INGREDIENT
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class IngredientDetailActivity :
     BaseActivity<ActivityIngredientDetailBinding, IngredientDetailViewModel>() {
+    private lateinit var ingredientRecipesAdapter: RecipeAdapter
+
     private val ingredientInfo by lazy { intent.parcelableExtra<IngredientDto>(KEY_INGREDIENT_DTO) }
 
     override fun getLazyBinding() = lazy { ActivityIngredientDetailBinding.inflate(layoutInflater) }
@@ -53,7 +56,11 @@ class IngredientDetailActivity :
             btnBack.onClick {
                 onBackPressed()
             }
-
+            contentLayout.btnSearch.onClick {
+                ingredientInfo?.let { ingredient ->
+                    goToSearch(ingredient.idIngredient)
+                }
+            }
         }
     }
 
@@ -65,6 +72,12 @@ class IngredientDetailActivity :
                     bindIngredientDetailDataView(it)
                 }
                 showLoadingView(false)
+            }
+
+            observe(liveIngredientRecipes()) { recipes ->
+                recipes?.let {
+                    bindIngredientRecipesDataView(it)
+                }
             }
 
             observeDistinct(liveIsLoading()) { isLoading ->
@@ -83,7 +96,30 @@ class IngredientDetailActivity :
             contentLayout.apply {
                 tvIngredientInfo.text = ingredientDetailDto.info
                 tvIngredientTitle.text = ingredientDetailDto.title
-                tvIngredientDescription.text = ingredientDetailDto.description.joinToString(separator = "\n")
+                tvIngredientDescription.text =
+                    ingredientDetailDto.description.joinToString(separator = "\n")
+            }
+        }
+    }
+
+    private fun bindIngredientRecipesDataView(recipes: List<RecipeDto>) {
+        binding.apply {
+            ingredientRecipesAdapter = RecipeAdapter(
+                recipes,
+                onItemClick = { recipe ->
+                    goToRecipeDetail(recipe)
+                },
+                onFavoriteClick = { recipe ->
+                    viewModel.likeRecipe(recipe)
+                }
+            )
+            contentLayout.rvIngredientRecipe.apply {
+                adapter = ingredientRecipesAdapter
+                layoutManager = LinearLayoutManager(
+                    this@IngredientDetailActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             }
         }
     }
@@ -97,6 +133,19 @@ class IngredientDetailActivity :
             backgroundView.setVisible(false)
             progressBar.setVisible(isShow)
         }
+    }
+
+    private fun goToRecipeDetail(recipe: RecipeDto) {
+        RecipeDetailActivity.startActivity(this) {
+            putExtra(RecipeDetailActivity.KEY_RECIPE_DTO, recipe)
+        }
+    }
+
+    private fun goToSearch(idIngredient: String) {
+        SearchActivity.startActivity(this) {
+            putExtra(KEY_SEARCH_INGREDIENT, idIngredient)
+        }
+        finish()
     }
 
     companion object {

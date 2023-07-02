@@ -10,6 +10,7 @@ import com.nguyenhl.bk.foodrecipe.databinding.FragmentProfileBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseFragment
 import com.nguyenhl.bk.foodrecipe.feature.dto.view.TabEntity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileActivity
+import com.nguyenhl.bk.foodrecipe.feature.presentation.healthgoal.HealthGoalPlanActivity
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.settings.SettingsActivity
 import com.nguyenhl.bk.foodrecipe.feature.util.DateFormatUtil
@@ -33,6 +34,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
             }
             btnSettings.onClick {
                 goToSettings()
+            }
+            btnHealthGoalPlan.onClick {
+                goToHealthGoalPlan()
             }
         }
     }
@@ -87,7 +91,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
 
     private fun goToSettings() {
         SettingsActivity.startActivity(requireContext()){
-//            putExtra()
+
+        }
+    }
+
+    private fun goToHealthGoalPlan() {
+        HealthGoalPlanActivity.startActivity(requireContext()) {
+
         }
     }
 
