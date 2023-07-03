@@ -22,7 +22,9 @@ class HealthGoalPlanActivity: BaseActivity<ActivityHealthGoalPlanBinding, Health
     }
 
     override fun initViews() {
+        binding.apply {
 
+        }
     }
 
     override fun initListener() {
