@@ -70,3 +70,7 @@ object LikeRecipeErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to like this recipe")
 object DetectionErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to detect this image")
+object GetAllWeeklyPlanErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get weekly plans")
+object GetWeeklyPlanDetailErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get weekly plan's details")

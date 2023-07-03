@@ -38,7 +38,6 @@ class SearchViewModel(
 
     init {
         viewModelScope.launch {
-            fetchRandomRecipes()
             fetchAllSearchFilters()
 
             searchUseCase.getUserHealthCategoryDetails()?.let { categoryDetails ->
@@ -105,7 +104,7 @@ class SearchViewModel(
         }
     }
 
-    private fun fetchRandomRecipes() {
+    fun fetchRandomRecipes() {
         val token = SessionManager.fetchToken(input.application).ifEmpty {
             input.application.toast("Empty token")
             return

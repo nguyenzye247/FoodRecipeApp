@@ -3,16 +3,13 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.nguyenhl.bk.foodrecipe.R
-import com.nguyenhl.bk.foodrecipe.core.extension.resources.drawable
-import com.nguyenhl.bk.foodrecipe.core.extension.views.imageDrawable
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemSuggestForYouBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
 
 class RecipeAdapter(
-    private val suggestRecipes: List<RecipeDto>,
+    private val recipes: List<RecipeDto>,
     private val onItemClick: (recipe: RecipeDto) -> Unit,
     private val onFavoriteClick: (recipe: RecipeDto) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.SuggestForYouViewHolder>() {
@@ -55,8 +52,8 @@ class RecipeAdapter(
     }
 
     override fun onBindViewHolder(holder: SuggestForYouViewHolder, position: Int) {
-        holder.bind(suggestRecipes[position])
+        holder.bind(recipes[position])
     }
 
-    override fun getItemCount(): Int = suggestRecipes.size
+    override fun getItemCount(): Int = recipes.size
 }

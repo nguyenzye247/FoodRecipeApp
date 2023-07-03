@@ -12,8 +12,10 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailVie
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.weeklyplan.WeeklyPlanDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detection.DetectionViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.editprofile.EditProfileViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.healthgoal.HealthGoalPlanViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.ingredient.IngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.MainViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.search.SearchViewModel
@@ -24,6 +26,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.collection.VAColl
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.ingredient.VAIngredientViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.random.VARandomRecipeViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.viewall.suggest.VASuggestViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.weeklyplan.WeeklyPlanViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -114,5 +117,17 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.IngredientInput) ->
         ViewModelProviderFactory(input).create(IngredientViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.HealthGoalPlanInput) ->
+        ViewModelProviderFactory(input).create(HealthGoalPlanViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.WeeklyPlanInput) ->
+        ViewModelProviderFactory(input).create(WeeklyPlanViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.WeeklyPlanDetailInput) ->
+        ViewModelProviderFactory(input).create(WeeklyPlanDetailViewModel::class.java)
     }
 }

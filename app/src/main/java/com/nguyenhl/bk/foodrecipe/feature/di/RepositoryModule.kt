@@ -25,4 +25,5 @@ val repositoryModule = module {
     single { SearchRepository(get()) }
     single { CalendarRepository(get()) }
     single { DetectionRepository() }
+    single { WeeklyPlanRepository(get()) }
 }

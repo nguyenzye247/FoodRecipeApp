@@ -102,4 +102,11 @@
     <string name="detect_result">Detect Result</string>
     <string name="search_for_ingredients">Search for ingredients</string>
     <string name="find_all">Find all</string>
+    <string name="health_goal_plan">Health Goal Plan</string>
+    <string name="create_plan">Create Plan</string>
+    <string name="health_goal">Health Goal</string>
+    <string name="health_goal_description">Achieve wellness through exercise, balanced diet, and restful sleep habit</string>
+    <string name="update_plan">Update plan</string>
+    <string name="related_recipes">Related Recipes</string>
+    <string name="healthy_food_choices_for_optimal_well_being">Healthy Food Choices for Optimal Well-being</string>
 </resources>

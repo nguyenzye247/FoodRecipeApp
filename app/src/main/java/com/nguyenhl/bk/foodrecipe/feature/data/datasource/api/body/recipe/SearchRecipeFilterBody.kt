@@ -32,3 +32,13 @@ internal fun SearchRecipeFilterBody.addUserHealthCategoryDetailToSearchBody(
         authorNames = this.authorNames
     )
 }
+
+internal fun createSearchBodyFromIdIngredient(idIngredient: String): SearchRecipeFilterBody {
+    return SearchRecipeFilterBody(
+        null,
+        null,
+        listOf(idIngredient),
+        null,
+        null
+    )
+}

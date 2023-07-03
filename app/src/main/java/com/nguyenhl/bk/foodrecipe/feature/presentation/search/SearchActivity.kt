@@ -16,6 +16,7 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifec
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.serializable
 import com.nguyenhl.bk.foodrecipe.core.extension.start
+import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runDelayOnMainThread
 import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
@@ -53,6 +54,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
 
     private val isMealTypeSearch by lazy { intent.getBooleanExtra(KEY_IS_MEAL_TYPE_SEARCH, false) }
 
+    private val isSearchIngredient by lazy { intent.getStringExtra(KEY_SEARCH_INGREDIENT) ?: "" }
+
     override fun getLazyBinding() = lazy { ActivitySearchBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModel<SearchViewModel> {
@@ -61,7 +64,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                 application,
                 intent.getBooleanExtra(KEY_IS_MEAL_TYPE_SEARCH, false),
                 intent.getStringExtra(KEY_DATE) ?: "",
-                intent.serializable(KEY_MEAL_TYPE)
+                intent.serializable(KEY_MEAL_TYPE),
+                intent.getStringExtra(KEY_SEARCH_INGREDIENT) ?: "",
             )
         )
     }
@@ -163,6 +167,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
             listenRxEventOnUI<RxEvent.EventApplySearchFilter> {
                 searchRecipe()
             }
+
+            if (isSearchIngredient.isEmpty()) {
+                fetchRandomRecipes()
+            } else {
+                searchRecipe(listOf(isSearchIngredient))
+            }
         }
     }
 
@@ -262,6 +272,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
         const val KEY_MEAL_TYPE = "key_meal_type"
         const val KEY_DATE = "key_date"
         const val KEY_IS_MEAL_TYPE_SEARCH = "key_is_meal_type_search"
+        const val KEY_IS_ALLOW_RANDOM_FETCH = "key_is_allow_random_fetch"
+        const val KEY_SEARCH_INGREDIENT = "key_search_ingredient"
 
         fun startActivity(context: Context?, configIntent: Intent.() -> Unit) {
             context?.let {
