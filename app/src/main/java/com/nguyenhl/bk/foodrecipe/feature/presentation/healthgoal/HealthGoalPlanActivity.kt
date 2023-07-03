@@ -30,6 +30,9 @@ class HealthGoalPlanActivity: BaseActivity<ActivityHealthGoalPlanBinding, Health
             btnTest.onClick {
 
             }
+            btnBack.onClick {
+                onBackPressed()
+            }
         }
     }
 
