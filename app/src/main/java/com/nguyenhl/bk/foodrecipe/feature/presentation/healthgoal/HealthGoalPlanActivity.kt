@@ -2,16 +2,21 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.healthgoal
 
 import android.content.Context
 import android.content.Intent
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.start
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ActivityHealthGoalPlanBinding
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseActivity
 import com.nguyenhl.bk.foodrecipe.feature.base.BaseInput
+import com.nguyenhl.bk.foodrecipe.feature.dto.healthgoal.HealthGoalDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.healthgoal.PhysicalLevelDto
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class HealthGoalPlanActivity: BaseActivity<ActivityHealthGoalPlanBinding, HealthGoalPlanViewModel>() {
-
+    private val physicalLevels: ArrayList<PhysicalLevelDto> = arrayListOf()
+    private val healthGoals: ArrayList<HealthGoalDto> = arrayListOf()
 
     override fun getLazyBinding() = lazy { ActivityHealthGoalPlanBinding.inflate(layoutInflater) }
 
@@ -38,8 +43,23 @@ class HealthGoalPlanActivity: BaseActivity<ActivityHealthGoalPlanBinding, Health
         }
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
+        viewModel.apply {
+            observe(livePhysicalLevels) { physicals ->
+                physicals?.let {
+                    physicalLevels.clear()
+                    physicalLevels.addAll(it)
+                }
+            }
 
+            observe(liveHealthGoals) { goals ->
+                goals?.let {
+                    healthGoals.clear()
+                    healthGoals.addAll(it)
+                }
+            }
+        }
     }
 
     companion object {

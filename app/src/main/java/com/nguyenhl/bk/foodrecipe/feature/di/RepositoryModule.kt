@@ -26,4 +26,5 @@ val repositoryModule = module {
     single { CalendarRepository(get()) }
     single { DetectionRepository() }
     single { WeeklyPlanRepository(get()) }
+    single { HealthGoalRepository(get()) }
 }

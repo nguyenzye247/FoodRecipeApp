@@ -109,4 +109,8 @@
     <string name="update_plan">Update plan</string>
     <string name="related_recipes">Related Recipes</string>
     <string name="healthy_food_choices_for_optimal_well_being">Healthy Food Choices for Optimal Well-being</string>
+    <string name="in_progress">In Progress</string>
+    <string name="target_weight">Target weight</string>
+    <string name="day_goal">Day goal</string>
+    <string name="start_day">Start day</string>
 </resources>

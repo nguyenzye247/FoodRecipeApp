@@ -74,3 +74,9 @@ object GetAllWeeklyPlanErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get weekly plans")
 object GetWeeklyPlanDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get weekly plan's details")
+object GetPhysicalLevelErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get all physical levels")
+object GetAllHealthGoalErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get all health goals")
+object GetHealthGoalDetailErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get health goal detail")
