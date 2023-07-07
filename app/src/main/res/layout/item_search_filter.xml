@@ -4,20 +4,22 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/dimen_3dp">
+    android:layout_margin="@dimen/dimen_4dp">
 
     <TextView
         android:id="@+id/tv_filter_item"
-        style="@style/TextRegularStyle"
+        style="@style/TextMediumStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/selector_search_filter_item"
+        android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:ellipsize="end"
-        android:padding="@dimen/dimen_8dp"
+        android:paddingHorizontal="@dimen/dimen_12dp"
+        android:paddingVertical="@dimen/dimen_8dp"
         android:textColor="@color/cl_search_filter_text"
+        android:textSize="@dimen/text_size_14sp"
         tools:text="Afternoon tea" />
 
 </FrameLayout>

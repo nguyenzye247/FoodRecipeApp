@@ -13,6 +13,9 @@ import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -185,11 +188,10 @@ class SearchFilterBottomSheet : BottomSheetDialogFragment() {
     private fun RecyclerView.bindCategoryDetailFiltersData(filterAdapter: SearchFilterItemAdapter) {
         this.apply {
             adapter = filterAdapter
-            layoutManager = GridLayoutManager(
-                context,
-                3,
-                GridLayoutManager.VERTICAL,
-                false
+            layoutManager = FlexboxLayoutManager(
+                requireContext(),
+                FlexDirection.ROW,
+                FlexWrap.WRAP
             )
         }
     }

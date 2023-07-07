@@ -139,4 +139,6 @@ dependencies {
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
     //Camera view
     api 'com.otaliastudios:cameraview:2.7.2'
+
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }

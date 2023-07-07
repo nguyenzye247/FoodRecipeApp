@@ -18,7 +18,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp">
 
                 <TextView
                     android:id="@+id/tv_filter_title"
@@ -26,7 +27,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_12dp"
                     android:text="@string/filter_search"
                     android:textSize="@dimen/text_size_18sp" />
 
@@ -37,7 +37,7 @@
                 style="@style/SearchFilterTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_12dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:text="@string/meal_type" />
 
             <androidx.recyclerview.widget.RecyclerView
