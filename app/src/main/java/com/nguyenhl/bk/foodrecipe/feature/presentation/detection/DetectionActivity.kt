@@ -48,7 +48,7 @@ class DetectionActivity : BaseActivity<ActivityDetectionBinding, DetectionViewMo
         ActivityResultContracts.StartActivityForResult()
     ) { getResultFrom(it) }
 
-    private var isBackWithNoDetectAction: Boolean = true
+    private var isBackWithNoDetectAction: Boolean = false
 
     override fun getLazyBinding() = lazy { ActivityDetectionBinding.inflate(layoutInflater) }
 

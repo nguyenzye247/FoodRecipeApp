@@ -83,6 +83,10 @@ class HomeFetchRecipeUseCase constructor(
             onFetchFinished()
         }
     }
+    suspend fun reFetchUserInfo(userId: String) {
+        val userInfo = userInfoRepository.getUserInfoByUserId(userId)
+        _userInfo.postValue(userInfo?.toUserInfoDto())
+    }
 
     private suspend fun fetchPreferredDishes(userId: String) {
         val preferredDishes = dishPreferredRepository.getAllPreferredDishByUserId(userId)

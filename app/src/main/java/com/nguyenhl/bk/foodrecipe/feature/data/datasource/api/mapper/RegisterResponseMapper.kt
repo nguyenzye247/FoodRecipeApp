@@ -80,3 +80,5 @@ object GetAllHealthGoalErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get all health goals")
 object GetHealthGoalDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get health goal detail")
+object CreateHealthGoalErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to create health goal")

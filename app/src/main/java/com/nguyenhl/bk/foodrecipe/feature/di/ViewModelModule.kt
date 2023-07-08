@@ -10,6 +10,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPr
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.healthgoal.HealthGoalPlanDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.weeklyplan.WeeklyPlanDetailViewModel
@@ -121,6 +122,10 @@ val viewModelModule = module {
 
     viewModel { (input: BaseInput.HealthGoalPlanInput) ->
         ViewModelProviderFactory(input).create(HealthGoalPlanViewModel::class.java)
+    }
+
+    viewModel { (input: BaseInput.HealthGoalPlanDetailInput) ->
+        ViewModelProviderFactory(input).create(HealthGoalPlanDetailViewModel::class.java)
     }
 
     viewModel { (input: BaseInput.WeeklyPlanInput) ->

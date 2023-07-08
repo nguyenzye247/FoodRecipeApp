@@ -4,6 +4,7 @@ import android.app.Application
 import com.nguyenhl.bk.foodrecipe.App
 import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
+import com.nguyenhl.bk.foodrecipe.feature.dto.healthgoal.HealthGoalDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.weeklyplan.WeeklyPlanDto
 
 sealed class BaseInput {
@@ -99,7 +100,8 @@ sealed class BaseInput {
         val isMealTypeSearch: Boolean,
         val date: String,
         var mealType: MealType?,
-        val idSearchIngredient: String
+        val idSearchIngredient: String,
+        val idPreferredDish: String
     ): BaseInput()
 
     data class EditProfileInput(
@@ -129,5 +131,10 @@ sealed class BaseInput {
     data class WeeklyPlanDetailInput(
         val application: Application,
         val weeklyPlanDto: WeeklyPlanDto?
+    ): BaseInput()
+
+    data class HealthGoalPlanDetailInput(
+        val application: Application,
+        val healthGoalPlanDto: HealthGoalDto?
     ): BaseInput()
 }

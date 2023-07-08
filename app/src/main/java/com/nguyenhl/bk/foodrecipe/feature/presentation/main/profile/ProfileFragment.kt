@@ -2,6 +2,8 @@ package com.nguyenhl.bk.foodrecipe.feature.presentation.main.profile
 
 import androidx.fragment.app.activityViewModels
 import com.nguyenhl.bk.foodrecipe.R
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifecycleApi
+import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.views.enforceSingleScrollDirection
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
@@ -41,10 +43,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
         }
     }
 
+    @OptIn(ObsoleteSplittiesLifecycleApi::class)
     override fun initObservers() {
         viewModel.apply {
             fetchLikedRecipe()
+
+            observe(liveUserInfo()) {
+                bindUserInfoView()
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refetchUserInfo()
     }
 
     private fun bindUserInfoView() {

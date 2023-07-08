@@ -2,6 +2,8 @@ package com.nguyenhl.bk.foodrecipe.feature.data.repository
 
 import androidx.annotation.WorkerThread
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.healthgoal.CreateHealthGoalBody
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.CreateHealthGoalErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetAllHealthGoalErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetHealthGoalDetailErrorResponseMapper
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetPhysicalLevelErrorResponseMapper
@@ -16,7 +18,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class HealthGoalRepository constructor(
     private val healthGoalService: HealthGoalService
-): Repository {
+) : Repository {
 
     @WorkerThread
     fun fetchAllPhysicalLevels() = flow {
@@ -35,9 +37,9 @@ class HealthGoalRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun fetchAllHealthGoals() = flow {
+    fun fetchAllHealthGoals(token: String) = flow {
         runAndRetry(GlobalRetryPolicy()) { _, _ ->
-            healthGoalService.getAllHealthGoal()
+            healthGoalService.getAllHealthGoal(token)
                 .suspendOnSuccess {
                     emit(data)
                 }
@@ -51,9 +53,9 @@ class HealthGoalRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun fetchHealthGoalDetail(healthGoalId: String) = flow {
+    fun fetchHealthGoalDetail(token: String, healthGoalId: String) = flow {
         runAndRetry(GlobalRetryPolicy()) { _, _ ->
-            healthGoalService.getHealthGoalDetail(healthGoalId)
+            healthGoalService.getHealthGoalDetail(token, healthGoalId)
                 .suspendOnSuccess {
                     emit(data)
                 }
@@ -65,4 +67,18 @@ class HealthGoalRepository constructor(
                 }
         }
     }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun createHealthGoal(token: String, healthGoalBody: CreateHealthGoalBody) = flow {
+        healthGoalService.createHealthGoal(token, healthGoalBody)
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(CreateHealthGoalErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(null)
+            }
+    }
 }

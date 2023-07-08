@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:background="@drawable/bg_app_dialog"
+        android:elevation="@dimen/dimen_8dp"
+        android:paddingHorizontal="@dimen/dimen_16dp">
+
+        <TextView
+            android:id="@+id/tv_create_health_goal_title"
+            style="@style/TextMediumStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/create_health_goal"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_target_weight_title"
+            style="@style/TextMediumStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:text="@string/target_weight"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_create_health_goal_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_target_weight"
+            style="@style/TIPInputStyle"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_target_weight_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_target_weight"
+                style="@style/ETInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/your_target_weight"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_4dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_day_goal_title"
+            style="@style/TextMediumStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:text="@string/day_goal"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tip_target_weight" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_day_goal"
+            style="@style/TIPInputStyle"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_day_goal_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_day_goal"
+                style="@style/ETInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/day_goal"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_4dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_physical_level_title"
+            style="@style/TextMediumStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:text="@string/physical_level"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tip_day_goal" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_physical_level"
+            style="@style/TIPInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_physical_level_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_physical_level"
+                style="@style/ETInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_4dp"
+                android:text="@string/none"
+                android:textSize="@dimen/text_size_14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_create_health_goal"
+            style="@style/CaretButtonStyle"
+            android:layout_width="218dp"
+            android:layout_height="@dimen/dimen_56dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:text="@string/create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tip_physical_level" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

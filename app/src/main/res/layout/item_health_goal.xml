@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_health_goal_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/dimen_8dp"
@@ -13,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:padding="@dimen/dimen_12dp">
 
         <LinearLayout
@@ -23,7 +25,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/dimen_8dp"
-            app:layout_constraintBottom_toTopOf="@id/iv_in_progress"
+            app:layout_constraintBottom_toTopOf="@id/ll_in_progress"
             app:layout_constraintEnd_toStartOf="@id/ll_target_weight"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +40,13 @@
 
             <TextView
                 android:id="@+id/tv_start_day"
-                style="@style/TextBoldStyle"
+                style="@style/TextMediumStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:text="@string/start_day"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
                 android:id="@+id/tv_start_day_value"
@@ -51,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_18sp"
                 tools:text="Jul, 14" />
 
@@ -63,6 +67,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/dimen_8dp"
+            app:layout_constraintBottom_toBottomOf="@id/ll_start_day"
             app:layout_constraintEnd_toStartOf="@id/ll_day_goal"
             app:layout_constraintStart_toEndOf="@id/ll_start_day"
             app:layout_constraintTop_toTopOf="@id/ll_start_day">
@@ -76,12 +81,13 @@
 
             <TextView
                 android:id="@+id/tv_target_weight"
-                style="@style/TextBoldStyle"
+                style="@style/TextMediumStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:text="@string/target_weight"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
                 android:id="@+id/tv_target_weight_value"
@@ -89,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_18sp"
                 tools:text="65" />
 
@@ -115,12 +122,13 @@
 
             <TextView
                 android:id="@+id/tv_day_goal"
-                style="@style/TextBoldStyle"
+                style="@style/TextMediumStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:text="@string/day_goal"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
                 android:id="@+id/tv_day_goal_value"
@@ -128,37 +136,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_18sp"
                 tools:text="60" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_in_progress"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_in_progress"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_in_progress"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_in_progress"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_in_progress"
-            style="@style/TextBoldStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_12dp"
-            android:text="@string/in_progress"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_20sp"
-            app:layout_constraintBottom_toBottomOf="@id/iv_in_progress"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_in_progress"
-            app:layout_constraintTop_toTopOf="@id/iv_in_progress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_start_day">
 
-            />
+            <ImageView
+                android:id="@+id/iv_in_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_finished"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_in_progress"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_in_progress"
+                style="@style/TextBoldStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                android:text="@string/in_progress"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_20sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_in_progress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_in_progress"
+                app:layout_constraintTop_toTopOf="@id/iv_in_progress" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

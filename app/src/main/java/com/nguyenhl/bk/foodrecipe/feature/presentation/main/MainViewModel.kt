@@ -50,6 +50,12 @@ class MainViewModel(
 
     fun getUserInfo(): UserInfoDto? = homeFetchRecipeUseCase.getUserInfo()
 
+    fun refetchUserInfo() {
+        viewModelScope.launch(Dispatchers.IO) {
+            homeFetchRecipeUseCase.reFetchUserInfo(userId)
+        }
+    }
+
     fun liveUserInfo(): LiveData<UserInfoDto?> {
         return homeFetchRecipeUseCase.liveUserInfo()
     }

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
+import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemDishTypeBinding
 import com.nguyenhl.bk.foodrecipe.feature.dto.DishPreferredDto
 
 class DishTypeAdapter(
-    private val dishTypes: List<DishPreferredDto>
+    private val dishTypes: List<DishPreferredDto>,
+    private val onItemClick: (dishType: DishPreferredDto) -> Unit
 ) : RecyclerView.Adapter<DishTypeAdapter.DishTypeViewHolder>() {
 
     inner class DishTypeViewHolder(val binding: ItemDishTypeBinding) :
@@ -17,6 +19,10 @@ class DishTypeAdapter(
             binding.apply {
                 ivDishType.loadImage(dishType.imageUrl)
                 tvDishType.text = dishType.name
+
+                root.onClick {
+                    onItemClick(dishType)
+                }
             }
         }
     }

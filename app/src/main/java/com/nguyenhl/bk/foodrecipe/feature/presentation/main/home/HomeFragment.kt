@@ -128,7 +128,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     private fun bindPreferredDishesViewData(preferredDishes: List<DishPreferredDto>?) {
         preferredDishes ?: return
 
-        dishTypeAdapter = DishTypeAdapter(preferredDishes)
+        dishTypeAdapter = DishTypeAdapter(preferredDishes) { preferredDish ->
+            goToSearch(preferredDish)
+        }
         binding.rvDishPreferred.apply {
             adapter = dishTypeAdapter
             layoutManager = LinearLayoutManager(
@@ -313,9 +315,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         }
     }
 
-    private fun goToSearch() {
+    private fun goToSearch(dishPreferred: DishPreferredDto? = null) {
         SearchActivity.startActivity(context) {
-
+            putExtra(SearchActivity.KEY_PREFERRED_DISH_SEARCH , dishPreferred?.name)
         }
     }
 }

@@ -17,6 +17,7 @@ import com.nguyenhl.bk.foodrecipe.feature.presentation.createdishprefered.DishPr
 import com.nguyenhl.bk.foodrecipe.feature.presentation.createinfo.CreateInfoViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.chef.ChefDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.collection.CollectionDetailViewModel
+import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.healthgoal.HealthGoalPlanDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.ingredient.IngredientDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.recipe.RecipeDetailViewModel
 import com.nguyenhl.bk.foodrecipe.feature.presentation.detail.weeklyplan.WeeklyPlanDetailViewModel
@@ -264,6 +265,13 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
                 return WeeklyPlanDetailViewModel(
                     input as BaseInput.WeeklyPlanDetailInput,
                     weeklyPlanRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(HealthGoalPlanDetailViewModel::class.java) -> {
+                return HealthGoalPlanDetailViewModel(
+                    input as BaseInput.HealthGoalPlanDetailInput,
+                    healthGoalRepository
                 ) as T
             }
 

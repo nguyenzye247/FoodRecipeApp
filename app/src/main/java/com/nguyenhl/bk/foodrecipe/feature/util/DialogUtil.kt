@@ -67,4 +67,26 @@ object DialogUtil {
             .isDialog(true)
             .build()
     }
+
+    fun <T> buildPhysicalLevelPicker(
+        context: Context,
+        onCreate: () -> Unit,
+        onOptionSelectListener: (index: Int) -> Unit
+    ): OptionsPickerView<T>?  {
+        return OptionsPickerBuilder(context) { oldIndex, oldItem, newIndex, newText ->
+            onOptionSelectListener.invoke(oldIndex)
+        }.apply {
+            setLayoutRes(R.layout.dialog_health_status_picker) { parentView ->
+                val btnApply: TextView = parentView.findViewById(R.id.btn_apply)
+                btnApply.onClick {
+                    onCreate()
+                }
+            }
+            isDialog(true)
+            setSelectOptions(0)
+            setContentTextSize(17)
+            isRestoreItem(true)
+            setOutSideCancelable(isOutSideCancelable)
+        }.build()
+    }
 }

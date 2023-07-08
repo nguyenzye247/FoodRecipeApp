@@ -16,7 +16,6 @@ import com.nguyenhl.bk.foodrecipe.core.extension.livedata.ObsoleteSplittiesLifec
 import com.nguyenhl.bk.foodrecipe.core.extension.livedata.observe
 import com.nguyenhl.bk.foodrecipe.core.extension.serializable
 import com.nguyenhl.bk.foodrecipe.core.extension.start
-import com.nguyenhl.bk.foodrecipe.core.extension.threadrelated.runDelayOnMainThread
 import com.nguyenhl.bk.foodrecipe.core.extension.toastError
 import com.nguyenhl.bk.foodrecipe.core.extension.toastSuccess
 import com.nguyenhl.bk.foodrecipe.core.extension.views.*
@@ -56,6 +55,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
 
     private val isSearchIngredient by lazy { intent.getStringExtra(KEY_SEARCH_INGREDIENT) ?: "" }
 
+    private val isPreferredDishSearch by lazy {
+        intent.getStringExtra(KEY_PREFERRED_DISH_SEARCH) ?: ""
+    }
+
     override fun getLazyBinding() = lazy { ActivitySearchBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel() = viewModel<SearchViewModel> {
@@ -66,6 +69,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                 intent.getStringExtra(KEY_DATE) ?: "",
                 intent.serializable(KEY_MEAL_TYPE),
                 intent.getStringExtra(KEY_SEARCH_INGREDIENT) ?: "",
+                intent.getStringExtra(KEY_PREFERRED_DISH_SEARCH) ?: ""
             )
         )
     }
@@ -168,10 +172,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                 searchRecipe()
             }
 
-            if (isSearchIngredient.isEmpty()) {
-                fetchRandomRecipes()
+            if (isSearchIngredient.isNotEmpty()) {
+                searchRecipe(ingredientIDs = listOf(isSearchIngredient))
+            } else if (isPreferredDishSearch.isNotEmpty()) {
+                searchRecipe(preferredDishName = isPreferredDishSearch)
             } else {
-                searchRecipe(listOf(isSearchIngredient))
+                fetchRandomRecipes()
             }
         }
     }
@@ -210,12 +216,13 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
         searchFilterBottomSheet.show(supportFragmentManager, SearchFilterBottomSheet.TAG)
     }
 
-    private fun searchRecipe(ingredientIDs: List<String>? = null) {
+    private fun searchRecipe(ingredientIDs: List<String>? = null, preferredDishName: String? = null) {
         binding.etSearch.apply {
             hideKeyboard()
-            val searchText = text.toString()
+            val searchText = preferredDishName ?: text.toString()
 
-            val searchBody = viewModel.getSearchBodyFromFilters(searchText, ingredientIDs)
+            val searchBody =
+                viewModel.getSearchBodyFromFilters(searchText, ingredientIDs)
             viewModel.loadSearchRecipe(searchBody)
         }
     }
@@ -270,6 +277,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
 
     companion object {
         const val KEY_MEAL_TYPE = "key_meal_type"
+        const val KEY_PREFERRED_DISH_SEARCH = "key_preferred_dish_search"
         const val KEY_DATE = "key_date"
         const val KEY_IS_MEAL_TYPE_SEARCH = "key_is_meal_type_search"
         const val KEY_IS_ALLOW_RANDOM_FETCH = "key_is_allow_random_fetch"

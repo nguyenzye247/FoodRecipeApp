@@ -113,4 +113,9 @@
     <string name="target_weight">Target weight</string>
     <string name="day_goal">Day goal</string>
     <string name="start_day">Start day</string>
+    <string name="finished">Finished</string>
+    <string name="create_health_goal">Create Health Goal</string>
+    <string name="your_target_weight">Your target weight</string>
+    <string name="physical_level">Physical level</string>
+    <string name="create">Create</string>
 </resources>

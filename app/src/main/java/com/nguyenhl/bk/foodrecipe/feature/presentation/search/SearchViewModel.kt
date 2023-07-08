@@ -151,11 +151,13 @@ class SearchViewModel(
 
     fun getSearchBodyFromFilters(
         searchText: String,
-        ingredientIDs: List<String>? = null
+        ingredientIDs: List<String>? = null,
     ): SearchRecipeFilterBody {
         val idCategoryDetail =
             filterHashMap[FilterS.MEAL_TYPE]
-                ?.filter { it.isSelected }?.map { it.idDetail }?.ifEmpty { null }
+                ?.filter { it.isSelected }
+                ?.map { it.idDetail }
+                ?.ifEmpty { null }
         val totalTime =
             filterHashMap[FilterS.TOTAL_TIME]?.firstOrNull { it.isSelected }?.value
         val authors =
