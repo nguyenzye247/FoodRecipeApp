@@ -33,9 +33,9 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() {
-    private val breakfastRecipes: ArrayList<RecipeDto> = arrayListOf()
-    private val lunchRecipes: ArrayList<RecipeDto> = arrayListOf()
-    private val dinnerRecipe: ArrayList<RecipeDto> = arrayListOf()
+    private val breakfastRecipes: ArrayList<RecipeByDateDto> = arrayListOf()
+    private val lunchRecipes: ArrayList<RecipeByDateDto> = arrayListOf()
+    private val dinnerRecipe: ArrayList<RecipeByDateDto> = arrayListOf()
     private lateinit var breakfastRecipeAdapter: RecipeByDateAdapter
     private lateinit var lunchRecipeAdapter: RecipeByDateAdapter
     private lateinit var dinnerRecipeAdapter: RecipeByDateAdapter
@@ -131,51 +131,69 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
             rvBreakfast.apply {
                 breakfastRecipeAdapter = RecipeByDateAdapter(
                     breakfastRecipes,
-                    onItemClick = { recipe ->
-                        goToRecipeDetail(recipe)
+                    onItemClick = { recipeByDate ->
+                        goToRecipeDetail(recipeByDate.recipe)
                     },
-                    onFavoriteClick = { recipe ->
-                        likeRecipe(recipe)
+                    onFavoriteClick = { recipeByDate ->
+                        likeRecipe(recipeByDate.recipe)
+                    },
+                    onRemoveClick = { recipeByDate ->
+                        val pos = breakfastRecipes.indexOf(recipeByDate)
+                        breakfastRecipes.remove(recipeByDate)
+                        breakfastRecipeAdapter.notifyItemRemoved(pos)
+                        removeRecipe(recipeByDate)
                     }
                 )
                 adapter = breakfastRecipeAdapter
                 layoutManager = WrapContentLinearLayoutManager(
                     requireContext(),
-                    LinearLayoutManager.VERTICAL,
+                    LinearLayoutManager.HORIZONTAL,
                     false
                 )
             }
             rvLunch.apply {
                 lunchRecipeAdapter = RecipeByDateAdapter(
                     lunchRecipes,
-                    onItemClick = { recipe ->
-                        goToRecipeDetail(recipe)
+                    onItemClick = { recipeByDate ->
+                        goToRecipeDetail(recipeByDate.recipe)
                     },
-                    onFavoriteClick = { recipe ->
-                        likeRecipe(recipe)
+                    onFavoriteClick = { recipeByDate ->
+                        likeRecipe(recipeByDate.recipe)
+                    },
+                    onRemoveClick = { recipeByDate ->
+                        val pos = lunchRecipes.indexOf(recipeByDate)
+                        lunchRecipes.remove(recipeByDate)
+                        lunchRecipeAdapter.notifyItemRemoved(pos)
+                        removeRecipe(recipeByDate)
                     }
                 )
                 adapter = lunchRecipeAdapter
                 layoutManager = WrapContentLinearLayoutManager(
                     requireContext(),
-                    LinearLayoutManager.VERTICAL,
+                    LinearLayoutManager.HORIZONTAL,
                     false
                 )
             }
             rvDinner.apply {
                 dinnerRecipeAdapter = RecipeByDateAdapter(
                     dinnerRecipe,
-                    onItemClick = { recipe ->
-                        goToRecipeDetail(recipe)
+                    onItemClick = { recipeByDate ->
+                        goToRecipeDetail(recipeByDate.recipe)
                     },
-                    onFavoriteClick = { recipe ->
-                        likeRecipe(recipe)
+                    onFavoriteClick = { recipeByDate ->
+                        likeRecipe(recipeByDate.recipe)
+                    },
+                    onRemoveClick = { recipeByDate ->
+                        val pos = dinnerRecipe.indexOf(recipeByDate)
+                        dinnerRecipe.remove(recipeByDate)
+                        dinnerRecipeAdapter.notifyItemRemoved(pos)
+                        removeRecipe(recipeByDate)
                     }
                 )
                 adapter = dinnerRecipeAdapter
                 layoutManager = WrapContentLinearLayoutManager(
                     requireContext(),
-                    LinearLayoutManager.VERTICAL,
+                    LinearLayoutManager.HORIZONTAL,
                     false
                 )
             }
@@ -191,18 +209,17 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
     private fun bindRecipeByMealTypeByDate(recipeByMealType: HashMap<MealType?, List<RecipeByDateDto>>) {
         val tempBreakfastRecipes = breakfastRecipes.toList()
         breakfastRecipes.clear()
-        breakfastRecipes.addAll(recipeByMealType[MealType.BREAKFAST]?.map { it.recipe }
-            ?: emptyList())
+        breakfastRecipes.addAll(recipeByMealType[MealType.BREAKFAST] ?: emptyList())
         breakfastRecipeAdapter.notifyChanges(tempBreakfastRecipes)
 
         val tempLunchRecipes = lunchRecipes.toList()
         lunchRecipes.clear()
-        lunchRecipes.addAll(recipeByMealType[MealType.LUNCH]?.map { it.recipe } ?: emptyList())
+        lunchRecipes.addAll(recipeByMealType[MealType.LUNCH] ?: emptyList())
         lunchRecipeAdapter.notifyChanges(tempLunchRecipes)
 
         val tempDinnerRecipes = breakfastRecipes.toList()
         dinnerRecipe.clear()
-        dinnerRecipe.addAll(recipeByMealType[MealType.DINNER]?.map { it.recipe } ?: emptyList())
+        dinnerRecipe.addAll(recipeByMealType[MealType.DINNER] ?: emptyList())
         dinnerRecipeAdapter.notifyChanges(tempDinnerRecipes)
 
     }
@@ -238,6 +255,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, MainViewModel>() 
 
     private fun likeRecipe(recipe: RecipeDto) {
         viewModel.likeRecipe(recipe)
+    }
+
+    private fun removeRecipe(recipe: RecipeByDateDto) {
+        viewModel.removeRecipe(recipe)
     }
 
     companion object {

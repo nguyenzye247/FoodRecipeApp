@@ -10,10 +10,7 @@ import com.nguyenhl.bk.foodrecipe.core.common.PAGE_SIZE
 import com.nguyenhl.bk.foodrecipe.core.common.PREFETCH_DIST
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.SearchRecipeFilterBody
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRandomRecipeErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetRecipeDetailErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.LikeRecipeErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.SearchRecipeByFiltersErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.*
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipeEP
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.pagingsource.RecipePagingSource
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.RecipeService
@@ -185,6 +182,20 @@ class RecipeRepository constructor(
                 emit(data)
             }
             .suspendOnError(LikeRecipeErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(null)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun removeCalendarRecipe(token: String, recipeId: String) = flow {
+        recipeService.removeCalendarRecipe(token, recipeId)
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(RemoveCalendarRecipeErrorResponseMapper) {
                 emit(this)
             }
             .suspendOnException {

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 interface DetectionService {
     companion object {
         const val MODEL_API_KEY = "SeH1f4gyjqn1Uc1xhd6O"
-        const val MODEL_EP = "food-ingredient-recognition-51ngf/1"
+        const val MODEL_EP = "food-ingredient-recognition-51ngf/3"
 
         private val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

@@ -11,6 +11,7 @@ import com.nguyenhl.bk.foodrecipe.feature.dto.*
 import com.nguyenhl.bk.foodrecipe.feature.dto.calendar.RecipeByDateDto
 import com.nguyenhl.bk.foodrecipe.feature.dto.enumdata.MealType
 import com.nguyenhl.bk.foodrecipe.feature.helper.SessionManager
+import com.nguyenhl.bk.foodrecipe.feature.presentation.main.calendar.RecipeByDateAdapter
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeFetchRecipeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.home.usecase.HomeUseCase
 import com.nguyenhl.bk.foodrecipe.feature.presentation.main.ingredients.IngredientUseCase
@@ -120,6 +121,16 @@ class MainViewModel(
         }
         viewModelScope.launch(Dispatchers.IO) {
             homeUseCase.likeRecipe(token, recipe.idRecipe)
+        }
+    }
+
+    fun removeRecipe(recipe: RecipeByDateDto) {
+        val token = SessionManager.fetchToken(input.application).ifEmpty {
+            input.application.toast("Empty token")
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.removeRecipe(token, recipe.idApi)
         }
     }
 

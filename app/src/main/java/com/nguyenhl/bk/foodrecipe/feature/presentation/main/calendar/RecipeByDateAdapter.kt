@@ -8,37 +8,41 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.nguyenhl.bk.foodrecipe.core.extension.views.loadImage
 import com.nguyenhl.bk.foodrecipe.core.extension.views.onClick
 import com.nguyenhl.bk.foodrecipe.databinding.ItemRecipeByDateBinding
-import com.nguyenhl.bk.foodrecipe.feature.dto.RecipeDto
+import com.nguyenhl.bk.foodrecipe.feature.dto.calendar.RecipeByDateDto
 
 class RecipeByDateAdapter(
-    private val recipes: List<RecipeDto>,
-    private val onItemClick: (recipe: RecipeDto) -> Unit,
-    private val onFavoriteClick: (recipe: RecipeDto) -> Unit,
-): RecyclerView.Adapter<RecipeByDateAdapter.RecipeByDateHolder>() {
+    private val recipes: List<RecipeByDateDto>,
+    private val onItemClick: (recipe: RecipeByDateDto) -> Unit,
+    private val onFavoriteClick: (recipe: RecipeByDateDto) -> Unit,
+    private val onRemoveClick: (recipe: RecipeByDateDto) -> Unit,
+) : RecyclerView.Adapter<RecipeByDateAdapter.RecipeByDateHolder>() {
 
     inner class RecipeByDateHolder(val binding: ItemRecipeByDateBinding) :
         ViewHolder(binding.root) {
 
-        fun bind(recipe: RecipeDto) {
+        fun bind(recipeByDate: RecipeByDateDto) {
             binding.apply {
-                ivBackground.loadImage(recipe.imageUrl)
-                tvChefName.text = recipe.author
-                tvRecipeName.text = recipe.name
+                ivBackground.loadImage(recipeByDate.recipe.imageUrl)
+                tvChefName.text = recipeByDate.recipe.author
+                tvRecipeName.text = recipeByDate.recipe.name
                 tvCookTime.apply {
-                    val cookTimeText = "${recipe.totalTime} min"
+                    val cookTimeText = "${recipeByDate.recipe.totalTime} min"
                     text = cookTimeText
                 }
 
                 root.onClick {
-                    onItemClick(recipe)
+                    onItemClick(recipeByDate)
                 }
                 btnFavorite.apply {
-                    isSelected = recipe.isLiked
+                    isSelected = recipeByDate.recipe.isLiked
                     onClick {
                         isSelected = !isSelected
-                        recipe.isLiked = isSelected
-                        onFavoriteClick(recipe)
+                        recipeByDate.recipe.isLiked = isSelected
+                        onFavoriteClick(recipeByDate)
                     }
+                }
+                btnRemove.onClick {
+                    onRemoveClick(recipeByDate)
                 }
             }
         }
@@ -60,7 +64,7 @@ class RecipeByDateAdapter(
 
     override fun getItemCount(): Int = recipes.size
 
-    fun notifyChanges(oldList: List<RecipeDto>) {
+    fun notifyChanges(oldList: List<RecipeByDateDto>) {
         val diff = DiffUtil.calculateDiff(
             RecipeByMealTypeDiffCallback(
                 oldList,

@@ -4,6 +4,7 @@ import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.recipe.Recipe
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.LikeRecipeResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeDetailResponse
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RecipeResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.recipe.RemoveRecipeResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.*
 
@@ -18,6 +19,7 @@ interface RecipeService {
 
         const val RECIPE_LIKE_POST_EP = "like"
         const val RECIPE_LIKE_GET_EP = "like"
+        const val RECIPE_CALENDAR_REMOVE_EP = "calendar/delete"
     }
 
     @GET(RECIPE_RANDOM_GET_EP)
@@ -57,6 +59,12 @@ interface RecipeService {
         @Header("Authorization") token: String,
         @Path("recipeId") recipeId: String
     ): ApiResponse<LikeRecipeResponse>
+
+    @DELETE("$RECIPE_CALENDAR_REMOVE_EP/{recipeId}")
+    suspend fun removeCalendarRecipe(
+        @Header("Authorization") token: String,
+        @Path("recipeId") recipeId: String
+    ): ApiResponse<RemoveRecipeResponse>
 
     @GET(RECIPE_LIKE_GET_EP)
     suspend fun getAllLikedRecipe(

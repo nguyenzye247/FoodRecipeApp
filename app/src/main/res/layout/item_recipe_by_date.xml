@@ -32,7 +32,7 @@
             tools:src="@drawable/img_splash_bg" />
 
         <ImageButton
-            android:id="@+id/btn_favorite"
+            android:id="@+id/btn_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_8dp"
@@ -40,9 +40,22 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@null"
             android:padding="@dimen/dimen_3dp"
-            android:src="@drawable/select_recipe_heart"
+            android:src="@drawable/ic_remove"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:padding="@dimen/dimen_3dp"
+            android:src="@drawable/select_recipe_heart"
+            app:layout_constraintBottom_toBottomOf="@id/btn_remove"
+            app:layout_constraintEnd_toStartOf="@id/btn_remove"
+            app:layout_constraintTop_toTopOf="@id/btn_remove" />
 
         <TextView
             android:id="@+id/tv_cook_time"
