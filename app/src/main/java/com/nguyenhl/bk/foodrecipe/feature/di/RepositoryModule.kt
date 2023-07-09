@@ -27,4 +27,5 @@ val repositoryModule = module {
     single { DetectionRepository() }
     single { WeeklyPlanRepository(get()) }
     single { HealthGoalRepository(get()) }
+    single { HealthIndicatorRepository(get()) }
 }

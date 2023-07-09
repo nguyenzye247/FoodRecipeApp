@@ -68,7 +68,9 @@ class IngredientActivity : BaseActivity<ActivityIngredientsBinding, IngredientVi
     override fun initListener() {
         binding.apply {
             etSearch.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (actionId == EditorInfo.IME_ACTION_GO ||
+                    actionId == EditorInfo.IME_ACTION_NEXT ||
+                    actionId == EditorInfo.IME_ACTION_DONE) {
                     searchIngredient()
                 }
                 true
@@ -82,6 +84,9 @@ class IngredientActivity : BaseActivity<ActivityIngredientsBinding, IngredientVi
                     loadState.append.endOfPaginationReached &&
                             ingredientAdapter.itemCount < 1
                 )
+            }
+            tipSearch.setEndIconOnClickListener {
+                searchIngredient()
             }
         }
     }

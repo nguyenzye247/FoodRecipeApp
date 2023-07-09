@@ -84,3 +84,15 @@ object GetHealthGoalDetailErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to get health goal detail")
 object CreateHealthGoalErrorResponseMapper :
     BaseApiErrorModelMapper("Error: Fail to create health goal")
+object FinishHealthGoalErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to finish health goal")
+object GetHealthIndicatorByDateErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get health indicator")
+object CreateHealthIndicatorErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to create health indicator")
+object GetWeightIndicatorErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get weight indicator")
+object GetBloodSugarIndicatorErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get blood sugar indicator")
+object GetHeartRateIndicatorErrorResponseMapper :
+    BaseApiErrorModelMapper("Error: Fail to get heart rate indicator")

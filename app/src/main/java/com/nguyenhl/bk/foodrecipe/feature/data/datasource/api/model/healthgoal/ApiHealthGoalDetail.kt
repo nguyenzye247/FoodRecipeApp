@@ -1,6 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.model.healthgoal
 
 import com.google.gson.annotations.SerializedName
+import com.nguyenhl.bk.foodrecipe.feature.dto.healthgoal.HealthGoalDetailDto
 
 data class ApiHealthGoalDetail(
     @SerializedName("meal_suggest")
@@ -18,3 +19,15 @@ data class ApiHealthGoalDetail(
     @SerializedName("type")
     val type: String
 )
+
+internal fun ApiHealthGoalDetail.toHealthGoalDetailDto(): HealthGoalDetailDto {
+    return HealthGoalDetailDto(
+        mealSuggests = this.mealSuggests.map { it.toMealSuggestDto() },
+        currentWeight = this.currentWeight,
+        targetWeight = this.targetWeight,
+        dayGoal = this.dayGoal,
+        dailyCalories = this.dailyCalories,
+        dailyWater = this.dailyWater,
+        type = this.type
+    )
+}

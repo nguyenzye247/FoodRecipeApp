@@ -118,4 +118,12 @@
     <string name="your_target_weight">Your target weight</string>
     <string name="physical_level">Physical level</string>
     <string name="create">Create</string>
+    <string name="start_weight">Start weight</string>
+    <string name="daily_calories">Daily calories</string>
+    <string name="daily_water">Daily water</string>
+    <string name="daily_suggestions">Daily suggestions</string>
+    <string name="calories_count">Calories count:</string>
+    <string name="add_indicators">Add indicators</string>
+    <string name="lose_weight">Lose weight</string>
+    <string name="gain_weight">Gain weight</string>
 </resources>

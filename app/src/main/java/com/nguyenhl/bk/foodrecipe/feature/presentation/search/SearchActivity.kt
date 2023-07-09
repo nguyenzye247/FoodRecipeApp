@@ -108,7 +108,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                 showSearchFilters()
             }
             etSearch.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (actionId == EditorInfo.IME_ACTION_GO ||
+                    actionId == EditorInfo.IME_ACTION_NEXT ||
+                    actionId == EditorInfo.IME_ACTION_DONE) {
                     searchRecipe()
                 }
                 true
@@ -118,6 +120,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
             }
             fabAiSearch.onClick {
                 goToDetection()
+            }
+            tipSearch.setEndIconOnClickListener {
+                searchRecipe()
             }
         }
     }

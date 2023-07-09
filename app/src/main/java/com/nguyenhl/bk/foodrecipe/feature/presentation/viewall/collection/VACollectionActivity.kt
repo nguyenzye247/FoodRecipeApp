@@ -39,6 +39,7 @@ class VACollectionActivity : BaseViewAllActivity<VACollectionViewModel>() {
 
     override fun initViews() {
         viewModel.setLoading(true)
+        binding.btnSearch.setVisible(false)
         bindText()
     }
 

@@ -1,10 +1,7 @@
 package com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service
 
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.healthgoal.CreateHealthGoalBody
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.healthgoal.CreateHealthGoalResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.healthgoal.HealthGoalDetailResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.healthgoal.HealthGoalResponse
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.healthgoal.PhysicalLevelResponse
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.response.healthgoal.*
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,7 +15,7 @@ interface HealthGoalService {
         const val HEALTH_GOAL_GET_EP = "healthgoal"
         const val HEALTH_GOAL_DETAIL_GET_EP = "healthgoal/detail"
         const val HEALTH_GOAL_POST_EP = "healthGoal/create"
-        const val HEALTH_GOAL_PUT_EP = "healthgoal/update"
+        const val HEALTH_GOAL_POST_FINISH_EP = "healthgoal/finish"
     }
 
     @GET(PHYSICAL_LEVEL_GET_EP)
@@ -40,7 +37,10 @@ interface HealthGoalService {
         @Header("Authorization") token: String,
         @Body createHealthGoalBody: CreateHealthGoalBody
     ): ApiResponse<CreateHealthGoalResponse>
-//
-//    @PUT(HEALTH_GOAL_PUT_EP)
-//    suspend fun updateHealthGoal(): ApiResponse<>
+
+    @POST("$HEALTH_GOAL_POST_FINISH_EP/{healthGoalId}")
+    suspend fun finishHealthGoal(
+        @Header("Authorization") token: String,
+        @Path("healthGoalId") healthGoalId: String
+    ): ApiResponse<FinishHealthGoalResponse>
 }

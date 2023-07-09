@@ -5,7 +5,7 @@ android:color="@color/rcp_grey_200">
     android:id="@android:id/mask"
     android:gravity="center">
     <shape android:shape="rectangle">
-        <corners android:radius="@dimen/dimen_16dp" />
+        <corners android:radius="@dimen/dimen_20dp" />
         <solid android:color="@color/white" />
     </shape>
 </item>
@@ -13,7 +13,7 @@ android:color="@color/rcp_grey_200">
     android:id="@android:id/background"
     android:gravity="center">
     <shape android:shape="rectangle">
-        <corners android:radius="@dimen/dimen_16dp" />
+        <corners android:radius="@dimen/dimen_20dp" />
         <solid android:color="@color/rcp_blue_400"/>
     </shape>
 </item>

@@ -63,6 +63,7 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
     private val categoryRepository: CategoryRepository by inject()
     private val weeklyPlanRepository: WeeklyPlanRepository by inject()
     private val healthGoalRepository: HealthGoalRepository by inject()
+    private val healthIndicatorRepository: HealthIndicatorRepository by inject()
 
     private val homeUseCase: HomeUseCase by inject()
     private val homeFetchRecipeUseCase: HomeFetchRecipeUseCase by inject()
@@ -271,7 +272,8 @@ class ViewModelProviderFactory(private val input: BaseInput) : ViewModelProvider
             modelClass.isAssignableFrom(HealthGoalPlanDetailViewModel::class.java) -> {
                 return HealthGoalPlanDetailViewModel(
                     input as BaseInput.HealthGoalPlanDetailInput,
-                    healthGoalRepository
+                    healthGoalRepository,
+                    healthIndicatorRepository
                 ) as T
             }
 

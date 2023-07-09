@@ -3,10 +3,7 @@ package com.nguyenhl.bk.foodrecipe.feature.data.repository
 import androidx.annotation.WorkerThread
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.GlobalRetryPolicy
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.body.healthgoal.CreateHealthGoalBody
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.CreateHealthGoalErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetAllHealthGoalErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetHealthGoalDetailErrorResponseMapper
-import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.GetPhysicalLevelErrorResponseMapper
+import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.mapper.*
 import com.nguyenhl.bk.foodrecipe.feature.data.datasource.api.service.HealthGoalService
 import com.skydoves.sandwich.retry.runAndRetry
 import com.skydoves.sandwich.suspendOnError
@@ -80,5 +77,19 @@ class HealthGoalRepository constructor(
             .suspendOnException {
                 emit(null)
             }
-    }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun finishHealthGoal(token: String, healthGoalId: String) = flow {
+        healthGoalService.finishHealthGoal(token, healthGoalId)
+            .suspendOnSuccess {
+                emit(data)
+            }
+            .suspendOnError(FinishHealthGoalErrorResponseMapper) {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(null)
+            }
+    }.flowOn(Dispatchers.IO)
 }
