@@ -34,11 +34,18 @@ class ProfileHealthStatusFragment: BaseFragment<FragmentProfileHealthStatusBindi
             userInfo.weight
         )
 
+        val bmr = AppUtil.calculateBMR(
+            userInfo.weight,
+            userInfo.height,
+            getAgeFrom(userInfo.dob),
+            userInfo.gender == 1
+        )
+
         binding.apply {
             tvBmiValue.text = bmi.toString()
             tvBmiLevel.text = AppUtil.getBmiLevel(bmi).value
 
-            tvCalorieIntakeValue.text = CALORIES_DEFAULT
+            tvCalorieIntakeValue.text = bmr.toString()
         }
     }
 

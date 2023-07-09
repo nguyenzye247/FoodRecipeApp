@@ -25,6 +25,17 @@ object AppUtil {
         return (bmi * 10).roundToInt() / 10.toFloat()
     }
 
+    fun calculateBMR(weight: Float, height: Float, age: Int, isMale: Boolean): Double {
+        val bmr: Double = if (isMale) {
+            // BMR calculation for males
+            66 + (13.7 * weight) + (5 * height) - (6.8 * age)
+        } else {
+            // BMR calculation for females
+            655 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
+        }
+        return bmr
+    }
+
     fun getBmiLevel(bmi: Float): BmiLevel {
         return when {
             bmi < 18.5f -> BmiLevel.UNDERWEIGHT

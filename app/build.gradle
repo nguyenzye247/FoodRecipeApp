@@ -139,6 +139,8 @@ dependencies {
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
     //Camera view
     api 'com.otaliastudios:cameraview:2.7.2'
-
+    // Flex box layout manager for filters
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    // chart views
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

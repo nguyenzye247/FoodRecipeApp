@@ -67,7 +67,7 @@ class HealthIndicatorRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun getWeightIndicator(
+    fun fetchWeightIndicator(
         token: String,
         healthGoalId: String
     ) = flow {
@@ -89,7 +89,7 @@ class HealthIndicatorRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun getBloodSugarIndicator(
+    fun fetchBloodSugarIndicator(
         token: String,
         healthGoalId: String
     ) = flow {
@@ -111,7 +111,7 @@ class HealthIndicatorRepository constructor(
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun getHeartRateIndicator(
+    fun fetchHeartRateIndicator(
         token: String,
         healthGoalId: String
     ) = flow {

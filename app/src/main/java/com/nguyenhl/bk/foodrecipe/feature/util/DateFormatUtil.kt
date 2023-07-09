@@ -60,4 +60,12 @@ object DateFormatUtil {
 
         return Period.between(date, currentDate).years + 1
     }
+
+    fun convertToDecimal(millis: Long): Float {
+        val millisString = millis.toString()
+        val firstDigit = millisString.first()
+        val remainingDigits = millisString.substring(1)
+        val decimalValue = "$firstDigit.$remainingDigits"
+        return decimalValue.toFloat()
+    }
 }
